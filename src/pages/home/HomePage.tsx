@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { getSiteContent } from '../../app/i18n/catalog'
 import { getLocalizedPath } from '../../app/router/route-utils'
@@ -7,6 +8,8 @@ import { ProjectCard } from '../../widgets/project-card/ProjectCard'
 import { isLocale, siteConfig } from '../../shared/config/site'
 import styles from './HomePage.module.css'
 
+const HeroScene = lazy(() => import('../../features/hero-scene/HeroScene'))
+
 export default function HomePage() {
   const { locale: localeParam } = useParams()
   const locale = localeParam && isLocale(localeParam) ? localeParam : siteConfig.defaultLocale
@@ -15,32 +18,24 @@ export default function HomePage() {
   return (
     <div className="pageShell">
       <section className={styles.hero}>
-        <div className={`panel ${styles.heroCard}`}>
-          <div className={styles.heroLayout}>
-            <div className={styles.heroCopy}>
-              <span className="eyebrow">{content.home.hero.eyebrow}</span>
-              <h1 className={styles.heroHeadline}>{content.home.hero.title}</h1>
-              <p className={styles.heroDescription}>{content.home.hero.description}</p>
-              <p className={styles.heroKicker}>{content.home.hero.kicker}</p>
+        <div className={styles.heroScene}>
+          <Suspense fallback={null}>
+            <HeroScene />
+          </Suspense>
+        </div>
 
-              <div className={styles.heroActions}>
-                <Link className="buttonPrimary" to={getLocalizedPath(locale, 'work')}>
-                  {content.nav.work}
-                </Link>
-                <Link className="buttonSecondary" to={getLocalizedPath(locale, 'about')}>
-                  {content.nav.about}
-                </Link>
-              </div>
-            </div>
+        <div className={styles.heroCopy}>
+          <span className="eyebrow">{content.home.hero.eyebrow}</span>
+          <h1 className={styles.heroHeadline}>{content.home.hero.title}</h1>
+          <p className={styles.heroSubtitle}>{content.home.hero.subtitle}</p>
 
-            <div className={styles.badgeGrid}>
-              {content.home.hero.badges.map((badge) => (
-                <article key={badge.label} className={styles.heroBadge}>
-                  <strong className={styles.badgeLabel}>{badge.label}</strong>
-                  <span className={styles.badgeDetail}>{badge.detail}</span>
-                </article>
-              ))}
-            </div>
+          <div className={styles.heroActions}>
+            <Link className={`buttonPrimary ${styles.heroCta}`} to={getLocalizedPath(locale, 'work')}>
+              {content.nav.work}
+            </Link>
+            <Link className={`buttonSecondary ${styles.heroCta}`} to={getLocalizedPath(locale, 'about')}>
+              {content.nav.about}
+            </Link>
           </div>
         </div>
       </section>

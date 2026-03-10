@@ -72,13 +72,7 @@ export const enContent: SiteContent = {
     hero: {
       eyebrow: 'Full-Stack Creative Engineer',
       title: 'Building 3D web tools, research platforms, and AI-driven products.',
-      description: 'Browser-native 3D tools, research interfaces, and AI product delivery.',
-      kicker: 'UTS Master of IT graduate with research, product, and real-time AI delivery experience.',
-      badges: [
-        { label: 'UTS Master of IT', detail: 'GPA 6.44 / 7, WAM 86, about Top 5%' },
-        { label: 'DynagraphAI', detail: 'Built a live AI-powered browser 3D engine' },
-        { label: 'Chemviz3d', detail: '4,000+ students reached through a deployed teaching tool' },
-      ],
+      subtitle: 'Combining frontend architecture and real-time AI to deliver interactive spatial web experiences.',
       contributionYears: [
         { year: '2025', total: '536 contributions' },
         { year: '2026', total: '427 contributions' },

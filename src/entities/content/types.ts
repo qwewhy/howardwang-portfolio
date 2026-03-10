@@ -13,10 +13,6 @@ export interface LinkItem {
   external?: boolean
 }
 
-export interface HeroBadge {
-  label: string
-  detail: string
-}
 
 export interface MetricEntry {
   value: string
@@ -83,9 +79,10 @@ export interface PageIntro {
 }
 
 export interface HomeContent {
-  hero: PageIntro & {
-    kicker: string
-    badges: HeroBadge[]
+  hero: {
+    eyebrow: string
+    title: string
+    subtitle: string
     contributionYears: ContributionYear[]
   }
   workIntro: PageIntro

@@ -1,47 +1,44 @@
 .hero {
+  position: relative;
+  min-height: min(78vh, 560px);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
   padding-top: 1.4rem;
 }
 
-.heroCard {
-  padding: clamp(1.2rem, 3vw, 1.8rem);
-}
-
-.heroLayout {
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
-  gap: 1.25rem;
-  align-items: start;
+.heroScene {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .heroCopy {
+  position: relative;
+  z-index: 1;
   display: grid;
-  gap: 1rem;
+  gap: 1.2rem;
+  max-width: 680px;
 }
 
 .heroHeadline {
   margin: 0;
-  max-width: 11ch;
   font-family: var(--font-display);
-  font-size: clamp(2.4rem, 6vw, 5rem);
-  line-height: 0.96;
-  letter-spacing: -0.04em;
+  font-size: clamp(2.2rem, 4.8vw, 3.8rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
   text-wrap: balance;
 }
 
-.heroDescription,
-.heroKicker,
+.heroSubtitle,
 .sectionLead,
 .educationDegree {
   margin: 0;
   max-width: 60ch;
   color: var(--color-text-muted);
-  font-size: 0.98rem;
-  line-height: 1.65;
-}
-
-.heroKicker {
-  color: var(--color-text);
-  opacity: 0.86;
+  font-size: 1rem;
+  line-height: 1.7;
 }
 
 .heroActions {
@@ -50,32 +47,31 @@
   flex-wrap: wrap;
 }
 
-.badgeGrid {
-  display: grid;
-  gap: 0.85rem;
+.heroCta {
+  padding: 0.95rem 1.6rem;
+  font-size: 1rem;
+  font-weight: 500;
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    border-color var(--transition-fast);
 }
 
-.heroBadge {
-  display: grid;
-  gap: 0.45rem;
-  min-height: 108px;
-  padding: 1rem;
-  border-radius: calc(var(--radius-sm) + 2px);
-  border: 1px solid var(--color-line);
-  background:
-    radial-gradient(circle at top right, rgba(107, 230, 255, 0.12), transparent 34%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+.heroCta:hover {
+  transform: translateY(-3px);
 }
 
-.badgeLabel {
-  font-family: var(--font-display);
-  font-size: 1.02rem;
-  line-height: 1.15;
+:global(.buttonPrimary).heroCta:hover {
+  box-shadow:
+    0 14px 36px rgba(67, 231, 177, 0.28),
+    0 0 0 1px rgba(67, 231, 177, 0.3);
 }
 
-.badgeDetail {
-  color: var(--color-text-muted);
-  line-height: 1.55;
+:global(.buttonSecondary).heroCta:hover {
+  box-shadow:
+    0 10px 28px rgba(107, 230, 255, 0.12),
+    0 0 0 1px rgba(107, 230, 255, 0.22);
+  border-color: rgba(107, 230, 255, 0.35);
 }
 
 .section {
@@ -196,45 +192,28 @@
   padding: 1.15rem 1.2rem;
 }
 
-@media (max-width: 980px) {
-  .heroLayout {
-    grid-template-columns: 1fr;
-  }
-
-  .badgeGrid {
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  }
-}
-
 @media (max-width: 640px) {
   .hero {
     padding-top: 0.8rem;
-  }
-
-  .heroCard {
-    padding: 1rem;
+    min-height: min(70vh, 420px);
   }
 
   .heroHeadline {
-    max-width: none;
-    font-size: clamp(2rem, 10vw, 3rem);
+    font-size: clamp(1.7rem, 7vw, 2.6rem);
   }
 
-  .heroDescription,
-  .heroKicker,
+  .heroSubtitle,
   .sectionLead,
   .educationDegree {
     font-size: 0.92rem;
   }
 
-  .badgeGrid,
   .workGrid,
   .educationGrid,
   .skillGrid {
     grid-template-columns: 1fr;
   }
 
-  .heroBadge,
   .educationCard,
   .skillCard,
   .contactCard {

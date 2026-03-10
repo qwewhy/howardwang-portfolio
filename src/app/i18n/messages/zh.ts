@@ -72,13 +72,7 @@ export const zhContent: SiteContent = {
     hero: {
       eyebrow: '全栈创意工程师',
       title: '构建 3D Web 工具、研究平台与 AI 驱动产品。',
-      description: '浏览器原生 3D 工具、研究型交互界面、AI 产品交付。',
-      kicker: 'UTS IT 硕士毕业生，兼具研究协作、产品化工具和实时 AI 系统交付经验。',
-      badges: [
-        { label: 'UTS Master of IT', detail: 'GPA 6.44 / 7，WAM 86，约 Top 5%' },
-        { label: 'DynagraphAI', detail: '已上线的 AI 浏览器 3D 引擎' },
-        { label: 'Chemviz3d', detail: '已服务 4,000+ 学生的教学工具' },
-      ],
+      subtitle: '融合前端架构与实时 AI 能力，交付交互式空间 Web 体验。',
       contributionYears: [
         { year: '2025', total: '536 次贡献' },
         { year: '2026', total: '427 次贡献' },
