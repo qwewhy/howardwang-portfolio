@@ -1,4 +1,4 @@
-import { lazy, Suspense, useMemo } from 'react'
+import { lazy, Suspense } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { getSiteContent } from '../../app/i18n/catalog'
 import { getLocalizedPath } from '../../app/router/route-utils'
@@ -17,30 +17,22 @@ export default function HomePage() {
   const content = getSiteContent(locale)
   const isMobile = useAppShellStore((state) => state.isMobile)
 
-  const heroTextContent = useMemo(() => ({
-    eyebrow: content.home.hero.eyebrow,
-    title: content.home.hero.title,
-    subtitle: content.home.hero.subtitle,
-  }), [content.home.hero.eyebrow, content.home.hero.title, content.home.hero.subtitle])
-
   return (
     <div className="pageShell">
       <section className={`${styles.hero} ${isMobile ? styles.heroMobile : ''}`}>
         {!isMobile && (
           <div className={styles.heroScene}>
             <Suspense fallback={null}>
-              <HeroScene textContent={heroTextContent} />
+              <HeroScene />
             </Suspense>
           </div>
         )}
 
-        {isMobile && (
-          <div className={styles.heroText}>
-            <span className="eyebrow">{content.home.hero.eyebrow}</span>
-            <h1 className="heroTitle">{content.home.hero.title}</h1>
-            <p className={styles.heroSubtitle}>{content.home.hero.subtitle}</p>
-          </div>
-        )}
+        <div className={styles.heroText}>
+          <span className="eyebrow">{content.home.hero.eyebrow}</span>
+          <h1 className="heroTitle">{content.home.hero.title}</h1>
+          <p className={styles.heroSubtitle}>{content.home.hero.subtitle}</p>
+        </div>
 
         <div className={styles.heroActions}>
           <Link className={`buttonPrimary ${styles.heroCta}`} to={getLocalizedPath(locale, 'work')}>
@@ -104,7 +96,7 @@ export default function HomePage() {
                 </div>
                 {entry.logo && (
                   <img
-                    className={styles.educationLogo}
+                    className={`${styles.educationLogo}${entry.logo.includes('neu') ? ` ${styles.educationLogoWide}` : ''}`}
                     src={`${import.meta.env.BASE_URL}${entry.logo}`}
                     alt={entry.institution}
                     loading="lazy"

@@ -1,17 +1,11 @@
 import { useEffect, useRef } from 'react'
 import { useAppShellStore } from '../../app/store/app-shell-store'
-import type { HeroSceneAdapter, HeroTextContent } from '../../scenes/hero/adapter'
+import type { HeroSceneAdapter } from '../../scenes/hero/adapter'
 import styles from './HeroScene.module.css'
 
-interface HeroSceneProps {
-  textContent?: HeroTextContent
-}
-
-export default function HeroScene({ textContent }: HeroSceneProps) {
+export default function HeroScene() {
   const containerRef = useRef<HTMLDivElement>(null)
   const adapterRef = useRef<HeroSceneAdapter | null>(null)
-  const textContentRef = useRef(textContent)
-  textContentRef.current = textContent
   const reducedMotion = useAppShellStore((state) => state.reducedMotion)
   const lowPerformanceMode = useAppShellStore((state) => state.lowPerformanceMode)
   const isMobile = useAppShellStore((state) => state.isMobile)
@@ -32,16 +26,6 @@ export default function HeroScene({ textContent }: HeroSceneProps) {
       adapter.mount(containerRef.current, { performanceMode })
       adapterRef.current = adapter
 
-      /* paint text after fonts load — cloth shows gradient-only until then */
-      if (textContentRef.current) {
-        const content = textContentRef.current
-        document.fonts.ready.then(() => {
-          if (!disposed && adapterRef.current) {
-            adapterRef.current.setTextContent(content)
-          }
-        })
-      }
-
       resizeObserver = new ResizeObserver((entries) => {
         const entry = entries[0]
         if (entry) adapter.resize(entry.contentRect.width, entry.contentRect.height)
@@ -59,17 +43,6 @@ export default function HeroScene({ textContent }: HeroSceneProps) {
     }
   }, [lowPerformanceMode, reducedMotion, isMobile])
 
-  /* repaint if textContent changes after mount */
-  useEffect(() => {
-    if (textContent && adapterRef.current) {
-      document.fonts.ready.then(() => {
-        if (adapterRef.current && textContent) {
-          adapterRef.current.setTextContent(textContent)
-        }
-      })
-    }
-  }, [textContent])
-
   useEffect(() => {
     const onMouseMove = (event: MouseEvent) => {
       const x = (event.clientX / window.innerWidth) * 2 - 1
@@ -81,7 +54,7 @@ export default function HeroScene({ textContent }: HeroSceneProps) {
     return () => window.removeEventListener('mousemove', onMouseMove)
   }, [])
 
-  /* don't render canvas on mobile — Three.js won't even lazy-load */
+  /* don't render canvas on mobile */
   if (isMobile) return null
 
   return (

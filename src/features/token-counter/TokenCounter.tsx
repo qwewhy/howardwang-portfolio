@@ -8,6 +8,7 @@ interface TokenCounterProps {
 interface CounterData {
   label: string
   value: string
+  readable: string
   note: string
   tools: string[]
 }
@@ -18,14 +19,16 @@ function getCounterData(locale: 'en' | 'zh'): [CounterData, CounterData] {
       {
         label: 'Cursor · 2025-2026',
         value: '1,126,048,160',
-        note: '仅 Cursor 一年 Token 消耗量',
+        readable: '≈ 11.3 亿 Tokens',
+        note: '仅 Cursor 一年 Token 消耗量（估算）',
         tools: ['Cursor'],
       },
       {
-        label: '全平台 · 2025-2026',
+        label: '全平台 · 2025-2026（估算）',
         value: '5,000,000,000+',
-        note: 'Cursor + Claude Code + Codex + Gemini',
-        tools: ['Cursor', 'Claude Code', 'Codex', 'Gemini'],
+        readable: '≈ 50 亿+ Tokens',
+        note: '',
+        tools: ['Cursor', 'Claude Code', 'Codex', 'Google Antigravity'],
       },
     ]
   }
@@ -33,14 +36,16 @@ function getCounterData(locale: 'en' | 'zh'): [CounterData, CounterData] {
     {
       label: 'Cursor · 2025-2026',
       value: '1,126,048,160',
-      note: 'Cursor token usage in one year alone',
+      readable: '≈ 1.13 Billion Tokens',
+      note: 'Cursor token usage in one year alone (estimated)',
       tools: ['Cursor'],
     },
     {
-      label: 'All platforms · 2025-2026',
+      label: 'All platforms · 2025-2026 (estimated)',
       value: '5,000,000,000+',
-      note: 'Cursor + Claude Code + Codex + Gemini',
-      tools: ['Cursor', 'Claude Code', 'Codex', 'Gemini'],
+      readable: '≈ 5 Billion+ Tokens',
+      note: '',
+      tools: ['Cursor', 'Claude Code', 'Codex', 'Google Antigravity'],
     },
   ]
 }
@@ -94,12 +99,13 @@ export function TokenCounter({ locale }: TokenCounterProps) {
       <div className={styles.counter}>
         <span className={styles.counterLabel}>{left.label}</span>
         <FlipDigits value={left.value} />
+        <p className={styles.readable}>{left.readable}</p>
         <p className={styles.counterNote}>{left.note}</p>
       </div>
       <div className={styles.counter}>
         <span className={styles.counterLabel}>{right.label}</span>
         <FlipDigits value={right.value} />
-        <p className={styles.counterNote}>{right.note}</p>
+        <p className={styles.readable}>{right.readable}</p>
         <div className={styles.tags}>
           {right.tools.map((t) => (
             <span key={t} className={styles.tag}>

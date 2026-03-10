@@ -85,8 +85,8 @@ export const enContent: SiteContent = {
     },
     metricsIntro: {
       eyebrow: 'GitHub activity',
-      title: 'A visible record of ongoing build velocity.',
-      description: 'Public commits from the last two years, expanded into their own section instead of being squeezed into the intro.',
+      title: 'Coding has been part of my routine.',
+      description: 'Two years of public GitHub activity, showing how I usually work.',
     },
     capabilityIntro: {
       eyebrow: 'Skills',
@@ -105,7 +105,7 @@ export const enContent: SiteContent = {
     },
     contactIntro: {
       eyebrow: 'Contact',
-      title: 'Open to frontend, creative web, and interactive product roles.',
+      title: 'Open to full-stack, web design, interactive product, game dev, AI application, and desktop/native client roles.',
       description: 'Reach out through any of the channels below.',
     },
   },
@@ -191,7 +191,7 @@ export const enContent: SiteContent = {
     intro: {
       eyebrow: 'Contact',
       title: 'Get in touch.',
-      description: 'Open to frontend, creative web, and interactive product opportunities. Feel free to reach out.',
+      description: 'Open to full-stack, web design, interactive product, game dev, AI application, and client-side opportunities. Feel free to reach out.',
     },
     note: 'For the full resume or direct phone contact, please send an email.',
     links: [
@@ -205,21 +205,21 @@ export const enContent: SiteContent = {
       institution: 'University of Technology Sydney',
       degree: 'Master of IT · Interactive Media',
       period: '2023.08 - 2025.06',
-      highlights: ['GPA 6.44 / 7', 'WAM 86', 'About Top 5% in UTS', 'Two Top 1 projects invited to the school festival'],
+      highlights: ['GPA 6.44 / 7', 'WAM 86', 'GPA rank estimated Top 5% in UTS', 'Two Top 1 projects invited to the school festival', 'Two courses scored 100 / 100'],
       logo: 'logos/restricteduts-logoheader.svg',
     },
     {
       institution: 'Northeastern University (China)',
       degree: 'Computer Science and Technology',
       period: '2020.09 - 2024.06',
-      highlights: ['Project 985 / Double First-Class Initiative', 'Freshman Academic Excellence Scholarship', 'Gaokao 640 / 750'],
+      highlights: ['WAM 80.2', 'China Project 985 / Double First-Class Initiative', 'Freshman Academic Excellence Scholarship', 'College Entrance Exam 640 / 750', 'Top 1 in college entrance exam among the entire faculty'],
       logo: 'logos/neu.png',
     },
   ],
   metrics: [
     { value: '4,000+', label: 'students reached', context: 'Chemviz3d deployed as a core educational tool for undergraduate teaching.', source: 'resume' },
     { value: '10+', label: 'professors collaborated', context: 'Shaped in close collaboration with science faculty at UTS.', source: 'resume' },
-    { value: '20+', label: 'custom React hooks', context: 'Built for animation, themes, and reusable business logic.', source: 'resume' },
+    { value: 'AI-assisted', label: 'molecular animation editing', context: 'AI-powered editing pipeline for research-quality chemical reaction animations.', source: 'resume' },
     { value: '10', label: 'languages supported', context: 'Chemviz3d includes multi-language support using react-i18next.', source: 'resume' },
     { value: 'Top 5%', label: 'UTS standing', context: 'GPA 6.44 / 7, WAM 86 at University of Technology Sydney.', source: 'resume' },
   ],
@@ -242,9 +242,9 @@ export const enContent: SiteContent = {
       summary: 'AI-powered Three.js sandbox — prompt to scene to exportable code, all in the browser.',
       badges: ['Live', 'Creative Tooling', 'Three.js'],
       metrics: [
-        { value: 'Prompt', label: 'to scene flow', context: 'Describe once, generate instantly, and preview in real time.', source: 'userProvided' },
+        { value: 'Prompt', label: 'to readable 3D animation', context: 'Describe once, generate readable and maintainable 3D animation code.', source: 'userProvided' },
         { value: 'Zero setup', label: 'browser-native entry', context: 'Runs directly in the browser with WebGL and Three.js.', source: 'liveSite' },
-        { value: 'WYSIWYG', label: 'viewport feedback', context: 'Code changes render directly in the interactive 3D viewport.', source: 'liveSite' },
+        { value: 'Efficient', label: 'custom animation rendering', context: 'Rapidly produce and preview custom 3D animations in the viewport.', source: 'liveSite' },
       ],
       techStack: ['Three.js', 'WebGL', 'TypeScript', 'AI-assisted generation', 'Browser editor workflows'],
       links: [
@@ -301,11 +301,11 @@ export const enContent: SiteContent = {
       period: 'Browser Molecular Animation Engine',
       location: 'UTS Science Department collaboration',
       summary: '3D chemical reaction visualizer for UTS chemistry teaching upgrade.',
-      badges: ['Research', 'Three.js', 'Education'],
+      badges: ['Used by UTS', 'Three.js', 'Education'],
       metrics: [
         { value: '4000+', label: 'chemistry undergrads using it', context: 'The deployed tool directly supported teaching at scale.', source: 'resume' },
         { value: '10+', label: 'professor collaborators', context: 'The project evolved through continuous interdisciplinary feedback.', source: 'resume' },
-        { value: '20+', label: 'custom hooks', context: 'State and behavior were decomposed into reusable frontend modules.', source: 'resume' },
+        { value: 'AI-assisted', label: 'academic-grade molecular animation editing', context: 'AI-powered editing pipeline for research-quality chemical reaction animations.', source: 'resume' },
       ],
       techStack: ['Three.js', 'WebGL', 'WASM', 'Web Worker', 'Zustand', 'Tailwind CSS', 'AWS S3', 'Route 53', 'CloudFront'],
       links: [

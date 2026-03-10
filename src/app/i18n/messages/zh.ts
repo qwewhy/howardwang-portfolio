@@ -85,8 +85,8 @@ export const zhContent: SiteContent = {
     },
     metricsIntro: {
       eyebrow: 'GitHub 提交',
-      title: '持续构建的活跃轨迹。',
-      description: '把近两年的公开提交记录单独展开，补充说明我的日常迭代节奏。',
+      title: '写代码是日常的一部分。',
+      description: '近两年的 GitHub 公开记录，反映我平时的开发习惯。',
     },
     capabilityIntro: {
       eyebrow: 'Skills',
@@ -105,7 +105,7 @@ export const zhContent: SiteContent = {
     },
     contactIntro: {
       eyebrow: '联系',
-      title: '开放前端、Creative Web 与交互产品相关机会。',
+      title: '开放全栈开发、网页设计、交互产品、游戏开发、AI 应用开发、客户端开发机会。',
       description: '欢迎通过以下方式联系我。',
     },
   },
@@ -185,7 +185,7 @@ export const zhContent: SiteContent = {
     intro: {
       eyebrow: '联系',
       title: '与我联系。',
-      description: '开放前端、Creative Web 与交互产品相关机会，欢迎随时联系。',
+      description: '开放全栈开发、网页设计、交互产品、游戏开发、AI 应用开发、客户端开发机会，欢迎随时联系。',
     },
     note: '完整简历或电话联系方式请通过邮件索取。',
     links: [
@@ -199,21 +199,21 @@ export const zhContent: SiteContent = {
       institution: 'University of Technology Sydney',
       degree: 'Master of IT · Interactive Media',
       period: '2023.08 - 2025.06',
-      highlights: ['GPA 6.44 / 7', 'WAM 86', '约 Top 5%', '2 个 Top 1 项目入选校内科技节'],
+      highlights: ['GPA 6.44 / 7', 'WAM 86', 'GPA 排名推测 Top 5%', '2 个 Top 1 项目入选校内科技节', '两门课成绩满分 100 / 100'],
       logo: 'logos/restricteduts-logoheader.svg',
     },
     {
       institution: 'Northeastern University (China)',
       degree: 'Computer Science and Technology',
       period: '2020.09 - 2024.06',
-      highlights: ['985 / 双一流', '新生学业优秀奖学金', '高考 640 / 750'],
+      highlights: ['WAM 80.2', '985 / 双一流', '新生学业优秀奖学金', '大学入学考试 640 / 750', '大学入学考试全学院成绩 Top 1'],
       logo: 'logos/neu.png',
     },
   ],
   metrics: [
     { value: '4,000+', label: '学生覆盖', context: 'Chemviz3d 已作为教学核心工具部署使用。', source: 'resume' },
     { value: '10+', label: '教授合作', context: '与 UTS 科学学院 faculty 持续协作推进。', source: 'resume' },
-    { value: '20+', label: '自定义 React Hooks', context: '用于动画、主题和可复用业务逻辑。', source: 'resume' },
+    { value: 'AI 辅助', label: '分子动画编辑', context: 'AI 驱动的编辑流程，产出研究级化学反应动画。', source: 'resume' },
     { value: '10', label: '语言支持', context: 'Chemviz3d 具备多语言支持能力。', source: 'resume' },
     { value: 'Top 5%', label: 'UTS 学业排名', context: 'GPA 6.44 / 7，WAM 86。', source: 'resume' },
   ],
@@ -236,9 +236,9 @@ export const zhContent: SiteContent = {
       summary: 'AI 驱动的 Three.js sandbox——从 prompt 到场景到可导出代码，全在浏览器内。',
       badges: ['已上线', '创作工具', 'Three.js'],
       metrics: [
-        { value: 'Prompt', label: '到场景工作流', context: 'Describe once, generate instantly, preview in real-time。', source: 'userProvided' },
+        { value: 'Prompt', label: '到可读可维护的 3D 动画', context: '一句话描述，生成可读可维护的 3D 动画代码。', source: 'userProvided' },
         { value: 'Zero setup', label: '浏览器原生体验', context: '基于 WebGL 与 Three.js，直接运行在浏览器中。', source: 'liveSite' },
-        { value: 'WYSIWYG', label: '实时视口反馈', context: '代码修改会即时渲染到 3D viewport。', source: 'liveSite' },
+        { value: '高效', label: '呈现自定义动画', context: '快速产出并预览自定义 3D 动画效果。', source: 'liveSite' },
       ],
       techStack: ['Three.js', 'WebGL', 'TypeScript', 'AI-assisted generation', 'Browser editor workflows'],
       links: [
@@ -283,11 +283,11 @@ export const zhContent: SiteContent = {
       period: '浏览器分子动画引擎',
       location: 'UTS Science Department 协作',
       summary: '3D 化学反应可视化教学工具，用于悉尼科技大学化学教学升级。',
-      badges: ['研究项目', 'Three.js', '教育场景'],
+      badges: ['UTS 官方使用', 'Three.js', '教育场景'],
       metrics: [
         { value: '4000+', label: '化学系本科生正在使用', context: '项目已经部署为教学核心工具。', source: 'resume' },
         { value: '10+', label: '教授协作', context: '项目通过持续的跨学科反馈演进。', source: 'resume' },
-        { value: '20+', label: '自定义 hooks', context: '状态与业务行为被拆成高复用前端模块。', source: 'resume' },
+        { value: 'AI 辅助', label: '学术论文级分子动画编辑', context: 'AI 驱动的编辑流程，产出研究级化学反应动画。', source: 'resume' },
       ],
       techStack: ['Three.js', 'WebGL', 'WASM', 'Web Worker', 'Zustand', 'Tailwind CSS', 'AWS S3', 'Route 53', 'CloudFront'],
       links: [{ label: '访问 Chemviz3d', href: 'https://www.chemviz3d.com', external: true }],

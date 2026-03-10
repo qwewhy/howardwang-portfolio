@@ -10,6 +10,7 @@ export interface SceneBundle {
   scene: THREE.Scene
   camera: THREE.PerspectiveCamera
   root: THREE.Group
+  getRenderer: () => THREE.WebGLRenderer | null
   setAnimation: (callback: (elapsed: number) => void) => void
   setPerformanceMode: (mode: ScenePerformanceMode) => void
   mount: (container: HTMLElement) => void
@@ -109,6 +110,7 @@ export function createSceneBundle({ background, cameraPosition }: SceneBundleOpt
     scene,
     camera,
     root,
+    getRenderer: () => renderer,
     setAnimation,
     setPerformanceMode,
     mount,

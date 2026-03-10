@@ -33,10 +33,10 @@
 
 .digit {
   position: relative;
-  width: 2rem;
-  height: 2.8rem;
+  width: 1.5rem;
+  height: 2.1rem;
   overflow: hidden;
-  border-radius: 6px;
+  border-radius: 5px;
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid var(--color-line);
 }
@@ -48,7 +48,7 @@
   align-items: center;
   justify-content: center;
   font-family: var(--font-display);
-  font-size: 1.4rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: var(--color-text);
   transform: rotateX(90deg);
@@ -72,11 +72,20 @@
 
 .separator {
   font-family: var(--font-display);
-  font-size: 1.3rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--color-text-muted);
   padding: 0 1px;
   align-self: center;
+}
+
+.readable {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  letter-spacing: -0.01em;
 }
 
 .counterNote {
@@ -147,16 +156,20 @@ html[data-theme='light'] .digit::after {
   }
 
   .digit {
-    width: 1.6rem;
-    height: 2.2rem;
+    width: 1.3rem;
+    height: 1.8rem;
   }
 
   .digitInner {
-    font-size: 1.1rem;
+    font-size: 0.9rem;
   }
 
   .separator {
-    font-size: 1rem;
+    font-size: 0.85rem;
+  }
+
+  .readable {
+    font-size: 1.15rem;
   }
 
   .counter {
@@ -166,11 +179,15 @@ html[data-theme='light'] .digit::after {
 
 @media (max-width: 480px) {
   .digit {
-    width: 1.4rem;
-    height: 2rem;
+    width: 1.1rem;
+    height: 1.6rem;
   }
 
   .digitInner {
+    font-size: 0.8rem;
+  }
+
+  .readable {
     font-size: 1rem;
   }
 }

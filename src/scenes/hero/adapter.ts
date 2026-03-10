@@ -2,19 +2,12 @@ import * as THREE from 'three'
 import { createSceneBundle } from '../core/createSceneBundle'
 import type { SceneAdapter, SceneMountOptions, ScenePerformanceMode } from '../core/types'
 
-export interface HeroTextContent {
-  eyebrow: string
-  title: string
-  subtitle: string
-}
-
 export interface HeroSceneAdapter extends SceneAdapter {
   setMousePosition: (normalizedX: number, normalizedY: number) => void
-  setTextContent: (content: HeroTextContent) => void
 }
 
 /* ---------- physics constants ---------- */
-const DAMPING = 0.14
+const DAMPING = 0.08
 const DRAG = 1 - DAMPING
 const MASS = 0.1
 const REST = 25
@@ -23,107 +16,12 @@ const Y_SEGS = 20
 const GRAVITY_VAL = 981 * 0.35
 const TS = 18 / 1000
 const TS_SQ = TS * TS
-const CONSTRAINT_ITERS = 8
+const CONSTRAINT_ITERS = 5
 
 const clothW = REST * X_SEGS
 const clothH = REST * Y_SEGS
 
 const gravityForce = new THREE.Vector3(0, -GRAVITY_VAL * MASS, 0)
-
-/* ---------- canvas text texture ---------- */
-const TEX_W = 2048
-const TEX_H = 1280
-
-function createTextCanvas(): HTMLCanvasElement {
-  const canvas = document.createElement('canvas')
-  canvas.width = TEX_W
-  canvas.height = TEX_H
-  return canvas
-}
-
-function drawGradientOnly(canvas: HTMLCanvasElement) {
-  const ctx = canvas.getContext('2d')!
-  const w = canvas.width
-  const h = canvas.height
-  const grad = ctx.createLinearGradient(0, 0, w * 0.3, h)
-  grad.addColorStop(0, '#2a9d7e')
-  grad.addColorStop(0.5, '#35b896')
-  grad.addColorStop(1, '#4dc8b0')
-  ctx.fillStyle = grad
-  ctx.fillRect(0, 0, w, h)
-
-  ctx.fillStyle = 'rgba(255,255,255,0.03)'
-  for (let i = 0; i < 800; i++) {
-    ctx.fillRect(Math.random() * w, Math.random() * h, 2, 2)
-  }
-}
-
-function drawTextContent(canvas: HTMLCanvasElement, content: HeroTextContent) {
-  const ctx = canvas.getContext('2d')!
-  const w = canvas.width
-  const h = canvas.height
-
-  /* gradient background */
-  const grad = ctx.createLinearGradient(0, 0, w * 0.3, h)
-  grad.addColorStop(0, '#2a9d7e')
-  grad.addColorStop(0.5, '#35b896')
-  grad.addColorStop(1, '#4dc8b0')
-  ctx.fillStyle = grad
-  ctx.fillRect(0, 0, w, h)
-
-  /* subtle noise overlay for fabric feel */
-  ctx.fillStyle = 'rgba(255,255,255,0.03)'
-  for (let i = 0; i < 800; i++) {
-    ctx.fillRect(Math.random() * w, Math.random() * h, 2, 2)
-  }
-
-  const cx = w / 2
-  ctx.textAlign = 'center'
-  ctx.textBaseline = 'middle'
-
-  /* eyebrow */
-  ctx.fillStyle = 'rgba(255,255,255,0.75)'
-  ctx.font = `500 ${Math.round(w * 0.022)}px "Space Grotesk", "IBM Plex Sans", system-ui, sans-serif`
-  ctx.fillText(content.eyebrow.toUpperCase(), cx, h * 0.18)
-
-  /* title — word wrap */
-  ctx.fillStyle = '#ffffff'
-  ctx.font = `700 ${Math.round(w * 0.058)}px "Space Grotesk", "IBM Plex Sans", system-ui, sans-serif`
-  const titleLines = wrapText(ctx, content.title, w * 0.82)
-  const titleLineH = w * 0.068
-  const titleStartY = h * 0.42 - ((titleLines.length - 1) * titleLineH) / 2
-  for (let i = 0; i < titleLines.length; i++) {
-    ctx.fillText(titleLines[i], cx, titleStartY + i * titleLineH)
-  }
-
-  /* subtitle */
-  ctx.fillStyle = 'rgba(255,255,255,0.6)'
-  ctx.font = `400 ${Math.round(w * 0.024)}px "IBM Plex Sans", "Space Grotesk", system-ui, sans-serif`
-  const subLines = wrapText(ctx, content.subtitle, w * 0.7)
-  const subLineH = w * 0.034
-  const subStartY = h * 0.72 - ((subLines.length - 1) * subLineH) / 2
-  for (let i = 0; i < subLines.length; i++) {
-    ctx.fillText(subLines[i], cx, subStartY + i * subLineH)
-  }
-}
-
-function wrapText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number): string[] {
-  const words = text.split(' ')
-  const lines: string[] = []
-  let current = ''
-
-  for (const word of words) {
-    const test = current ? `${current} ${word}` : word
-    if (ctx.measureText(test).width > maxWidth && current) {
-      lines.push(current)
-      current = word
-    } else {
-      current = test
-    }
-  }
-  if (current) lines.push(current)
-  return lines
-}
 
 /* ---------- parametric surface ---------- */
 function clothPos(u: number, v: number, out: THREE.Vector3) {
@@ -179,12 +77,11 @@ function satisfy(p1: Particle, p2: Particle, dist: number) {
 
 /* ---------- responsive scale helper ---------- */
 function getResponsiveParams(viewportW: number) {
-  /* scale factor: 1.0 at 1280px, smaller on mobile, larger on wide screens */
   const base = Math.min(Math.max(viewportW / 1280, 0.45), 1.35)
   return {
-    scale: 0.012 * base,
-    cameraZ: THREE.MathUtils.lerp(9, 7, Math.min((viewportW - 375) / (1280 - 375), 1)),
-    cameraY: THREE.MathUtils.lerp(-1.8, -2.2, Math.min((viewportW - 375) / (1280 - 375), 1)),
+    scale: 0.018 * base,
+    cameraZ: THREE.MathUtils.lerp(7.5, 5.5, Math.min((viewportW - 375) / (1280 - 375), 1)),
+    cameraY: THREE.MathUtils.lerp(-1.5, -2.0, Math.min((viewportW - 375) / (1280 - 375), 1)),
   }
 }
 
@@ -197,6 +94,30 @@ export function createSceneAdapter(): HeroSceneAdapter {
   bundle.scene.background = null
   bundle.camera.fov = 52
   bundle.camera.updateProjectionMatrix()
+
+  /* override default lighting: dark ambient + colored point lights */
+  bundle.scene.children
+    .filter((c) => c instanceof THREE.Light)
+    .forEach((light) => bundle.scene.remove(light))
+
+  /* minimal ambient — just enough to not clip to pure black */
+  const ambient = new THREE.AmbientLight(0xffffff, 0.08)
+  bundle.scene.add(ambient)
+
+  /* key — accent green from right, nearly edge-on to rake across folds */
+  const keyLight = new THREE.DirectionalLight(0x34d399, 5.5)
+  keyLight.position.set(6, 1, 0.8)
+  bundle.scene.add(keyLight)
+
+  /* fill — soft cyan from upper-left for secondary fold definition */
+  const fillLight = new THREE.DirectionalLight(0x6be6ff, 2.5)
+  fillLight.position.set(-4, 3, 1.5)
+  bundle.scene.add(fillLight)
+
+  /* rim — bright green from behind-below to silhouette fold edges */
+  const rimLight = new THREE.DirectionalLight(0x43e7b1, 4.0)
+  rimLight.position.set(-1, -4, -4)
+  bundle.scene.add(rimLight)
 
   const stage = new THREE.Group()
   const initParams = getResponsiveParams(window.innerWidth)
@@ -264,26 +185,41 @@ export function createSceneAdapter(): HeroSceneAdapter {
   geo.setAttribute('uv', new THREE.BufferAttribute(uvs, 2))
   geo.setIndex(indices)
 
-  /* --- canvas texture --- */
-  const textCanvas = createTextCanvas()
-  drawGradientOnly(textCanvas) /* show gradient immediately, text added after fonts load */
-  const canvasTexture = new THREE.CanvasTexture(textCanvas)
-  canvasTexture.flipY = false
-  canvasTexture.colorSpace = THREE.SRGBColorSpace
+  /* --- procedural environment map for PBR reflections --- */
+  const envScene = new THREE.Scene()
+  /* dark base with colored gradient spheres to give reflections direction */
+  envScene.background = new THREE.Color(0x020606)
+  const envGeo = new THREE.SphereGeometry(20, 16, 16)
+  const envMat1 = new THREE.MeshBasicMaterial({ color: 0x0a3d2e, side: THREE.BackSide })
+  const envSphere1 = new THREE.Mesh(envGeo, envMat1)
+  envSphere1.position.set(10, 5, 0)
+  envScene.add(envSphere1)
+  const envMat2 = new THREE.MeshBasicMaterial({ color: 0x0a2535, side: THREE.BackSide })
+  const envSphere2 = new THREE.Mesh(envGeo, envMat2)
+  envSphere2.position.set(-10, -3, -5)
+  envScene.add(envSphere2)
 
-  const mat = new THREE.MeshPhongMaterial({
-    map: canvasTexture,
+  /* --- PBR physical material with fabric sheen for edge glow --- */
+  const mat = new THREE.MeshPhysicalMaterial({
     side: THREE.DoubleSide,
     transparent: true,
-    opacity: 0.88,
-    shininess: 18,
-    specular: new THREE.Color(0x222222),
+    opacity: 0.94,
+    color: new THREE.Color(0x0e2830),
+    roughness: 0.45,
+    metalness: 0.15,
+    /* sheen creates fabric-like edge brightening (Fresnel) */
+    sheen: 1.0,
+    sheenRoughness: 0.3,
+    sheenColor: new THREE.Color(0x34d399),
+    emissive: new THREE.Color(0x010808),
+    emissiveIntensity: 0.15,
+    envMapIntensity: 2.0,
   })
 
   const clothMesh = new THREE.Mesh(geo, mat)
   stage.add(clothMesh)
 
-  /* --- mouse interaction: raycasted pull effect --- */
+  /* --- mouse interaction --- */
   let activeMode: ScenePerformanceMode = 'default'
   const mouseNDC = { x: 0, y: 0 }
   const mouseSmooth = { x: 0, y: 0 }
@@ -297,12 +233,14 @@ export function createSceneAdapter(): HeroSceneAdapter {
   function simulate(elapsed: number) {
     const speed = activeMode === 'reduced' ? 0.3 : 0.5
 
-    /* gentle wind — heavily reduced Z component to prevent forward/back sway */
-    const windStr = Math.cos(elapsed * speed / 7) * 3 + 6
+    /* wind — aggressive multi-frequency gusts for dramatic ripples */
+    const windStr = Math.cos(elapsed * speed / 3) * 5.0 + 12.0
+      + Math.sin(elapsed * speed * 1.7) * 3.0
+      + Math.sin(elapsed * speed * 3.5) * 1.5
     windForce.set(
-      Math.sin(elapsed * speed / 2),
-      Math.cos(elapsed * speed / 3) * 0.5,
-      Math.sin(elapsed * speed) * 0.15,
+      Math.sin(elapsed * speed * 0.8) + Math.sin(elapsed * speed * 2.1) * 0.6 + Math.cos(elapsed * speed * 4.0) * 0.3,
+      Math.cos(elapsed * speed * 0.6) * 0.8 + Math.sin(elapsed * speed * 1.5) * 0.5 + Math.sin(elapsed * speed * 3.2) * 0.25,
+      Math.sin(elapsed * speed * 1.3) * 0.9 + Math.cos(elapsed * speed * 2.5) * 0.5 + Math.sin(elapsed * speed * 4.5) * 0.2,
     )
     windForce.normalize().multiplyScalar(windStr)
 
@@ -321,10 +259,10 @@ export function createSceneAdapter(): HeroSceneAdapter {
       }
     }
 
-    /* mouse pull: attract nearby particles toward pull point */
+    /* mouse pull: strong push toward camera for visible deformation */
     if (hasPullTarget) {
-      const pullRadius = clothW * 0.35
-      const pullStrength = 28
+      const pullRadius = clothW * 0.4
+      const pullStrength = 40
       for (const p of particles) {
         const dx = pullPoint.x - p.position.x
         const dy = pullPoint.y - p.position.y
@@ -333,7 +271,7 @@ export function createSceneAdapter(): HeroSceneAdapter {
         const rSq = pullRadius * pullRadius
         if (distSq < rSq && distSq > 0) {
           const factor = (1 - distSq / rSq) * pullStrength
-          tmpForce.set(dx, dy, dz + pullRadius * 0.3).normalize().multiplyScalar(factor)
+          tmpForce.set(dx * 0.3, dy * 0.3, pullRadius * 0.8).normalize().multiplyScalar(factor)
           p.addForce(tmpForce)
         }
       }
@@ -344,10 +282,10 @@ export function createSceneAdapter(): HeroSceneAdapter {
       p.integrate()
     }
 
-    /* Z-axis depth clamp — prevent cloth from billowing too far forward or backward */
+    /* Z-axis depth clamp — allow more dramatic billowing */
     for (const p of particles) {
-      if (p.position.z > 60) p.position.z = 60
-      if (p.position.z < -60) p.position.z = -60
+      if (p.position.z > 80) p.position.z = 80
+      if (p.position.z < -80) p.position.z = -80
     }
 
     for (let iter = 0; iter < CONSTRAINT_ITERS; iter++) {
@@ -379,16 +317,15 @@ export function createSceneAdapter(): HeroSceneAdapter {
 
   /* --- animation --- */
   bundle.setAnimation((elapsed) => {
-    /* smooth mouse interpolation */
-    mouseSmooth.x = THREE.MathUtils.lerp(mouseSmooth.x, mouseNDC.x, 0.04)
-    mouseSmooth.y = THREE.MathUtils.lerp(mouseSmooth.y, mouseNDC.y, 0.04)
+    /* smooth mouse interpolation — faster tracking for responsive feel */
+    mouseSmooth.x = THREE.MathUtils.lerp(mouseSmooth.x, mouseNDC.x, 0.09)
+    mouseSmooth.y = THREE.MathUtils.lerp(mouseSmooth.y, mouseNDC.y, 0.09)
 
     /* raycast from smoothed mouse to find pull target on cloth */
     mouseVec2.set(mouseSmooth.x, mouseSmooth.y)
     raycaster.setFromCamera(mouseVec2, bundle.camera)
     const hits = raycaster.intersectObject(clothMesh)
     if (hits.length > 0) {
-      /* convert world hit point back to cloth local space */
       pullPoint.copy(hits[0].point)
       stage.worldToLocal(pullPoint)
       hasPullTarget = true
@@ -406,6 +343,17 @@ export function createSceneAdapter(): HeroSceneAdapter {
     mount(container: HTMLElement, options: SceneMountOptions) {
       activeMode = options.performanceMode
       bundle.mount(container)
+      /* enable tone mapping + generate environment map for PBR */
+      const renderer = bundle.getRenderer()
+      if (renderer) {
+        renderer.toneMapping = THREE.ACESFilmicToneMapping
+        renderer.toneMappingExposure = 1.6
+        const pmrem = new THREE.PMREMGenerator(renderer)
+        const envMap = pmrem.fromScene(envScene, 0.04).texture
+        mat.envMap = envMap
+        mat.needsUpdate = true
+        pmrem.dispose()
+      }
       bundle.setPerformanceMode(options.performanceMode)
     },
     unmount() {
@@ -413,7 +361,6 @@ export function createSceneAdapter(): HeroSceneAdapter {
     },
     resize(w, h) {
       bundle.resize(w, h)
-      /* responsive scaling on resize */
       const params = getResponsiveParams(w)
       stage.scale.setScalar(params.scale)
       bundle.camera.position.set(0, params.cameraY, params.cameraZ)
@@ -427,10 +374,6 @@ export function createSceneAdapter(): HeroSceneAdapter {
     setMousePosition(x, y) {
       mouseNDC.x = x
       mouseNDC.y = y
-    },
-    setTextContent(content: HeroTextContent) {
-      drawTextContent(textCanvas, content)
-      canvasTexture.needsUpdate = true
     },
   }
 }
