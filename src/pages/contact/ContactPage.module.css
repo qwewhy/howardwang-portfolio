@@ -1,0 +1,17 @@
+.layout {
+  display: grid;
+  gap: 1rem;
+}
+
+.card {
+  display: grid;
+  gap: 1rem;
+  padding: 1.3rem;
+}
+
+@media (max-width: 640px) {
+  .card {
+    padding: 0.95rem;
+  }
+}
+

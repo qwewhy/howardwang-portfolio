@@ -1,10 +1,24 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>howardwang-portfolio</title>
+    <meta name="theme-color" content="#06111F" />
+    <meta name="prerender-route" content="/" />
+    <script>
+      (() => {
+        try {
+          const stored = window.localStorage.getItem('hw-portfolio-theme')
+          const parsed = stored ? JSON.parse(stored) : null
+          const themeId = parsed?.state?.themeId ?? (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark')
+          document.documentElement.dataset.theme = themeId
+        } catch {
+          document.documentElement.dataset.theme = 'dark'
+        }
+      })()
+    </script>
+    <!--app-head-->
   </head>
   <body>
     <div id="root"></div>

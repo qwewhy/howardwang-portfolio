@@ -1,0 +1,27 @@
+.layout {
+  display: grid;
+  gap: 1rem;
+}
+
+.pillars {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.pillar {
+  display: grid;
+  gap: 0.8rem;
+  padding: 1.25rem;
+}
+
+@media (max-width: 640px) {
+  .pillars {
+    grid-template-columns: 1fr;
+  }
+
+  .pillar {
+    padding: 0.95rem;
+  }
+}
+

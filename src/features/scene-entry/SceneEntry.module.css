@@ -1,0 +1,72 @@
+.entry {
+  display: grid;
+  gap: 1rem;
+  padding: 1.2rem;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.chapterRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chapterButton {
+  min-height: 38px;
+  padding: 0 0.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-line);
+  color: var(--color-text-muted);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.chapterActive {
+  color: var(--color-bg);
+  background: var(--color-accent);
+}
+
+.viewport {
+  position: relative;
+  min-height: 360px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  background:
+    linear-gradient(180deg, rgba(107, 230, 255, 0.06), rgba(6, 17, 31, 0.7)),
+    radial-gradient(circle at top, rgba(67, 231, 177, 0.08), transparent 35%);
+}
+
+.canvasHost {
+  position: absolute;
+  inset: 0;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1.2rem;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(6, 17, 31, 0.12), rgba(6, 17, 31, 0.78));
+}
+
+.overlayInner {
+  display: grid;
+  gap: 0.9rem;
+  max-width: 28rem;
+}
+
+@media (max-width: 780px) {
+  .viewport {
+    min-height: 300px;
+  }
+}
+

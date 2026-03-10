@@ -1,0 +1,37 @@
+.shell {
+  position: relative;
+  min-height: 100vh;
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(67, 231, 177, 0.08), transparent 20%),
+    radial-gradient(circle at 82% 10%, rgba(107, 230, 255, 0.08), transparent 18%),
+    radial-gradient(circle at 50% 100%, rgba(255, 155, 90, 0.08), transparent 24%);
+  z-index: 0;
+}
+
+.main {
+  position: relative;
+  z-index: 1;
+}
+
+.routeFrame {
+  animation: routeFade 480ms ease both;
+}
+
+@keyframes routeFade {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
