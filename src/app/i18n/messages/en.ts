@@ -80,8 +80,8 @@ export const enContent: SiteContent = {
     },
     workIntro: {
       eyebrow: 'Selected Work',
-      title: 'Representative projects that show how I build.',
-      description: 'Spanning browser 3D tooling, research visualization, real-time AI product delivery, and broader frontend system work.',
+      title: 'Featured Projects',
+      description: 'Browser 3D tooling, research visualization, and real-time AI products.',
     },
     metricsIntro: {
       eyebrow: 'GitHub activity',

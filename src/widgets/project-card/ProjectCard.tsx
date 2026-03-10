@@ -30,7 +30,7 @@ export function ProjectCard({ locale, slug }: ProjectCardProps) {
   const content = getSiteContent(locale)
   const project = content.projects[slug]
   const setHoveredSlug = useProjectIndexStore((state) => state.setHoveredSlug)
-  const featuredMetrics = project.metrics.slice(0, 2)
+  const featuredMetrics = project.metrics.slice(0, 3)
   const externalAction = project.liveUrl
     ? { href: project.liveUrl, label: content.copy.tryLiveLabel, primary: true }
     : project.links[0]
@@ -52,20 +52,20 @@ export function ProjectCard({ locale, slug }: ProjectCardProps) {
       onBlur={() => setHoveredSlug(null)}
     >
       <div className={styles.content}>
-        <p className={styles.metaLine}>
-          {project.role} · {project.period}
-        </p>
-        <h3 className="cardTitle">{project.title}</h3>
+        <div className={styles.cardHeader}>
+          <span className={styles.badge}>{project.badges[0]}</span>
+          <h3 className="cardTitle">{project.title}</h3>
+        </div>
         <p className={styles.summary}>{project.summary}</p>
 
-        <div className={styles.proofGrid}>
+        <ul className={styles.featureList}>
           {featuredMetrics.map((metric) => (
-            <div key={metric.label} className={styles.proofItem}>
-              <span className={styles.proofValue}>{metric.value}</span>
-              <span className={styles.proofLabel}>{metric.label}</span>
-            </div>
+            <li key={metric.label} className={styles.featureItem}>
+              <span className={styles.featureValue}>{metric.value}</span>
+              <span className={styles.featureLabel}>{metric.label}</span>
+            </li>
           ))}
-        </div>
+        </ul>
 
         <div className={styles.techList}>
           {project.techStack.slice(0, 3).map((item) => (

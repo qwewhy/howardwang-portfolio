@@ -80,8 +80,8 @@ export const zhContent: SiteContent = {
     },
     workIntro: {
       eyebrow: '核心项目',
-      title: '用代表性项目展示工程能力。',
-      description: '覆盖浏览器 3D 工具、研究可视化、实时 AI 产品交付，以及持续扩展中的更多前端实践。',
+      title: '代表项目',
+      description: '浏览器 3D 工具、研究可视化与实时 AI 产品。',
     },
     metricsIntro: {
       eyebrow: 'GitHub 提交',
