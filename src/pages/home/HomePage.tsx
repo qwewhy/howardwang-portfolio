@@ -54,8 +54,10 @@ const SKILL_LOGO: Record<string, string> = {
   Qdrant: 'qdrant.svg',
   OpenClaw: 'openclaw.svg',
   'Vercel AI SDK': 'vercel.svg',
-  DeepSeek: 'deepseek.svg',
   'OpenAI SDK': 'openai.svg',
+  'Claude Code': 'claude.svg',
+  Cursor: 'cursor.svg',
+  'OpenAI Codex': 'openai.svg',
 }
 
 export default function HomePage() {
@@ -174,7 +176,7 @@ export default function HomePage() {
             <article
               key={group.group}
               className={`panel ${styles.skillCard}`}
-              style={{ '--skill-accent': ['107,230,255', '67,231,177', '255,155,90'][i] ?? '107,230,255' } as React.CSSProperties}
+              style={{ '--skill-accent': ['107,230,255', '67,231,177', '255,155,90', '167,139,250'][i] ?? '107,230,255' } as React.CSSProperties}
             >
               <h3 className={styles.skillHeading}>{group.group}</h3>
               <div className={styles.skillList}>

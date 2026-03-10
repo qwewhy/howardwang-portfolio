@@ -205,7 +205,14 @@
 }
 
 .skillGrid {
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 2fr 1fr;
+}
+
+/* First two cards span both rows */
+.skillCard:nth-child(1),
+.skillCard:nth-child(2) {
+  grid-row: 1 / -1;
 }
 
 .skillCard {
@@ -305,6 +312,12 @@
   .educationGrid,
   .skillGrid {
     grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  .skillCard:nth-child(1),
+  .skillCard:nth-child(2) {
+    grid-row: auto;
   }
 
   .educationCard,
