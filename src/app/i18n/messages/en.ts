@@ -44,8 +44,8 @@ export const enContent: SiteContent = {
   },
   nav: {
     home: 'Home',
-    work: 'Work',
-    about: 'About',
+    work: 'Projects',
+    about: 'About Me',
     resume: 'Resume',
     contact: 'Contact',
   },
@@ -206,14 +206,14 @@ export const enContent: SiteContent = {
       degree: 'Master of IT · Interactive Media',
       period: '2023.08 - 2025.06',
       highlights: ['GPA 6.44 / 7', 'WAM 86', 'About Top 5% in UTS', 'Two Top 1 projects invited to the school festival'],
-      logo: 'logos/uts.svg',
+      logo: 'logos/restricteduts-logoheader.svg',
     },
     {
       institution: 'Northeastern University (China)',
       degree: 'Computer Science and Technology',
       period: '2020.09 - 2024.06',
       highlights: ['Project 985 / Double First-Class Initiative', 'Freshman Academic Excellence Scholarship', 'Gaokao 640 / 750'],
-      logo: 'logos/neu.svg',
+      logo: 'logos/neu.png',
     },
   ],
   metrics: [

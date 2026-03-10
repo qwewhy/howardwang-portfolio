@@ -1,7 +1,8 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useMemo } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { getSiteContent } from '../../app/i18n/catalog'
 import { getLocalizedPath } from '../../app/router/route-utils'
+import { useAppShellStore } from '../../app/store/app-shell-store'
 import { SignalGrid } from '../../features/contribution-visual/SignalGrid'
 import { TokenCounter } from '../../features/token-counter/TokenCounter'
 import { ProjectCard } from '../../widgets/project-card/ProjectCard'
@@ -14,29 +15,40 @@ export default function HomePage() {
   const { locale: localeParam } = useParams()
   const locale = localeParam && isLocale(localeParam) ? localeParam : siteConfig.defaultLocale
   const content = getSiteContent(locale)
+  const isMobile = useAppShellStore((state) => state.isMobile)
+
+  const heroTextContent = useMemo(() => ({
+    eyebrow: content.home.hero.eyebrow,
+    title: content.home.hero.title,
+    subtitle: content.home.hero.subtitle,
+  }), [content.home.hero.eyebrow, content.home.hero.title, content.home.hero.subtitle])
 
   return (
     <div className="pageShell">
-      <section className={styles.hero}>
-        <div className={styles.heroScene}>
-          <Suspense fallback={null}>
-            <HeroScene />
-          </Suspense>
-        </div>
-
-        <div className={styles.heroCopy}>
-          <span className="eyebrow">{content.home.hero.eyebrow}</span>
-          <h1 className={styles.heroHeadline}>{content.home.hero.title}</h1>
-          <p className={styles.heroSubtitle}>{content.home.hero.subtitle}</p>
-
-          <div className={styles.heroActions}>
-            <Link className={`buttonPrimary ${styles.heroCta}`} to={getLocalizedPath(locale, 'work')}>
-              {content.nav.work}
-            </Link>
-            <Link className={`buttonSecondary ${styles.heroCta}`} to={getLocalizedPath(locale, 'about')}>
-              {content.nav.about}
-            </Link>
+      <section className={`${styles.hero} ${isMobile ? styles.heroMobile : ''}`}>
+        {!isMobile && (
+          <div className={styles.heroScene}>
+            <Suspense fallback={null}>
+              <HeroScene textContent={heroTextContent} />
+            </Suspense>
           </div>
+        )}
+
+        {isMobile && (
+          <div className={styles.heroText}>
+            <span className="eyebrow">{content.home.hero.eyebrow}</span>
+            <h1 className="heroTitle">{content.home.hero.title}</h1>
+            <p className={styles.heroSubtitle}>{content.home.hero.subtitle}</p>
+          </div>
+        )}
+
+        <div className={styles.heroActions}>
+          <Link className={`buttonPrimary ${styles.heroCta}`} to={getLocalizedPath(locale, 'work')}>
+            {content.nav.work}
+          </Link>
+          <Link className={`buttonSecondary ${styles.heroCta}`} to={getLocalizedPath(locale, 'about')}>
+            {content.nav.about}
+          </Link>
         </div>
       </section>
 

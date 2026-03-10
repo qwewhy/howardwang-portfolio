@@ -66,14 +66,76 @@
 
 .menuButton {
   display: none;
-  min-height: 40px;
-  padding: 0 0.95rem;
-  border-radius: 999px;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--color-line);
   color: var(--color-text);
   background: rgba(255, 255, 255, 0.04);
+  cursor: pointer;
 }
 
+/* CSS hamburger icon */
+.hamburger {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: var(--color-text);
+  position: relative;
+  transition: background 200ms ease;
+}
+
+.hamburger::before,
+.hamburger::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--color-text);
+  transition: transform 200ms ease;
+}
+
+.hamburger::before { top: -6px; }
+.hamburger::after { top: 6px; }
+
+/* animate to X when open */
+.hamburgerOpen {
+  background: transparent;
+}
+
+.hamburgerOpen::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+
+.hamburgerOpen::after {
+  top: 0;
+  transform: rotate(-45deg);
+}
+
+/* mobile menu controls: hidden on desktop */
+.mobileMenuControls {
+  display: none;
+}
+
+/* desktop controls: visible on desktop */
+.desktopControls {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+/* overlay: rendered outside <header> to escape backdrop-filter containment.
+   z-index sits between header (50) and main (1). */
+.overlay {
+  display: none;
+}
+
+/* ---------- tablet (≤980px) ---------- */
 @media (max-width: 980px) {
   .inner {
     grid-template-columns: auto auto;
@@ -94,51 +156,131 @@
 
   .menuButton {
     display: inline-flex;
-    align-items: center;
-    justify-content: center;
   }
 }
 
+/* ---------- mobile (≤640px) ---------- */
 @media (max-width: 640px) {
   .header {
-    padding: 0.6rem 0;
+    padding: 0.5rem 0;
+    z-index: 50;
   }
 
   .inner {
-    padding: 0.55rem 0.7rem;
-    gap: 0.6rem;
+    grid-template-columns: 1fr auto;
+    padding: 0.45rem 0.65rem;
+    gap: 0;
+    border-radius: var(--radius-sm);
+  }
+
+  /* brand + hamburger must sit above the nav panel (z-index: 60) */
+  .brand {
+    position: relative;
+    z-index: 70;
   }
 
   .name {
-    font-size: 0.88rem;
+    font-size: 0.92rem;
   }
 
   .tagline {
     display: none;
   }
 
-  .navLink {
-    padding: 0.45rem 0.7rem;
-    font-size: 0.88rem;
-  }
-
-  .actions {
-    justify-self: end;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    gap: 0.35rem;
+  /* hide desktop locale/theme on mobile */
+  .desktopControls {
+    display: none;
   }
 
   .menuButton {
-    min-height: 36px;
-    padding: 0 0.7rem;
-    font-size: 0.85rem;
+    display: flex;
+    border: none;
+    background: transparent;
+    position: relative;
+    z-index: 70;
+  }
+
+  /* full-screen slide-down nav panel */
+  .nav {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 60;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 4.5rem 1.25rem 2rem;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-line);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    animation: menuSlideDown 220ms ease;
+  }
+
+  .navOpen {
+    display: flex;
+  }
+
+  .navLink {
+    padding: 0.9rem 0.85rem;
+    font-size: 1.05rem;
+    font-weight: 500;
+    border-radius: var(--radius-sm);
+  }
+
+  .navActive {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  /* show locale + theme inside mobile menu */
+  .mobileMenuControls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-line);
+  }
+
+  /* tap-to-dismiss overlay */
+  .overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    background: rgba(0, 0, 0, 0.45);
+    animation: fadeIn 200ms ease;
   }
 }
 
-/* Light theme: softer header background */
+@keyframes menuSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ---------- light theme ---------- */
 html[data-theme='light'] .inner {
   background: rgba(255, 255, 255, 0.62);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
 }
 
+html[data-theme='light'] .navActive {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+@media (max-width: 640px) {
+  html[data-theme='light'] .overlay {
+    background: rgba(0, 0, 0, 0.2);
+  }
+}

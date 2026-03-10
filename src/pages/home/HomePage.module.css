@@ -1,10 +1,12 @@
 .hero {
   position: relative;
-  min-height: min(78vh, 560px);
+  min-height: min(82vh, 620px);
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: flex-end;
   overflow: hidden;
-  padding-top: 1.4rem;
+  padding-bottom: 2.5rem;
 }
 
 .heroScene {
@@ -14,24 +16,6 @@
   pointer-events: none;
 }
 
-.heroCopy {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  gap: 1.2rem;
-  max-width: 680px;
-}
-
-.heroHeadline {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(2.2rem, 4.8vw, 3.8rem);
-  line-height: 1.08;
-  letter-spacing: -0.03em;
-  text-wrap: balance;
-}
-
-.heroSubtitle,
 .sectionLead,
 .educationDegree {
   margin: 0;
@@ -42,9 +26,12 @@
 }
 
 .heroActions {
+  position: relative;
+  z-index: 1;
   display: flex;
   gap: 0.8rem;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .heroCta {
@@ -72,6 +59,39 @@
     0 10px 28px rgba(107, 230, 255, 0.12),
     0 0 0 1px rgba(107, 230, 255, 0.22);
   border-color: rgba(107, 230, 255, 0.35);
+}
+
+/* Mobile text-based hero (replaces cloth) */
+.heroMobile {
+  min-height: auto;
+  padding: 2rem 0 1.5rem;
+  align-items: flex-start;
+  justify-content: flex-start;
+  overflow: visible;
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(67, 231, 177, 0.1), transparent 50%),
+    radial-gradient(ellipse at 85% 100%, rgba(107, 230, 255, 0.06), transparent 50%);
+}
+
+.heroText {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 0.75rem;
+  max-width: 100%;
+}
+
+.heroSubtitle {
+  margin: 0;
+  max-width: 52ch;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--color-text-muted);
+}
+
+.heroMobile .heroActions {
+  justify-content: flex-start;
+  margin-top: 1.2rem;
 }
 
 .section {
@@ -133,9 +153,10 @@
 }
 
 .educationLogo {
-  width: 64px;
+  width: 72px;
   height: 64px;
   flex: none;
+  object-fit: contain;
   opacity: 0.7;
   transition: opacity var(--transition-fast);
 }
@@ -195,14 +216,17 @@
 @media (max-width: 640px) {
   .hero {
     padding-top: 0.8rem;
+    padding-bottom: 1.5rem;
     min-height: min(70vh, 420px);
   }
 
-  .heroHeadline {
-    font-size: clamp(1.7rem, 7vw, 2.6rem);
+  /* override min-height when mobile text hero is active */
+  .heroMobile {
+    min-height: auto;
+    padding: 1.25rem 0 1rem;
+    overflow: visible;
   }
 
-  .heroSubtitle,
   .sectionLead,
   .educationDegree {
     font-size: 0.92rem;
@@ -221,7 +245,7 @@
   }
 
   .educationLogo {
-    width: 48px;
+    width: 56px;
     height: 48px;
   }
 

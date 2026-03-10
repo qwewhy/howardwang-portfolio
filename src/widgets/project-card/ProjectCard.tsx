@@ -36,7 +36,6 @@ export function ProjectCard({ locale, slug }: ProjectCardProps) {
     : project.links[0]
       ? { href: project.links[0].href, label: project.links[0].label, primary: false }
       : null
-  const previewSrc = `${import.meta.env.BASE_URL}project-previews/${slug}.svg`
 
   return (
     <article
@@ -52,19 +51,6 @@ export function ProjectCard({ locale, slug }: ProjectCardProps) {
       }}
       onBlur={() => setHoveredSlug(null)}
     >
-      <Link className={styles.previewLink} to={getLocalizedPath(locale, 'project', slug)}>
-        <div className={styles.preview}>
-          <img
-            className={styles.previewImage}
-            src={previewSrc}
-            alt={`${project.title} preview`}
-            loading="lazy"
-            decoding="async"
-          />
-          <div className={styles.previewShade} />
-        </div>
-      </Link>
-
       <div className={styles.content}>
         <p className={styles.metaLine}>
           {project.role} · {project.period}

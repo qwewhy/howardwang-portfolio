@@ -44,8 +44,8 @@ export const zhContent: SiteContent = {
   },
   nav: {
     home: '首页',
-    work: '项目',
-    about: '关于',
+    work: '项目经历',
+    about: '关于我',
     resume: '简历',
     contact: '联系',
   },
@@ -200,14 +200,14 @@ export const zhContent: SiteContent = {
       degree: 'Master of IT · Interactive Media',
       period: '2023.08 - 2025.06',
       highlights: ['GPA 6.44 / 7', 'WAM 86', '约 Top 5%', '2 个 Top 1 项目入选校内科技节'],
-      logo: 'logos/uts.svg',
+      logo: 'logos/restricteduts-logoheader.svg',
     },
     {
       institution: 'Northeastern University (China)',
       degree: 'Computer Science and Technology',
       period: '2020.09 - 2024.06',
       highlights: ['985 / 双一流', '新生学业优秀奖学金', '高考 640 / 750'],
-      logo: 'logos/neu.svg',
+      logo: 'logos/neu.png',
     },
   ],
   metrics: [

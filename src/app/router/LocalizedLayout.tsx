@@ -13,6 +13,7 @@ import styles from '../../widgets/app-shell/AppShell.module.css'
 function useEnvironmentSync() {
   const setReducedMotion = useAppShellStore((state) => state.setReducedMotion)
   const setLowPerformanceMode = useAppShellStore((state) => state.setLowPerformanceMode)
+  const setIsMobile = useAppShellStore((state) => state.setIsMobile)
   const themeId = useThemeStore((state) => state.themeId)
 
   useEffect(() => {
@@ -31,10 +32,17 @@ function useEnvironmentSync() {
     const lowPerformance = window.matchMedia('(max-width: 900px)').matches || navigator.hardwareConcurrency <= 4
     setLowPerformanceMode(lowPerformance || mediaQuery.matches)
 
+    /* live mobile breakpoint detection */
+    const mobileQuery = window.matchMedia('(max-width: 640px)')
+    const applyMobile = () => setIsMobile(mobileQuery.matches)
+    applyMobile()
+    mobileQuery.addEventListener('change', applyMobile)
+
     return () => {
       mediaQuery.removeEventListener('change', applyReducedMotion)
+      mobileQuery.removeEventListener('change', applyMobile)
     }
-  }, [setLowPerformanceMode, setReducedMotion])
+  }, [setLowPerformanceMode, setReducedMotion, setIsMobile])
 }
 
 function useDocumentMeta(pathname: string) {
@@ -91,11 +99,17 @@ export function LocalizedLayout() {
   const { locale: localeParam } = useParams()
   const location = useLocation()
   const setCurrentLocale = useLocaleStore((state) => state.setCurrentLocale)
+  const setNavigationOpen = useAppShellStore((state) => state.setNavigationOpen)
   const locale = localeParam && isLocale(localeParam) ? localeParam : siteConfig.defaultLocale
   const content = getSiteContent(locale)
 
   useEnvironmentSync()
   useDocumentMeta(location.pathname)
+
+  /* close mobile nav on route change */
+  useEffect(() => {
+    setNavigationOpen(false)
+  }, [location.pathname, setNavigationOpen])
 
   useEffect(() => {
     setCurrentLocale(locale)

@@ -2,10 +2,12 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.25rem;
+  align-items: stretch;
 }
 
 .counter {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 0.85rem;
   padding: 1.25rem;
   border-radius: calc(var(--radius-sm) + 2px);
@@ -54,7 +56,7 @@
 }
 
 .animated .digitInner {
-  animation: flipIn 0.6s cubic-bezier(0.23, 1, 0.32, 1) both;
+  animation: flipIn 0.8s cubic-bezier(0.23, 1, 0.32, 1) both;
 }
 
 .digit::after {
@@ -119,16 +121,16 @@
   }
 }
 
-/* Stagger animation delay per digit */
+/* Stagger animation delay per digit — later digits flip more slowly */
 .animated .digit:nth-child(1) .digitInner { animation-delay: 0.05s; }
-.animated .digit:nth-child(2) .digitInner { animation-delay: 0.10s; }
-.animated .digit:nth-child(3) .digitInner { animation-delay: 0.15s; }
-.animated .digit:nth-child(5) .digitInner { animation-delay: 0.20s; }
-.animated .digit:nth-child(6) .digitInner { animation-delay: 0.25s; }
-.animated .digit:nth-child(7) .digitInner { animation-delay: 0.30s; }
-.animated .digit:nth-child(9) .digitInner { animation-delay: 0.35s; }
-.animated .digit:nth-child(10) .digitInner { animation-delay: 0.40s; }
-.animated .digit:nth-child(11) .digitInner { animation-delay: 0.45s; }
+.animated .digit:nth-child(2) .digitInner { animation-delay: 0.12s; }
+.animated .digit:nth-child(3) .digitInner { animation-delay: 0.20s; }
+.animated .digit:nth-child(5) .digitInner { animation-delay: 0.30s; }
+.animated .digit:nth-child(6) .digitInner { animation-delay: 0.42s; }
+.animated .digit:nth-child(7) .digitInner { animation-delay: 0.56s; }
+.animated .digit:nth-child(9) .digitInner { animation-delay: 0.72s; }
+.animated .digit:nth-child(10) .digitInner { animation-delay: 0.90s; }
+.animated .digit:nth-child(11) .digitInner { animation-delay: 1.10s; }
 
 /* Light theme */
 html[data-theme='light'] .digit {
