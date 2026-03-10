@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useMemo } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { getSiteContent } from '../../app/i18n/catalog'
 import { getLocalizedPath } from '../../app/router/route-utils'
@@ -10,6 +10,53 @@ import { isLocale, siteConfig } from '../../shared/config/site'
 import styles from './HomePage.module.css'
 
 const HeroScene = lazy(() => import('../../features/hero-scene/HeroScene'))
+
+/** Map skill display-name → logo file under /logos/skills/ */
+const SKILL_LOGO: Record<string, string> = {
+  'React 18': 'react.svg',
+  'Next.js': 'nextjs.svg',
+  TanStack: 'tanstack.png',
+  JavaScript: 'javascript.svg',
+  TypeScript: 'typescript.svg',
+  WebGL: 'webgl.svg',
+  'Three.js': 'threejs.svg',
+  R3F: 'threejs.svg',
+  Drei: 'threejs.svg',
+  Cannon: 'threejs.svg',
+  Rapier3D: 'rapier.svg',
+  GLSL: 'glsl.svg',
+  WASM: 'wasm.svg',
+  'driver.js': 'driverjs.svg',
+  'CodeMirror 6': 'codemirror.svg',
+  Vitest: 'vitest.svg',
+  Vite: 'vitejs.svg',
+  Webpack: 'webpack.svg',
+  'React Router': 'reactrouter.svg',
+  Zustand: 'zustand.svg',
+  'Tailwind CSS': 'tailwindcss.svg',
+  'Ant Design': 'antdesign.svg',
+  Figma: 'figma.svg',
+  'ESLint/TSLint': 'eslint.svg',
+  Prettier: 'prettier.svg',
+  'Node.js': 'nodejs.svg',
+  NestJS: 'nestjs.svg',
+  Java: 'java.svg',
+  'Spring Boot 3': 'spring.svg',
+  MongoDB: 'mongodb.svg',
+  Redis: 'redis.svg',
+  MySQL: 'mysql.svg',
+  Elasticsearch: 'elasticsearch.svg',
+  Supabase: 'supabase.svg',
+  Stripe: 'stripe.svg',
+  'Swagger/Knife4j': 'swagger.svg',
+  'Spring AI': 'spring.svg',
+  'Spring AI Alibaba': 'spring.svg',
+  Qdrant: 'qdrant.svg',
+  OpenClaw: 'openclaw.svg',
+  'Vercel AI SDK': 'vercel.svg',
+  DeepSeek: 'deepseek.svg',
+  'OpenAI SDK': 'openai.svg',
+}
 
 export default function HomePage() {
   const { locale: localeParam } = useParams()
@@ -123,12 +170,24 @@ export default function HomePage() {
           <p className={styles.sectionLead}>{content.home.capabilityIntro.description}</p>
         </div>
         <div className={styles.skillGrid}>
-          {content.resume.skills.map((group) => (
-            <article key={group.group} className={`panel ${styles.skillCard}`}>
+          {content.resume.skills.map((group, i) => (
+            <article
+              key={group.group}
+              className={`panel ${styles.skillCard}`}
+              style={{ '--skill-accent': ['107,230,255', '67,231,177', '255,155,90'][i] ?? '107,230,255' } as React.CSSProperties}
+            >
               <h3 className={styles.skillHeading}>{group.group}</h3>
               <div className={styles.skillList}>
                 {group.items.map((item) => (
                   <span key={item} className={styles.skillChip}>
+                    {SKILL_LOGO[item] && (
+                      <img
+                        src={`/logos/skills/${SKILL_LOGO[item]}`}
+                        alt=""
+                        className={styles.skillIcon}
+                        loading="lazy"
+                      />
+                    )}
                     {item}
                   </span>
                 ))}

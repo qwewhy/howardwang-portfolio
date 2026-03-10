@@ -181,10 +181,9 @@ export const enContent: SiteContent = {
       },
     ],
     skills: [
-      { group: 'Frontend', items: ['React 18', 'Next.js', 'TypeScript', 'Three.js', 'GLSL', 'Vite', 'Webpack', 'React Router'] },
-      { group: 'State & UI', items: ['Zustand', 'Tailwind CSS', 'Figma', 'ESLint', 'Prettier'] },
-      { group: 'Backend & Data', items: ['Spring Boot 3', 'RESTful APIs', 'JWT', 'MongoDB', 'Redis', 'MySQL', 'Elasticsearch'] },
-      { group: 'AI', items: ['Spring AI', 'Spring AI Alibaba', 'RAG', 'Qdrant', 'LLM workflows', 'WebMCP'] },
+      { group: 'Frontend & UI', items: ['React 18', 'Next.js', 'TanStack', 'JavaScript', 'ES6', 'TypeScript', 'WebGL', 'Three.js', 'R3F', 'Drei', 'Cannon', 'Rapier3D', 'GLSL', 'WASM', 'driver.js', 'CodeMirror 6', 'Vitest', 'DOMPurify', 'SEO', 'Vite', 'Webpack', 'React Router', 'Zustand', 'Tailwind CSS', 'Ant Design', 'Figma', 'i18n', 'ESLint/TSLint', 'Prettier'] },
+      { group: 'Backend & Data', items: ['Node.js', 'NestJS', 'Java', 'Spring Boot 3', 'RESTful APIs', 'JWT', 'MongoDB', 'Redis', 'Caffeine', 'MySQL', 'Elasticsearch', 'Supabase', 'Stripe', 'Swagger/Knife4j'] },
+      { group: 'AI Tech', items: ['Spring AI', 'Spring AI Alibaba', 'Vercel AI SDK', 'DeepSeek', 'Qwen-VL', 'OpenAI SDK', 'RAG', 'Qdrant', 'SSE', 'LLM workflows', 'WebMCP', 'OpenClaw', 'Pi', 'Function Call', 'QMD', 'Prompt Engineering'] },
     ],
   },
   contact: {

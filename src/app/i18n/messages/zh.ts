@@ -175,10 +175,9 @@ export const zhContent: SiteContent = {
       },
     ],
     skills: [
-      { group: '前端', items: ['React 18', 'Next.js', 'TypeScript', 'Three.js', 'GLSL', 'Vite', 'Webpack', 'React Router'] },
-      { group: '状态与界面', items: ['Zustand', 'Tailwind CSS', 'Figma', 'ESLint', 'Prettier'] },
-      { group: '后端与数据', items: ['Spring Boot 3', 'RESTful APIs', 'JWT', 'MongoDB', 'Redis', 'MySQL', 'Elasticsearch'] },
-      { group: 'AI', items: ['Spring AI', 'Spring AI Alibaba', 'RAG', 'Qdrant', 'LLM workflows', 'WebMCP'] },
+      { group: '前端与界面', items: ['React 18', 'Next.js', 'TanStack', 'JavaScript', 'ES6', 'TypeScript', 'WebGL', 'Three.js', 'R3F', 'Drei', 'Cannon', 'Rapier3D', 'GLSL', 'WASM', 'driver.js', 'CodeMirror 6', 'Vitest', 'DOMPurify', 'SEO', 'Vite', 'Webpack', 'React Router', 'Zustand', 'Tailwind CSS', 'Ant Design', 'Figma', 'i18n', 'ESLint/TSLint', 'Prettier'] },
+      { group: '后端与数据', items: ['Node.js', 'NestJS', 'Java', 'Spring Boot 3', 'RESTful APIs', 'JWT', 'MongoDB', 'Redis', 'Caffeine', 'MySQL', 'Elasticsearch', 'Supabase', 'Stripe', 'Swagger/Knife4j'] },
+      { group: 'AI技术', items: ['Spring AI', 'Spring AI Alibaba', 'Vercel AI SDK', 'DeepSeek', 'Qwen-VL', 'OpenAI SDK', 'RAG', 'Qdrant', 'SSE', 'LLM workflows', 'WebMCP', 'OpenClaw', 'Pi', 'Function Call', 'QMD', '提示词工程'] },
     ],
   },
   contact: {
