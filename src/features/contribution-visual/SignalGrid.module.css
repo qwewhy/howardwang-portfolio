@@ -57,11 +57,11 @@
 }
 
 .cell[data-level="1"] {
-  background: rgba(67, 231, 177, 0.2);
+  background: rgba(67, 231, 177, 0.4);
 }
 
 .cell[data-level="2"] {
-  background: rgba(67, 231, 177, 0.45);
+  background: rgba(67, 231, 177, 0.65);
 }
 
 .cell[data-level="3"] {
@@ -74,11 +74,11 @@ html[data-theme='light'] .cell {
 }
 
 html[data-theme='light'] .cell[data-level="1"] {
-  background: rgba(14, 168, 128, 0.2);
+  background: rgba(14, 168, 128, 0.4);
 }
 
 html[data-theme='light'] .cell[data-level="2"] {
-  background: rgba(14, 168, 128, 0.45);
+  background: rgba(14, 168, 128, 0.65);
 }
 
 html[data-theme='light'] .cell[data-level="3"] {

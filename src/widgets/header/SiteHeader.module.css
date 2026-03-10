@@ -13,7 +13,7 @@
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 1rem;
-  padding: 0.85rem 1rem;
+  padding: 0.85rem 1.4rem;
   border: 1px solid var(--color-line);
   border-radius: 999px;
   background: rgba(6, 17, 31, 0.38);
@@ -134,5 +134,11 @@
     padding: 0 0.7rem;
     font-size: 0.85rem;
   }
+}
+
+/* Light theme: softer header background */
+html[data-theme='light'] .inner {
+  background: rgba(255, 255, 255, 0.62);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
 }
 

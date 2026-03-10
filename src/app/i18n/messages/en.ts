@@ -99,6 +99,11 @@ export const enContent: SiteContent = {
       title: 'Frontend, 3D graphics, and AI integration capabilities.',
       description: 'Grouped by the kinds of systems I actually ship, so the technical coverage is easy to scan.',
     },
+    aiUsageIntro: {
+      eyebrow: 'AI-Driven Development',
+      title: 'Expert at leveraging AI to accelerate engineering delivery.',
+      description: 'Deep Vibe Coding practitioner with clear understanding of AI capability boundaries, turning AI tools into productivity multipliers.',
+    },
     educationIntro: {
       eyebrow: 'Education',
       title: 'Academic training that supports complex product delivery.',
@@ -207,12 +212,14 @@ export const enContent: SiteContent = {
       degree: 'Master of IT · Interactive Media',
       period: '2023.08 - 2025.06',
       highlights: ['GPA 6.44 / 7', 'WAM 86', 'About Top 5% in UTS', 'Two Top 1 projects invited to the school festival'],
+      logo: 'logos/uts.svg',
     },
     {
       institution: 'Northeastern University (China)',
       degree: 'Computer Science and Technology',
       period: '2020.09 - 2024.06',
       highlights: ['Project 985 / Double First-Class Initiative', 'Freshman Academic Excellence Scholarship', 'Gaokao 640 / 750'],
+      logo: 'logos/neu.svg',
     },
   ],
   metrics: [
@@ -297,12 +304,12 @@ export const enContent: SiteContent = {
       slug: 'chemviz3d',
       title: 'Chemviz3d',
       role: 'UTS interdisciplinary research project',
-      period: '2024.10 - 2026.01',
+      period: 'Browser Molecular Animation Engine',
       location: 'UTS Science Department collaboration',
-      summary: '3D chemical reaction visualizer deployed as a teaching tool for 4,000+ students at UTS.',
+      summary: '3D chemical reaction visualizer for UTS chemistry teaching upgrade.',
       badges: ['Research', 'Three.js', 'Education'],
       metrics: [
-        { value: '4,000+', label: 'undergraduate users', context: 'The deployed tool directly supported teaching at scale.', source: 'resume' },
+        { value: '4000+', label: 'chemistry undergrads using it', context: 'The deployed tool directly supported teaching at scale.', source: 'resume' },
         { value: '10+', label: 'professor collaborators', context: 'The project evolved through continuous interdisciplinary feedback.', source: 'resume' },
         { value: '20+', label: 'custom hooks', context: 'State and behavior were decomposed into reusable frontend modules.', source: 'resume' },
       ],
@@ -367,9 +374,7 @@ export const enContent: SiteContent = {
         { value: 'Full-stack', label: 'delivery scope', context: 'The work spanned frontend, backend integration, and system collaboration.', source: 'resume' },
       ],
       techStack: ['Next.js', 'Spring Boot', 'Spring AI Alibaba', 'Qdrant', 'Netty-socketio', 'MongoDB'],
-      links: [
-        { label: 'Visit Cyberoo AI', href: 'https://www.cyberoo.ai/', external: true },
-      ],
+      links: [],
       evidenceSource: ['resume'],
       poster: {
         title: 'Fraud Signal Control Room',

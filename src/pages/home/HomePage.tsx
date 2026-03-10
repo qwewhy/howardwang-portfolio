@@ -2,6 +2,7 @@ import { Link, useParams } from 'react-router-dom'
 import { getSiteContent } from '../../app/i18n/catalog'
 import { getLocalizedPath } from '../../app/router/route-utils'
 import { SignalGrid } from '../../features/contribution-visual/SignalGrid'
+import { TokenCounter } from '../../features/token-counter/TokenCounter'
 import { ProjectCard } from '../../widgets/project-card/ProjectCard'
 import { isLocale, siteConfig } from '../../shared/config/site'
 import styles from './HomePage.module.css'
@@ -70,6 +71,17 @@ export default function HomePage() {
 
       <section className={styles.section}>
         <div className="pageIntro">
+          <span className="eyebrow">{content.home.aiUsageIntro.eyebrow}</span>
+          <h2 className="sectionTitle">{content.home.aiUsageIntro.title}</h2>
+          <p className={styles.sectionLead}>{content.home.aiUsageIntro.description}</p>
+        </div>
+        <div className={`panel ${styles.aiPanel}`}>
+          <TokenCounter locale={locale} />
+        </div>
+      </section>
+
+      <section className={styles.section}>
+        <div className="pageIntro">
           <span className="eyebrow">{content.home.educationIntro.eyebrow}</span>
           <h2 className="sectionTitle">{content.home.educationIntro.title}</h2>
           <p className={styles.sectionLead}>{content.home.educationIntro.description}</p>
@@ -77,9 +89,22 @@ export default function HomePage() {
         <div className={styles.educationGrid}>
           {content.education.map((entry) => (
             <article key={entry.institution} className={`panel ${styles.educationCard}`}>
-              <span className={styles.educationPeriod}>{entry.period}</span>
-              <h3 className="cardTitle">{entry.institution}</h3>
-              <p className={styles.educationDegree}>{entry.degree}</p>
+              <div className={styles.educationMain}>
+                <div className={styles.educationContent}>
+                  <span className={styles.educationPeriod}>{entry.period}</span>
+                  <h3 className="cardTitle">{entry.institution}</h3>
+                  <p className={styles.educationDegree}>{entry.degree}</p>
+                </div>
+                {entry.logo && (
+                  <img
+                    className={styles.educationLogo}
+                    src={`${import.meta.env.BASE_URL}${entry.logo}`}
+                    alt={entry.institution}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
+              </div>
               <div className={styles.educationHighlights}>
                 {entry.highlights.map((highlight) => (
                   <span key={highlight} className={styles.educationHighlight}>

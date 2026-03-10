@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <!-- NEU simplified circular emblem -->
+  <circle cx="60" cy="60" r="50" fill="currentColor" opacity="0.08"/>
+  <circle cx="60" cy="60" r="50" stroke="currentColor" stroke-width="2" opacity="0.25"/>
+  <circle cx="60" cy="60" r="38" stroke="currentColor" stroke-width="1.5" opacity="0.15"/>
+  <!-- Book/campus icon -->
+  <path d="M42 50 L60 40 L78 50 L78 70 L60 80 L42 70Z" fill="currentColor" opacity="0.15"/>
+  <path d="M60 40 L60 80" stroke="currentColor" stroke-width="1.5" opacity="0.2"/>
+  <path d="M42 50 L60 40 L78 50" stroke="currentColor" stroke-width="1.5" opacity="0.25" fill="none"/>
+  <!-- NEU text -->
+  <text x="60" y="100" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="14" font-weight="700" fill="currentColor" opacity="0.5">NEU</text>
+</svg>

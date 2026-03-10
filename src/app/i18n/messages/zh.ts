@@ -99,6 +99,11 @@ export const zhContent: SiteContent = {
       title: '前端、3D 图形与 AI 集成的技能结构。',
       description: '常用能力按真实交付场景归类，便于快速判断技术覆盖面。',
     },
+    aiUsageIntro: {
+      eyebrow: 'AI 驱动开发',
+      title: '特别擅长使用 AI 加速工程交付。',
+      description: '深度 Vibe Coding 实践者，清楚 AI 能力边界，善于将 AI 工具转化为生产力杠杆。',
+    },
     educationIntro: {
       eyebrow: '教育背景',
       title: '教育经历能够支撑复杂系统交付。',
@@ -201,12 +206,14 @@ export const zhContent: SiteContent = {
       degree: 'Master of IT · Interactive Media',
       period: '2023.08 - 2025.06',
       highlights: ['GPA 6.44 / 7', 'WAM 86', '约 Top 5%', '2 个 Top 1 项目入选校内科技节'],
+      logo: 'logos/uts.svg',
     },
     {
       institution: 'Northeastern University (China)',
       degree: 'Computer Science and Technology',
       period: '2020.09 - 2024.06',
       highlights: ['985 / 双一流', '新生学业优秀奖学金', '高考 640 / 750'],
+      logo: 'logos/neu.svg',
     },
   ],
   metrics: [
@@ -279,12 +286,12 @@ export const zhContent: SiteContent = {
       slug: 'chemviz3d',
       title: 'Chemviz3d',
       role: 'UTS 跨学科研究项目',
-      period: '2024.10 - 2026.01',
+      period: '浏览器分子动画引擎',
       location: 'UTS Science Department 协作',
-      summary: '3D 化学反应可视化教学工具，已服务 UTS 4,000+ 学生。',
+      summary: '3D 化学反应可视化教学工具，用于悉尼科技大学化学教学升级。',
       badges: ['研究项目', 'Three.js', '教育场景'],
       metrics: [
-        { value: '4,000+', label: '本科学生使用', context: '项目已经部署为教学核心工具。', source: 'resume' },
+        { value: '4000+', label: '化学系本科生正在使用', context: '项目已经部署为教学核心工具。', source: 'resume' },
         { value: '10+', label: '教授协作', context: '项目通过持续的跨学科反馈演进。', source: 'resume' },
         { value: '20+', label: '自定义 hooks', context: '状态与业务行为被拆成高复用前端模块。', source: 'resume' },
       ],
@@ -335,7 +342,7 @@ export const zhContent: SiteContent = {
         { value: 'Full-stack', label: '交付范围', context: '覆盖前端、后端集成与系统协作。', source: 'resume' },
       ],
       techStack: ['Next.js', 'Spring Boot', 'Spring AI Alibaba', 'Qdrant', 'Netty-socketio', 'MongoDB'],
-      links: [{ label: '访问 Cyberoo AI', href: 'https://www.cyberoo.ai/', external: true }],
+      links: [],
       evidenceSource: ['resume'],
       poster: {
         title: 'Fraud Signal Control Room',

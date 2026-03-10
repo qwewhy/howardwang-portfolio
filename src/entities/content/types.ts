@@ -42,6 +42,7 @@ export interface EducationEntry {
   degree: string
   period: string
   highlights: string[]
+  logo?: string
 }
 
 export interface ProjectChapter {
@@ -90,6 +91,7 @@ export interface HomeContent {
   workIntro: PageIntro
   metricsIntro: PageIntro
   capabilityIntro: PageIntro
+  aiUsageIntro: PageIntro
   educationIntro: PageIntro
   contactIntro: PageIntro
 }

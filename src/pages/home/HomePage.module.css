@@ -103,6 +103,11 @@
   overflow: hidden;
 }
 
+.aiPanel {
+  padding: 1.15rem;
+  overflow: hidden;
+}
+
 .educationCard,
 .skillCard,
 .contactCard {
@@ -115,6 +120,32 @@
   background:
     radial-gradient(circle at top right, rgba(67, 231, 177, 0.12), transparent 32%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+}
+
+.educationMain {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.educationContent {
+  display: grid;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.educationLogo {
+  width: 64px;
+  height: 64px;
+  flex: none;
+  opacity: 0.7;
+  transition: opacity var(--transition-fast);
+}
+
+.educationCard:hover .educationLogo {
+  opacity: 1;
 }
 
 .educationPeriod {
@@ -208,6 +239,11 @@
   .skillCard,
   .contactCard {
     padding: 0.9rem;
+  }
+
+  .educationLogo {
+    width: 48px;
+    height: 48px;
   }
 
   .section {
