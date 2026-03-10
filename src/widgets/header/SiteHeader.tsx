@@ -30,7 +30,6 @@ export function SiteHeader({ locale }: SiteHeaderProps) {
               ['home', getLocalizedPath(locale, 'home')],
               ['work', getLocalizedPath(locale, 'work')],
               ['about', getLocalizedPath(locale, 'about')],
-              ['resume', getLocalizedPath(locale, 'resume')],
               ['contact', getLocalizedPath(locale, 'contact')],
             ] as const
           ).map(([key, href]) => (

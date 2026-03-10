@@ -33,7 +33,7 @@ export interface CapabilityEntry {
 }
 
 export interface ContributionYear {
-  year: '2025' | '2026'
+  year: string
   total: string
 }
 
@@ -69,6 +69,7 @@ export interface ProjectContentSchema {
   metrics: MetricEntry[]
   techStack: string[]
   links: LinkItem[]
+  liveUrl?: string
   evidenceSource: EvidenceSourceId[]
   poster: PosterSpec
   chapters: ProjectChapter[]
@@ -95,13 +96,10 @@ export interface HomeContent {
 
 export interface WorkContent {
   intro: PageIntro
-  comparisonTitle: string
-  comparisonDescription: string
 }
 
 export interface AboutContent {
   intro: PageIntro
-  pillars: Array<{ title: string; description: string }>
 }
 
 export interface ResumeContent {
@@ -161,6 +159,9 @@ export interface AppCopy {
   notFoundTitle: string
   notFoundDescription: string
   backHomeLabel: string
+  contributionsSuffix: string
+  tryLiveLabel: string
+  livePreviewLabel: string
 }
 
 export interface SiteContent {

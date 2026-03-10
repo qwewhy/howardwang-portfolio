@@ -199,7 +199,9 @@ canvas {
 
 .buttonPrimary {
   color: #031018;
-  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-alt));
+  border-color: rgba(67, 231, 177, 0.24);
+  background: var(--color-accent);
+  box-shadow: 0 12px 30px rgba(67, 231, 177, 0.16);
 }
 
 .buttonSecondary {
@@ -218,6 +220,13 @@ canvas {
 .buttonSecondary:hover,
 .buttonGhost:hover {
   transform: translateY(-2px);
+}
+
+.buttonPrimary svg,
+.buttonSecondary svg,
+.buttonGhost svg {
+  width: 1rem;
+  height: 1rem;
 }
 
 .chipRow {

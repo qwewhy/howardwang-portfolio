@@ -17,11 +17,6 @@ export default function WorkPage() {
         <p className="sectionDescription">{content.work.intro.description}</p>
       </section>
 
-      <section className={`panel ${styles.comparison}`}>
-        <h2 className="cardTitle">{content.work.comparisonTitle}</h2>
-        <p className="sectionDescription">{content.work.comparisonDescription}</p>
-      </section>
-
       <section className={styles.grid}>
         {siteConfig.projectSlugs.map((slug) => (
           <ProjectCard key={slug} locale={locale} slug={slug} />
@@ -30,4 +25,3 @@ export default function WorkPage() {
     </div>
   )
 }
-

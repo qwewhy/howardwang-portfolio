@@ -11,6 +11,21 @@ function getNextProjectSlug(slug: ProjectSlug): ProjectSlug {
   return siteConfig.projectSlugs[(currentIndex + 1) % siteConfig.projectSlugs.length]
 }
 
+function ExternalArrowIcon() {
+  return (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <path
+        d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
+      />
+    </svg>
+  )
+}
+
 export default function ProjectDetailPage() {
   const { locale: localeParam, slug: slugParam } = useParams()
 
@@ -82,6 +97,25 @@ export default function ProjectDetailPage() {
       </section>
 
       <SceneEntry locale={localeParam} slug={slugParam} chapters={project.chapters} />
+
+      {project.liveUrl && (
+        <section className={`panel ${styles.liveEmbed}`}>
+          <div className={styles.liveEmbedHeader}>
+            <span className="eyebrow">{content.copy.livePreviewLabel}</span>
+            <a className="buttonPrimary" href={project.liveUrl} target="_blank" rel="noreferrer">
+              <span>{content.copy.tryLiveLabel}</span>
+              <ExternalArrowIcon />
+            </a>
+          </div>
+          <iframe
+            className={styles.liveFrame}
+            src={project.liveUrl}
+            title={`${project.title} live preview`}
+            loading="lazy"
+            sandbox="allow-scripts allow-same-origin allow-popups"
+          />
+        </section>
+      )}
 
       <section className={styles.chapterGrid}>
         {project.chapters.map((chapter) => (

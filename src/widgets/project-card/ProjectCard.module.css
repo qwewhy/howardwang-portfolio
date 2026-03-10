@@ -1,159 +1,136 @@
 .card {
   display: grid;
-  gap: 0.9rem;
-  padding: 0;
+  grid-template-rows: auto 1fr;
   overflow: hidden;
+  padding: 0;
+}
+
+.previewLink {
+  display: block;
 }
 
 .preview {
   position: relative;
-  height: 140px;
-  background:
-    radial-gradient(circle at top left, rgba(107, 230, 255, 0.24), transparent 32%),
-    radial-gradient(circle at bottom right, rgba(67, 231, 177, 0.18), transparent 36%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(6, 17, 31, 0.72));
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.04);
 }
 
-.preview[data-slug='chemviz3d'] {
-  background:
-    radial-gradient(circle at 30% 26%, rgba(67, 231, 177, 0.28), transparent 18%),
-    radial-gradient(circle at 72% 62%, rgba(107, 230, 255, 0.16), transparent 24%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(6, 17, 31, 0.84));
+.previewImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
 }
 
-.preview[data-slug='virtual-coach'] {
-  background:
-    radial-gradient(circle at 72% 22%, rgba(255, 155, 90, 0.22), transparent 18%),
-    radial-gradient(circle at 22% 68%, rgba(107, 230, 255, 0.14), transparent 22%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(6, 17, 31, 0.84));
-}
-
-.previewWords {
+.previewShade {
   position: absolute;
-  inset: 0.75rem;
-  display: flex;
-  align-items: flex-end;
-  gap: 0.5rem;
-  flex-wrap: wrap;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(6, 17, 31, 0.02), rgba(6, 17, 31, 0.26));
+  pointer-events: none;
 }
 
-.previewWord {
-  padding: 0.4rem 0.6rem;
-  border-radius: 999px;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  color: var(--color-text);
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+.card:hover .previewImage,
+.card:focus-within .previewImage {
+  transform: scale(1.035);
 }
 
-/* Light theme: adjust preview gradient and word chip colors */
-html[data-theme='light'] .preview {
-  background:
-    radial-gradient(circle at top left, rgba(0, 126, 167, 0.18), transparent 32%),
-    radial-gradient(circle at bottom right, rgba(14, 168, 128, 0.14), transparent 36%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.6), rgba(223, 233, 242, 0.9));
-}
-
-html[data-theme='light'] .preview[data-slug='chemviz3d'] {
-  background:
-    radial-gradient(circle at 30% 26%, rgba(14, 168, 128, 0.22), transparent 18%),
-    radial-gradient(circle at 72% 62%, rgba(0, 126, 167, 0.14), transparent 24%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(223, 233, 242, 0.95));
-}
-
-html[data-theme='light'] .preview[data-slug='virtual-coach'] {
-  background:
-    radial-gradient(circle at 72% 22%, rgba(215, 102, 46, 0.18), transparent 18%),
-    radial-gradient(circle at 22% 68%, rgba(0, 126, 167, 0.12), transparent 22%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(223, 233, 242, 0.95));
-}
-
-html[data-theme='light'] .previewWord {
-  background: rgba(0, 0, 0, 0.06);
-  border-color: rgba(0, 0, 0, 0.08);
-}
-
-.header {
+.content {
   display: grid;
-  gap: 0.65rem;
-  padding: 0 1.1rem;
+  gap: 1rem;
+  align-content: start;
+  padding: 1.1rem;
 }
 
-.eyebrow {
+.metaLine {
+  margin: 0;
   font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   color: var(--color-text-muted);
 }
 
 .summary {
   margin: 0;
   color: var(--color-text-muted);
-  line-height: 1.55;
+  line-height: 1.58;
   display: -webkit-box;
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
 }
 
-.metric {
-  display: flex;
-  gap: 0.8rem;
-  align-items: flex-start;
-  padding: 0.8rem 0.9rem;
-  margin: 0 1.1rem;
-  border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--color-line);
-}
-
-.metricValue {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  line-height: 0.95;
-}
-
-.metricCopy {
+.proofGrid {
   display: grid;
-  gap: 0.15rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
 }
 
-.metricSource {
+.proofItem {
+  display: grid;
+  gap: 0.22rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--color-line);
+}
+
+.proofValue {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.2vw, 2rem);
+  line-height: 0.94;
+}
+
+.proofLabel {
   color: var(--color-text-muted);
-  font-size: 0.78rem;
+  font-size: 0.82rem;
+  line-height: 1.45;
 }
 
-.meta {
+.techList {
   display: flex;
   flex-wrap: wrap;
   gap: 0.55rem;
-  padding: 0 1.1rem;
+}
+
+.techChip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45rem 0.72rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-line);
+  background: rgba(255, 255, 255, 0.03);
   color: var(--color-text-muted);
-  font-size: 0.84rem;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+}
+
+.cardActions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+  margin-top: auto;
+}
+
+.singleAction {
+  grid-template-columns: 1fr;
 }
 
 .cardAction {
-  margin: 0 1.1rem 1.1rem;
+  width: 100%;
+}
+
+.externalIcon {
+  width: 0.96rem;
+  height: 0.96rem;
+  flex: none;
 }
 
 @media (max-width: 640px) {
-  .preview {
-    height: 110px;
+  .content {
+    gap: 0.9rem;
+    padding: 0.9rem;
   }
 
-  .header {
-    padding: 0 0.85rem;
-  }
-
-  .metric {
-    margin: 0 0.85rem;
-  }
-
-  .meta {
-    padding: 0 0.85rem;
-  }
-
-  .cardAction {
-    margin: 0 0.85rem 0.85rem;
+  .proofGrid,
+  .cardActions {
+    grid-template-columns: 1fr;
   }
 }

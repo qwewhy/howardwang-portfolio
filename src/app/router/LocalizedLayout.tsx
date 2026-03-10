@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import { Navigate, Outlet, useLocation, useParams } from 'react-router-dom'
 import { getSiteContent } from '../i18n/catalog'
-import { SiteFooter } from '../../widgets/footer/SiteFooter'
 import { SiteHeader } from '../../widgets/header/SiteHeader'
 import { getRouteMeta } from '../seo/meta'
 import { useAppShellStore } from '../store/app-shell-store'
@@ -118,7 +117,6 @@ export function LocalizedLayout() {
           <Outlet />
         </div>
       </main>
-      <SiteFooter locale={locale} />
     </div>
   )
 }

@@ -113,3 +113,8 @@ export const contributionData: Record<string, number[]> = {
 }
 
 export const monthLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+export const contributionTotals: Record<string, number> = {
+  '2025': 536,
+  '2026': 427,
+}

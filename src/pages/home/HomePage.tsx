@@ -10,36 +10,49 @@ export default function HomePage() {
   const { locale: localeParam } = useParams()
   const locale = localeParam && isLocale(localeParam) ? localeParam : siteConfig.defaultLocale
   const content = getSiteContent(locale)
-  const proofMetrics = content.metrics.slice(0, 3)
 
   return (
     <div className="pageShell">
       <section className={styles.hero}>
         <div className={`panel ${styles.heroCard}`}>
-          <span className="eyebrow">{content.home.hero.eyebrow}</span>
-          <h1 className="heroTitle">{content.home.hero.title}</h1>
-          <p className={styles.heroDescription}>{content.home.hero.description}</p>
+          <div className={styles.heroLayout}>
+            <div className={styles.heroCopy}>
+              <span className="eyebrow">{content.home.hero.eyebrow}</span>
+              <h1 className={styles.heroHeadline}>{content.home.hero.title}</h1>
+              <p className={styles.heroDescription}>{content.home.hero.description}</p>
+              <p className={styles.heroKicker}>{content.home.hero.kicker}</p>
 
-          <div className={styles.badgeGrid}>
-            {content.home.hero.badges.map((badge) => (
-              <article key={badge.label} className={styles.heroBadge}>
-                <strong className={styles.badgeLabel}>{badge.label}</strong>
-                <span className="muted">{badge.detail}</span>
-              </article>
-            ))}
-          </div>
+              <div className={styles.heroActions}>
+                <Link className="buttonPrimary" to={getLocalizedPath(locale, 'work')}>
+                  {content.nav.work}
+                </Link>
+                <Link className="buttonSecondary" to={getLocalizedPath(locale, 'about')}>
+                  {content.nav.about}
+                </Link>
+              </div>
+            </div>
 
-          <div className={styles.heroActions}>
-            <Link className="buttonPrimary" to={getLocalizedPath(locale, 'work')}>
-              {content.nav.work}
-            </Link>
-            <Link className="buttonSecondary" to={getLocalizedPath(locale, 'about')}>
-              {content.nav.about}
-            </Link>
+            <div className={styles.badgeGrid}>
+              {content.home.hero.badges.map((badge) => (
+                <article key={badge.label} className={styles.heroBadge}>
+                  <strong className={styles.badgeLabel}>{badge.label}</strong>
+                  <span className={styles.badgeDetail}>{badge.detail}</span>
+                </article>
+              ))}
+            </div>
           </div>
         </div>
+      </section>
 
-        <SignalGrid contributionYears={content.home.hero.contributionYears} />
+      <section className={styles.section}>
+        <div className="pageIntro">
+          <span className="eyebrow">{content.home.metricsIntro.eyebrow}</span>
+          <h2 className="sectionTitle">{content.home.metricsIntro.title}</h2>
+          <p className={styles.sectionLead}>{content.home.metricsIntro.description}</p>
+        </div>
+        <div className={`panel ${styles.signalPanel}`}>
+          <SignalGrid locale={locale} contributionYears={content.home.hero.contributionYears} />
+        </div>
       </section>
 
       <section className={styles.section}>
@@ -57,18 +70,45 @@ export default function HomePage() {
 
       <section className={styles.section}>
         <div className="pageIntro">
-          <span className="eyebrow">{content.home.metricsIntro.eyebrow}</span>
-          <h2 className="sectionTitle">{content.home.metricsIntro.title}</h2>
-          <p className={styles.sectionLead}>{content.home.metricsIntro.description}</p>
+          <span className="eyebrow">{content.home.educationIntro.eyebrow}</span>
+          <h2 className="sectionTitle">{content.home.educationIntro.title}</h2>
+          <p className={styles.sectionLead}>{content.home.educationIntro.description}</p>
         </div>
-        <div className={styles.proofGrid}>
-          {proofMetrics.map((metric) => (
-            <article key={metric.label} className={`panel ${styles.proofCard}`}>
-              <span className={styles.proofValue}>
-                {metric.value}
-              </span>
-              <strong>{metric.label}</strong>
-              <p className={styles.proofContext}>{metric.context}</p>
+        <div className={styles.educationGrid}>
+          {content.education.map((entry) => (
+            <article key={entry.institution} className={`panel ${styles.educationCard}`}>
+              <span className={styles.educationPeriod}>{entry.period}</span>
+              <h3 className="cardTitle">{entry.institution}</h3>
+              <p className={styles.educationDegree}>{entry.degree}</p>
+              <div className={styles.educationHighlights}>
+                {entry.highlights.map((highlight) => (
+                  <span key={highlight} className={styles.educationHighlight}>
+                    {highlight}
+                  </span>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className={styles.section}>
+        <div className="pageIntro">
+          <span className="eyebrow">{content.home.capabilityIntro.eyebrow}</span>
+          <h2 className="sectionTitle">{content.home.capabilityIntro.title}</h2>
+          <p className={styles.sectionLead}>{content.home.capabilityIntro.description}</p>
+        </div>
+        <div className={styles.skillGrid}>
+          {content.resume.skills.map((group) => (
+            <article key={group.group} className={`panel ${styles.skillCard}`}>
+              <h3 className={styles.skillHeading}>{group.group}</h3>
+              <div className={styles.skillList}>
+                {group.items.map((item) => (
+                  <span key={item} className={styles.skillChip}>
+                    {item}
+                  </span>
+                ))}
+              </div>
             </article>
           ))}
         </div>

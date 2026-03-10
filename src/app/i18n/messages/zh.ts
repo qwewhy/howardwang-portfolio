@@ -14,7 +14,7 @@ export const zhContent: SiteContent = {
     closeMenuLabel: '关闭导航',
     menuLabel: '菜单',
     closeLabel: '关闭',
-    openProjectLabel: '查看项目',
+    openProjectLabel: '详细信息',
     enterSceneLabel: '进入场景',
     sceneReadyLabel: '场景已就绪',
     sceneLoadingLabel: '正在加载场景',
@@ -38,6 +38,9 @@ export const zhContent: SiteContent = {
     notFoundTitle: '页面未找到',
     notFoundDescription: '你访问的页面不存在。',
     backHomeLabel: '返回首页',
+    contributionsSuffix: '次贡献',
+    tryLiveLabel: '立即体验',
+    livePreviewLabel: '实时预览',
   },
   nav: {
     home: '首页',
@@ -54,8 +57,8 @@ export const zhContent: SiteContent = {
   },
   profile: {
     name: 'Hongyuan Wang',
-    title: '交互媒体工程师 / 全栈开发者',
-    tagline: '交互媒体工程师',
+    title: '全栈创意工程师',
+    tagline: '全栈创意工程师',
     summary: '构建智能 Web 系统、空间化界面与数据驱动体验。',
     location: '悉尼 Ultimo',
     status: '澳大利亚永久居民',
@@ -67,9 +70,9 @@ export const zhContent: SiteContent = {
   },
   home: {
     hero: {
-      eyebrow: '交互媒体工程师',
+      eyebrow: '全栈创意工程师',
       title: '构建 3D Web 工具、研究平台与 AI 驱动产品。',
-      description: 'UTS IT 硕士毕业，专注浏览器原生 3D 工具、研究型交互界面与全栈 AI 产品交付。',
+      description: '浏览器原生 3D 工具、研究型交互界面、AI 产品交付。',
       kicker: 'UTS IT 硕士毕业生，兼具研究协作、产品化工具和实时 AI 系统交付经验。',
       badges: [
         { label: 'UTS Master of IT', detail: 'GPA 6.44 / 7，WAM 86，约 Top 5%' },
@@ -83,23 +86,23 @@ export const zhContent: SiteContent = {
     },
     workIntro: {
       eyebrow: '核心项目',
-      title: '三个项目，三种清晰证明。',
-      description: '浏览器 3D 工具、研究可视化、实时 AI 产品交付。',
+      title: '用代表性项目展示工程能力。',
+      description: '覆盖浏览器 3D 工具、研究可视化、实时 AI 产品交付，以及持续扩展中的更多前端实践。',
     },
     metricsIntro: {
-      eyebrow: '成果',
-      title: '值得关注的数字。',
-      description: '来自已部署项目和学术表现的可验证成果。',
+      eyebrow: 'GitHub 提交',
+      title: '持续构建的活跃轨迹。',
+      description: '把近两年的公开提交记录单独展开，补充说明我的日常迭代节奏。',
     },
     capabilityIntro: {
-      eyebrow: '能力',
-      title: '横跨界面设计、3D 图形与全栈系统的技能。',
-      description: '每项能力都有对应的交付项目。',
+      eyebrow: 'Skills',
+      title: '前端、3D 图形与 AI 集成的技能结构。',
+      description: '常用能力按真实交付场景归类，便于快速判断技术覆盖面。',
     },
     educationIntro: {
       eyebrow: '教育背景',
-      title: '计算机科学底子加交互媒体训练。',
-      description: '扎实的学术基础支撑研究级工程能力。',
+      title: '教育经历能够支撑复杂系统交付。',
+      description: '交互媒体与计算机科学训练并行，既有学术表现，也有项目落地。',
     },
     contactIntro: {
       eyebrow: '联系',
@@ -113,29 +116,13 @@ export const zhContent: SiteContent = {
       title: '展示真正工程深度的项目。',
       description: '每个项目包含在线演示、成果指标与交互式 3D 预览。',
     },
-    comparisonTitle: '每个项目分别证明什么',
-    comparisonDescription: 'DynagraphAI 证明浏览器 3D 创作工具能力，Chemviz3d 证明研究协作与复杂前端架构能力，Virtual Coach 证明实时 AI 全栈产品交付能力。',
   },
   about: {
     intro: {
       eyebrow: '关于',
       title: '设计、代码与空间交互的交汇处。',
-      description: '前端架构、3D 图形与用户体验设计——结合起来打造技术深度与视觉清晰度兼具的产品。',
+      description: '前端架构、3D 图形与全栈 AI 交付——打造技术深度与视觉清晰度兼具的产品。',
     },
-    pillars: [
-      {
-        title: '研究协作',
-        description: '与 UTS Science faculty 密切合作，把教学和领域需求翻译成可部署的交互系统。',
-      },
-      {
-        title: '创作工具',
-        description: '构建浏览器内的创作型工具，让 prompt、scene graph、viewport 与 code export 形成完整工作流。',
-      },
-      {
-        title: '产品工程',
-        description: '交付实时 AI 产品功能，同时兼顾前端系统设计、后端协作和整体架构可维护性。',
-      },
-    ],
   },
   resume: {
     intro: {
@@ -230,13 +217,13 @@ export const zhContent: SiteContent = {
     { value: 'Top 5%', label: 'UTS 学业排名', context: 'GPA 6.44 / 7，WAM 86。', source: 'resume' },
   ],
   capabilities: [
-    { id: 'spatial-web', title: 'Spatial Web', description: 'Three.js、WebGL、Shader 理解与场景叙事能力。', linkedProjects: ['dynagraphai', 'chemviz3d'] },
-    { id: 'creative-tooling', title: 'Creative Tooling', description: '浏览器内创作工具、层级面板、脚本区、视口与导出工作流。', linkedProjects: ['dynagraphai'] },
-    { id: 'ui-systems', title: 'UI Systems', description: '清晰信息架构、状态驱动交互模式与可维护组件边界。', linkedProjects: ['chemviz3d', 'dynagraphai'] },
-    { id: 'frontend-architecture', title: 'Frontend Architecture', description: 'Typed content、分层结构、懒加载与独立 scene adapters。', linkedProjects: ['chemviz3d', 'virtual-coach'] },
-    { id: 'ai-integration', title: 'AI Integration', description: 'Prompt 驱动工作流、Agent 思维与知识增强产品能力。', linkedProjects: ['dynagraphai', 'virtual-coach'] },
-    { id: 'research-collaboration', title: 'Research Collaboration', description: '把学术与领域反馈转化为产品和界面决策。', linkedProjects: ['chemviz3d'] },
-    { id: 'performance-engineering', title: 'Performance Engineering', description: '首屏克制、3D 延迟加载、运行时权衡与工程级性能意识。', linkedProjects: ['dynagraphai', 'chemviz3d', 'virtual-coach'] },
+    { id: 'spatial-web', title: 'Spatial Web', description: 'Three.js、WebGL、Shader 理解。', linkedProjects: ['dynagraphai', 'chemviz3d'] },
+    { id: 'creative-tooling', title: 'Creative Tooling', description: '浏览器内编辑器、层级面板与导出。', linkedProjects: ['dynagraphai'] },
+    { id: 'ui-systems', title: 'UI Systems', description: '状态驱动模式、清晰组件边界。', linkedProjects: ['chemviz3d', 'dynagraphai'] },
+    { id: 'frontend-architecture', title: 'Frontend Architecture', description: 'Typed content、懒加载、模块化 scene adapters。', linkedProjects: ['chemviz3d', 'virtual-coach'] },
+    { id: 'ai-integration', title: 'AI Integration', description: 'Prompt 工作流、RAG、Agent 驱动。', linkedProjects: ['dynagraphai', 'virtual-coach'] },
+    { id: 'research-collaboration', title: 'Research Collaboration', description: '学术反馈转化为产品决策。', linkedProjects: ['chemviz3d'] },
+    { id: 'performance-engineering', title: 'Performance Engineering', description: '首屏优化、3D 延迟加载、Worker 架构。', linkedProjects: ['dynagraphai', 'chemviz3d', 'virtual-coach'] },
   ],
   projects: {
     dynagraphai: {
@@ -245,7 +232,7 @@ export const zhContent: SiteContent = {
       role: 'AI 驱动的浏览器 3D 引擎',
       period: '已公开上线',
       location: '公网产品',
-      summary: '一个面向 Three.js 的 AI sandbox：从 prompt 到交互式 3D 场景，再到可导出的代码，都在浏览器内完成。',
+      summary: 'AI 驱动的 Three.js sandbox——从 prompt 到场景到可导出代码，全在浏览器内。',
       badges: ['已上线', '创作工具', 'Three.js'],
       metrics: [
         { value: 'Prompt', label: '到场景工作流', context: 'Describe once, generate instantly, preview in real-time。', source: 'userProvided' },
@@ -257,6 +244,7 @@ export const zhContent: SiteContent = {
         { label: '访问 DynagraphAI', href: 'https://www.dynagraphai.com/', external: true },
         { label: '打开编辑器', href: 'https://www.dynagraphai.com/editor', external: true },
       ],
+      liveUrl: 'https://www.dynagraphai.com',
       evidenceSource: ['userProvided', 'liveSite'],
       poster: {
         title: 'Prompt-to-World Foundry',
@@ -268,21 +256,21 @@ export const zhContent: SiteContent = {
           id: 'prompt-signal',
           eyebrow: '第一幕',
           title: 'Prompt Signal',
-          summary: '起点是自然语言，但最终输出必须依然是可控、可检查、可延展的创作工具，而不是黑盒玩具。',
+          summary: '自然语言输入，产出可控、可检查的 Three.js 代码。',
           bullets: ['把描述转换为可运行的 Three.js 代码。', '把 AI 作为加速器，而不是替代创作者。', '保持从 idea 到 scene intent 的清晰映射。'],
         },
         {
           id: 'scene-graph-assembly',
           eyebrow: '第二幕',
           title: 'Scene Graph Assembly',
-          summary: 'Hierarchy、Inspector、Assets、Script、Console、AI Assistant 等面板共同定义了它的产品化工具属性。',
+          summary: '层级、检查器与资产面板，定义产品化创作工具身份。',
           bullets: ['面板系统本身就是 UI 产品能力的证据。', '代码检查与场景编辑并存。', '它不是一个 demo generator，而是一个 workbench。'],
         },
         {
           id: 'viewport-export',
           eyebrow: '第三幕',
           title: 'Viewport to Export',
-          summary: '实时预览与代码导出让结果可以离开 demo 时刻，进入真实开发流程。',
+          summary: '实时预览与代码导出，让输出进入真实工作流。',
           bullets: ['视口对修改即时响应。', '输出仍然是代码，而不是不可用的黑盒结果。', '浏览器优先的体验强调低门槛与快反馈。'],
         },
       ],
@@ -293,7 +281,7 @@ export const zhContent: SiteContent = {
       role: 'UTS 跨学科研究项目',
       period: '2024.10 - 2026.01',
       location: 'UTS Science Department 协作',
-      summary: '一个服务于教学的 3D 化学反应可视化 Web 应用，兼具空间叙事、数据转换、多语言支持与可维护的前端系统设计。',
+      summary: '3D 化学反应可视化教学工具，已服务 UTS 4,000+ 学生。',
       badges: ['研究项目', 'Three.js', '教育场景'],
       metrics: [
         { value: '4,000+', label: '本科学生使用', context: '项目已经部署为教学核心工具。', source: 'resume' },
@@ -302,6 +290,7 @@ export const zhContent: SiteContent = {
       ],
       techStack: ['Three.js', 'WebGL', 'WASM', 'Web Worker', 'Zustand', 'Tailwind CSS', 'AWS S3', 'Route 53', 'CloudFront'],
       links: [{ label: '访问 Chemviz3d', href: 'https://www.chemviz3d.com', external: true }],
+      liveUrl: 'https://www.chemviz3d.com',
       evidenceSource: ['resume'],
       poster: {
         title: 'Reactive Molecular Theater',
@@ -313,21 +302,21 @@ export const zhContent: SiteContent = {
           id: 'molecule-assembly',
           eyebrow: '第一幕',
           title: 'Molecule Assembly',
-          summary: '这个项目不是把科学数据扔进 3D，而是把复杂结构翻译成可解释的空间表达。',
+          summary: '科学数据转化为可解释的 3D 分子空间结构。',
           bullets: ['包含 2D-to-3D 分子结构转换工作。', '接入化学数据查询与导入能力。', '视觉系统以领域理解为基础。'],
         },
         {
           id: 'reaction-timeline',
           eyebrow: '第二幕',
           title: 'Reaction Timeline',
-          summary: '动画系统和关键帧处理让运动成为解释层，而不是装饰层。',
+          summary: '关键帧动画让运动成为解释层而非装饰。',
           bullets: ['实现了 keyframe-oriented 管理逻辑。', '处理 rotation 与 transformation 数据。', '通过可复用 hooks 控制复杂度。'],
         },
         {
           id: 'teaching-scale',
           eyebrow: '第三幕',
           title: 'Teaching at Scale',
-          summary: '它证明的不只是图形能力，还包括研究协作、教学场景理解、多语言落地与生产部署能力。',
+          summary: '已部署给 4,000+ 学生，多语言支持，教授协作。',
           bullets: ['已服务 4,000+ 学生。', '与 10+ 科学学院教授协作。', '具备多语言支持与可维护的 UI 状态架构。'],
         },
       ],
@@ -338,7 +327,7 @@ export const zhContent: SiteContent = {
       role: '全职实习 · 全栈开发者',
       period: '2025.07 - 2025.10',
       location: 'Cyberoo AI',
-      summary: '一个结合实时 AI 语音分析、RAG 工作流与全栈交付能力的银行反欺诈检测训练系统。',
+      summary: '银行反欺诈训练系统，实时 AI 语音检测与 RAG 集成。',
       badges: ['实习项目', '实时系统', 'AI 产品'],
       metrics: [
         { value: 'Realtime', label: '语音检测链路', context: '产品核心是即时的反欺诈训练反馈。', source: 'resume' },
@@ -358,21 +347,21 @@ export const zhContent: SiteContent = {
           id: 'voice-pulse-field',
           eyebrow: '第一幕',
           title: 'Voice Pulse Field',
-          summary: '系统以实时信号判断为中心，而不是静态报表展示。',
+          summary: '实时语音信号解读，用于反欺诈检测训练。',
           bullets: ['面向银行反欺诈训练的实时 AI 语音检测。', '围绕低延迟用户反馈设计。', '界面语言强调监测与干预。'],
         },
         {
           id: 'risk-node-graph',
           eyebrow: '第二幕',
           title: 'Risk Node Graph',
-          summary: '训练场景把风险理解转化为可交互、可追踪的网络化叙事。',
+          summary: '风险事件映射为可交互、可追踪的图结构。',
           bullets: ['将事件、实体与风险标记映射到可解释结构。', '支持监控型产品界面组合。', '把前端清晰度与后端事件流连接起来。'],
         },
         {
           id: 'knowledge-orbit',
           eyebrow: '第三幕',
           title: 'Knowledge Orbit',
-          summary: 'RAG 与 AI framework 集成证明了产品深度不止停留在视觉层。',
+          summary: 'RAG 与 AI 框架集成驱动知识增强决策。',
           bullets: ['集成 Spring AI Alibaba 与 Qdrant。', '使用 Netty-socketio 实现实时数据传输。', '使用 MongoDB 支撑灵活数据存储。'],
         },
       ],
@@ -380,7 +369,7 @@ export const zhContent: SiteContent = {
   },
   seo: {
     home: {
-      title: 'Hongyuan Wang · 交互媒体工程师',
+      title: 'Hongyuan Wang · 全栈创意工程师',
       description: '个人作品集，展示 DynagraphAI、Chemviz3d 与 Virtual Coach——交互式 3D 工具、研究平台与 AI 产品系统。',
     },
     work: {
@@ -389,11 +378,11 @@ export const zhContent: SiteContent = {
     },
     about: {
       title: '关于 · Hongyuan Wang',
-      description: 'Hongyuan Wang 的背景与定位——交互媒体工程师与全栈开发者。',
+      description: 'Hongyuan Wang 的背景与定位——全栈创意工程师。',
     },
     resume: {
       title: '简历 · Hongyuan Wang',
-      description: 'Hongyuan Wang 的经历、教育与技能——交互媒体工程师与全栈开发者。',
+      description: 'Hongyuan Wang 的经历、教育与技能——全栈创意工程师。',
     },
     contact: {
       title: '联系 · Hongyuan Wang',

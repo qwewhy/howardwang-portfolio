@@ -3,25 +3,42 @@
   gap: 1rem;
 }
 
-.pillars {
+.capGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1rem;
 }
 
-.pillar {
+.capCard {
   display: grid;
-  gap: 0.8rem;
-  padding: 1.25rem;
+  gap: 0.6rem;
+  padding: 1.1rem;
+  align-content: start;
+}
+
+.projectChip {
+  display: inline-block;
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-accent);
+  background: rgba(107, 230, 255, 0.08);
+  border: 1px solid rgba(107, 230, 255, 0.15);
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.projectChip:hover {
+  background: rgba(107, 230, 255, 0.16);
 }
 
 @media (max-width: 640px) {
-  .pillars {
+  .capGrid {
     grid-template-columns: 1fr;
   }
 
-  .pillar {
+  .capCard {
     padding: 0.95rem;
   }
 }
-

@@ -14,7 +14,7 @@ export const enContent: SiteContent = {
     closeMenuLabel: 'Close navigation',
     menuLabel: 'Menu',
     closeLabel: 'Close',
-    openProjectLabel: 'View project',
+    openProjectLabel: 'Details',
     enterSceneLabel: 'Enter scene',
     sceneReadyLabel: 'Scene ready',
     sceneLoadingLabel: 'Loading scene',
@@ -38,6 +38,9 @@ export const enContent: SiteContent = {
     notFoundTitle: 'Page not found',
     notFoundDescription: 'The page you are looking for does not exist.',
     backHomeLabel: 'Back to home',
+    contributionsSuffix: 'contributions',
+    tryLiveLabel: 'Launch now',
+    livePreviewLabel: 'Live preview',
   },
   nav: {
     home: 'Home',
@@ -54,8 +57,8 @@ export const enContent: SiteContent = {
   },
   profile: {
     name: 'Hongyuan Wang',
-    title: 'Interactive Media Engineer / Full-Stack Developer',
-    tagline: 'Interactive Media Engineer',
+    title: 'Full-Stack Creative Engineer',
+    tagline: 'Full-Stack Creative Engineer',
     summary: 'Building intelligent web systems, spatial interfaces, and data-driven experiences.',
     location: 'Ultimo, Sydney',
     status: 'Australian permanent resident',
@@ -67,9 +70,9 @@ export const enContent: SiteContent = {
   },
   home: {
     hero: {
-      eyebrow: 'Interactive Media Engineer',
+      eyebrow: 'Full-Stack Creative Engineer',
       title: 'Building 3D web tools, research platforms, and AI-driven products.',
-      description: 'UTS Master of IT graduate specializing in browser-native 3D tools, interactive research interfaces, and full-stack AI product delivery.',
+      description: 'Browser-native 3D tools, research interfaces, and AI product delivery.',
       kicker: 'UTS Master of IT graduate with research, product, and real-time AI delivery experience.',
       badges: [
         { label: 'UTS Master of IT', detail: 'GPA 6.44 / 7, WAM 86, about Top 5%' },
@@ -83,23 +86,23 @@ export const enContent: SiteContent = {
     },
     workIntro: {
       eyebrow: 'Selected Work',
-      title: 'Three projects, three distinct proofs.',
-      description: 'Browser 3D tooling, research visualization, and real-time AI product delivery.',
+      title: 'Representative projects that show how I build.',
+      description: 'Spanning browser 3D tooling, research visualization, real-time AI product delivery, and broader frontend system work.',
     },
     metricsIntro: {
-      eyebrow: 'Impact',
-      title: 'Numbers that matter.',
-      description: 'Verified outcomes from deployed projects and academic performance.',
+      eyebrow: 'GitHub activity',
+      title: 'A visible record of ongoing build velocity.',
+      description: 'Public commits from the last two years, expanded into their own section instead of being squeezed into the intro.',
     },
     capabilityIntro: {
-      eyebrow: 'Capabilities',
-      title: 'Skills spanning interface design, 3D graphics, and full-stack systems.',
-      description: 'Each skill area is backed by a shipped project.',
+      eyebrow: 'Skills',
+      title: 'Frontend, 3D graphics, and AI integration capabilities.',
+      description: 'Grouped by the kinds of systems I actually ship, so the technical coverage is easy to scan.',
     },
     educationIntro: {
       eyebrow: 'Education',
-      title: 'Computer science depth plus interactive media training.',
-      description: 'Strong academic foundation supporting research-quality engineering.',
+      title: 'Academic training that supports complex product delivery.',
+      description: 'Interactive media and computer science training, backed by strong results and shipped project work.',
     },
     contactIntro: {
       eyebrow: 'Contact',
@@ -113,29 +116,13 @@ export const enContent: SiteContent = {
       title: 'Projects that demonstrate real engineering depth.',
       description: 'Each project includes live demos, impact metrics, and interactive 3D previews.',
     },
-    comparisonTitle: 'What each project proves',
-    comparisonDescription: 'DynagraphAI proves productized creative tooling, Chemviz3d proves research collaboration and complex frontend architecture, and Virtual Coach proves real-time AI-enabled full-stack delivery.',
   },
   about: {
     intro: {
       eyebrow: 'About',
       title: 'Where design, code, and spatial interaction intersect.',
-      description: 'Frontend architecture, 3D graphics, and user experience design — combined to build products that are technically deep and visually clear.',
+      description: 'Frontend architecture, 3D graphics, and full-stack AI delivery — building products that are technically deep and visually clear.',
     },
-    pillars: [
-      {
-        title: 'Research collaboration',
-        description: 'Worked closely with UTS science faculty and translated teaching and domain requirements into a deployable interactive system.',
-      },
-      {
-        title: 'Creative tooling',
-        description: 'Built browser-based tooling that turns prompts into interactive Three.js scenes while preserving code-level control.',
-      },
-      {
-        title: 'Product engineering',
-        description: 'Delivered full-stack AI product features with real-time flows, backend collaboration, and architecture-minded frontend systems.',
-      },
-    ],
   },
   resume: {
     intro: {
@@ -236,13 +223,13 @@ export const enContent: SiteContent = {
     { value: 'Top 5%', label: 'UTS standing', context: 'GPA 6.44 / 7, WAM 86 at University of Technology Sydney.', source: 'resume' },
   ],
   capabilities: [
-    { id: 'spatial-web', title: 'Spatial Web', description: 'Three.js, WebGL, shader literacy, and scene storytelling that serves the product narrative.', linkedProjects: ['dynagraphai', 'chemviz3d'] },
-    { id: 'creative-tooling', title: 'Creative Tooling', description: 'Browser-native tooling with hierarchy, inspector, scripting, AI, and export workflows.', linkedProjects: ['dynagraphai'] },
-    { id: 'ui-systems', title: 'UI Systems', description: 'Structured information architecture, state-driven interface patterns, and maintainable component boundaries.', linkedProjects: ['chemviz3d', 'dynagraphai'] },
-    { id: 'frontend-architecture', title: 'Frontend Architecture', description: 'Typed content, isolated features, route-level lazy loading, and scene adapters that keep the codebase scalable.', linkedProjects: ['chemviz3d', 'virtual-coach'] },
-    { id: 'ai-integration', title: 'AI Integration', description: 'Prompt-driven tooling, agent workflows, and knowledge-enhanced product features.', linkedProjects: ['dynagraphai', 'virtual-coach'] },
-    { id: 'research-collaboration', title: 'Research Collaboration', description: 'Turning academic and domain feedback into product decisions and interface refinements.', linkedProjects: ['chemviz3d'] },
-    { id: 'performance-engineering', title: 'Performance Engineering', description: 'Fast first paint, deferred 3D loading, worker-aware architecture, and pragmatic runtime tradeoffs.', linkedProjects: ['dynagraphai', 'chemviz3d', 'virtual-coach'] },
+    { id: 'spatial-web', title: 'Spatial Web', description: 'Three.js, WebGL, shader-level understanding.', linkedProjects: ['dynagraphai', 'chemviz3d'] },
+    { id: 'creative-tooling', title: 'Creative Tooling', description: 'Browser-native editor with hierarchy, inspector, and export.', linkedProjects: ['dynagraphai'] },
+    { id: 'ui-systems', title: 'UI Systems', description: 'State-driven patterns, clean component boundaries.', linkedProjects: ['chemviz3d', 'dynagraphai'] },
+    { id: 'frontend-architecture', title: 'Frontend Architecture', description: 'Typed content, lazy loading, modular scene adapters.', linkedProjects: ['chemviz3d', 'virtual-coach'] },
+    { id: 'ai-integration', title: 'AI Integration', description: 'Prompt workflows, RAG, agent-driven features.', linkedProjects: ['dynagraphai', 'virtual-coach'] },
+    { id: 'research-collaboration', title: 'Research Collaboration', description: 'Academic feedback to product decisions.', linkedProjects: ['chemviz3d'] },
+    { id: 'performance-engineering', title: 'Performance Engineering', description: 'Fast first paint, deferred 3D, worker-aware builds.', linkedProjects: ['dynagraphai', 'chemviz3d', 'virtual-coach'] },
   ],
   projects: {
     dynagraphai: {
@@ -251,7 +238,7 @@ export const enContent: SiteContent = {
       role: 'AI-powered browser 3D engine',
       period: 'Live product',
       location: 'Public web deployment',
-      summary: 'An AI-powered sandbox for Three.js that turns prompts into interactive 3D scenes, keeps editing in-browser, and exports code without requiring a local setup.',
+      summary: 'AI-powered Three.js sandbox — prompt to scene to exportable code, all in the browser.',
       badges: ['Live', 'Creative Tooling', 'Three.js'],
       metrics: [
         { value: 'Prompt', label: 'to scene flow', context: 'Describe once, generate instantly, and preview in real time.', source: 'userProvided' },
@@ -263,6 +250,7 @@ export const enContent: SiteContent = {
         { label: 'Visit DynagraphAI', href: 'https://www.dynagraphai.com/', external: true },
         { label: 'Open editor', href: 'https://www.dynagraphai.com/editor', external: true },
       ],
+      liveUrl: 'https://www.dynagraphai.com',
       evidenceSource: ['userProvided', 'liveSite'],
       poster: {
         title: 'Prompt-to-World Foundry',
@@ -274,7 +262,7 @@ export const enContent: SiteContent = {
           id: 'prompt-signal',
           eyebrow: 'Act I',
           title: 'Prompt Signal',
-          summary: 'The product starts with language as input, but the output must still feel like a controlled creative tool rather than a black box.',
+          summary: 'Natural language input producing controlled, inspectable Three.js output.',
           bullets: [
             'Turns descriptions into runnable Three.js code.',
             'Frames AI as acceleration, not replacement of authorship.',
@@ -285,7 +273,7 @@ export const enContent: SiteContent = {
           id: 'scene-graph-assembly',
           eyebrow: 'Act II',
           title: 'Scene Graph Assembly',
-          summary: 'The interface communicates a strong creative tooling identity through hierarchy, inspector, assets, scripts, console, and assistant panels.',
+          summary: 'Hierarchy, inspector, and asset panels that define a productized creative tool.',
           bullets: [
             'The panel language proves productized UI thinking.',
             'The interface supports code inspection alongside scene editing.',
@@ -296,7 +284,7 @@ export const enContent: SiteContent = {
           id: 'viewport-export',
           eyebrow: 'Act III',
           title: 'Viewport to Export',
-          summary: 'Real-time preview plus code export keeps the output useful beyond the demo moment.',
+          summary: 'Live preview and code export that carry output into real workflows.',
           bullets: [
             'Interactive viewport reflects edits immediately.',
             'The generated output remains code, not an opaque artifact.',
@@ -311,7 +299,7 @@ export const enContent: SiteContent = {
       role: 'UTS interdisciplinary research project',
       period: '2024.10 - 2026.01',
       location: 'UTS Science Department collaboration',
-      summary: 'A 3D chemical reaction visualization web application used as a core teaching tool, combining spatial storytelling, data conversion pipelines, multilingual support, and a maintainable frontend system.',
+      summary: '3D chemical reaction visualizer deployed as a teaching tool for 4,000+ students at UTS.',
       badges: ['Research', 'Three.js', 'Education'],
       metrics: [
         { value: '4,000+', label: 'undergraduate users', context: 'The deployed tool directly supported teaching at scale.', source: 'resume' },
@@ -322,6 +310,7 @@ export const enContent: SiteContent = {
       links: [
         { label: 'Visit Chemviz3d', href: 'https://www.chemviz3d.com', external: true },
       ],
+      liveUrl: 'https://www.chemviz3d.com',
       evidenceSource: ['resume'],
       poster: {
         title: 'Reactive Molecular Theater',
@@ -333,7 +322,7 @@ export const enContent: SiteContent = {
           id: 'molecule-assembly',
           eyebrow: 'Act I',
           title: 'Molecule Assembly',
-          summary: 'The project turns scientific data into interpretable spatial structures instead of dumping raw complexity onto the learner.',
+          summary: 'Scientific data converted into interpretable 3D molecular structures.',
           bullets: [
             'Included 2D-to-3D molecular structure conversion work.',
             'Integrated chemistry data queries and import pipelines.',
@@ -344,7 +333,7 @@ export const enContent: SiteContent = {
           id: 'reaction-timeline',
           eyebrow: 'Act II',
           title: 'Reaction Timeline',
-          summary: 'Animation systems and keyframe processing allowed motion to become an explanatory layer rather than a decorative one.',
+          summary: 'Keyframe-driven animation turning motion into an explanatory layer.',
           bullets: [
             'Built keyframe-oriented management logic.',
             'Handled rotation and transformation data processing.',
@@ -355,7 +344,7 @@ export const enContent: SiteContent = {
           id: 'teaching-scale',
           eyebrow: 'Act III',
           title: 'Teaching at Scale',
-          summary: 'The project proves not just graphics ability, but collaboration, teaching context, multilingual rollout, and production deployment discipline.',
+          summary: 'Deployed to 4,000+ students with multilingual support and faculty collaboration.',
           bullets: [
             'Used across 4,000+ students.',
             'Collaborated with 10+ professors from the science department.',
@@ -370,7 +359,7 @@ export const enContent: SiteContent = {
       role: 'Full-time intern · Full Stack Developer',
       period: '2025.07 - 2025.10',
       location: 'Cyberoo AI',
-      summary: 'A bank anti-fraud detection training system that combines real-time AI voice analysis, RAG-enhanced workflows, and full-stack delivery discipline.',
+      summary: 'Bank anti-fraud training system with real-time AI voice detection and RAG integration.',
       badges: ['Internship', 'Realtime', 'AI Systems'],
       metrics: [
         { value: 'Realtime', label: 'voice detection flow', context: 'The product centered on immediate anti-fraud training feedback.', source: 'resume' },
@@ -392,7 +381,7 @@ export const enContent: SiteContent = {
           id: 'voice-pulse-field',
           eyebrow: 'Act I',
           title: 'Voice Pulse Field',
-          summary: 'The system is anchored in live signal interpretation rather than static dashboards.',
+          summary: 'Live voice signal interpretation for real-time fraud detection training.',
           bullets: [
             'Real-time AI voice detection for banking fraud prevention training.',
             'Designed around low-latency user feedback.',
@@ -403,7 +392,7 @@ export const enContent: SiteContent = {
           id: 'risk-node-graph',
           eyebrow: 'Act II',
           title: 'Risk Node Graph',
-          summary: 'The training context turns risk understanding into an interactive networked narrative.',
+          summary: 'Risk events mapped into an interactive, traceable graph structure.',
           bullets: [
             'Maps events, entities, and flags into interpretable structures.',
             'Supports monitoring-style interface composition.',
@@ -414,7 +403,7 @@ export const enContent: SiteContent = {
           id: 'knowledge-orbit',
           eyebrow: 'Act III',
           title: 'Knowledge Orbit',
-          summary: 'RAG and AI framework integration show product depth beyond the visual layer.',
+          summary: 'RAG and AI framework integration powering knowledge-assisted decisions.',
           bullets: [
             'Integrated Spring AI Alibaba and Qdrant.',
             'Used Netty-socketio for realtime data transmission.',
@@ -426,7 +415,7 @@ export const enContent: SiteContent = {
   },
   seo: {
     home: {
-      title: 'Hongyuan Wang · Interactive Media Engineer',
+      title: 'Hongyuan Wang · Full-Stack Creative Engineer',
       description: 'Portfolio featuring DynagraphAI, Chemviz3d, and Virtual Coach — interactive 3D tools, research platforms, and AI product systems.',
     },
     work: {
@@ -435,11 +424,11 @@ export const enContent: SiteContent = {
     },
     about: {
       title: 'About · Hongyuan Wang',
-      description: 'Background and positioning of Hongyuan Wang — Interactive Media Engineer and Full-Stack Developer.',
+      description: 'Background and positioning of Hongyuan Wang — Full-Stack Creative Engineer.',
     },
     resume: {
       title: 'Resume · Hongyuan Wang',
-      description: 'Experience, education, and skills of Hongyuan Wang — Interactive Media Engineer and Full-Stack Developer.',
+      description: 'Experience, education, and skills of Hongyuan Wang — Full-Stack Creative Engineer.',
     },
     contact: {
       title: 'Contact · Hongyuan Wang',
