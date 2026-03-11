@@ -69,6 +69,11 @@ export default function HomePage() {
   const content = getSiteContent(locale)
   const isMobile = useAppShellStore((state) => state.isMobile)
   const heroEyebrowClassName = `eyebrow ${styles.heroEyebrow}`
+  const heroEyebrow = (
+    <span className={heroEyebrowClassName}>
+      <span className={styles.heroEyebrowLabel}>{content.home.hero.eyebrow}</span>
+    </span>
+  )
 
   return (
     <div className="pageShell">
@@ -87,7 +92,7 @@ export default function HomePage() {
               <Suspense
                 fallback={
                   <>
-                    <span className={heroEyebrowClassName}>{content.home.hero.eyebrow}</span>
+                    {heroEyebrow}
                     <h1 className="heroTitle">{content.home.hero.title}</h1>
                     <p className={styles.heroSubtitle}>{content.home.hero.subtitle}</p>
                   </>
@@ -108,7 +113,7 @@ export default function HomePage() {
                   transitionDelay={640}
                   transitionDuration={620}
                 >
-                  <span className={heroEyebrowClassName}>{content.home.hero.eyebrow}</span>
+                  {heroEyebrow}
                 </ParticleText>
                 <ParticleText
                   className={styles.heroTitleParticle}
@@ -143,7 +148,7 @@ export default function HomePage() {
               </Suspense>
             ) : (
               <>
-                <span className={heroEyebrowClassName}>{content.home.hero.eyebrow}</span>
+                {heroEyebrow}
                 <h1 className="heroTitle">{content.home.hero.title}</h1>
                 <p className={styles.heroSubtitle}>{content.home.hero.subtitle}</p>
               </>
