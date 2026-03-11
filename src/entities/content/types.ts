@@ -49,6 +49,11 @@ export interface ProjectChapter {
   bullets: string[]
 }
 
+export interface SkillGroup {
+  group: string
+  items: string[]
+}
+
 export interface PosterSpec {
   title: string
   description: string
@@ -70,12 +75,14 @@ export interface ProjectContentSchema {
   badges: string[]
   metrics: MetricEntry[]
   techStack: string[]
+  skillGroups?: SkillGroup[]
   links: LinkItem[]
   liveUrl?: string
   livePages?: LivePage[]
   evidenceSource: EvidenceSourceId[]
-  poster: PosterSpec
+  poster?: PosterSpec
   chapters: ProjectChapter[]
+  detailSections?: ProjectChapter[]
 }
 
 export interface PageIntro {
@@ -119,7 +126,7 @@ export interface ResumeContent {
       bullets: string[]
     }>
   }>
-  skills: Array<{ group: string; items: string[] }>
+  skills: SkillGroup[]
 }
 
 export interface ContactContent {
@@ -167,6 +174,10 @@ export interface AppCopy {
   contributionsSuffix: string
   tryLiveLabel: string
   livePreviewLabel: string
+  toStaticLabel: string
+  toPhysicsLabel: string
+  toStaticAriaLabel: string
+  toPhysicsAriaLabel: string
 }
 
 export interface SiteContent {

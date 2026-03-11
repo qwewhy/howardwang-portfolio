@@ -2,9 +2,11 @@ import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { getSiteContent } from '../../app/i18n/catalog'
 import { getLocalizedPath } from '../../app/router/route-utils'
+import type { ProjectContentSchema, SiteContent, SkillGroup } from '../../entities/content/types'
 import { SceneEntry } from '../../features/scene-entry/SceneEntry'
 import { isLocale, isProjectSlug, siteConfig, type ProjectSlug } from '../../shared/config/site'
 import { BrowserChrome } from '../../shared/ui/BrowserChrome'
+import { SkillsShowcase } from '../../widgets/skills-showcase/SkillsShowcase'
 import NotFoundPage from '../not-found/NotFoundPage'
 import styles from './ProjectDetailPage.module.css'
 
@@ -28,7 +30,7 @@ function ExternalArrowIcon() {
   )
 }
 
-function LiveEmbedSection({ project, content }: { project: import('../../entities/content/types').ProjectContentSchema; content: import('../../entities/content/types').SiteContent }) {
+function LiveEmbedSection({ project, content }: { project: ProjectContentSchema; content: SiteContent }) {
   const [activeUrl, setActiveUrl] = useState(project.liveUrl!)
   const livePages = project.livePages
 
@@ -60,6 +62,10 @@ function LiveEmbedSection({ project, content }: { project: import('../../entitie
   )
 }
 
+function getProjectSkillGroups(project: ProjectContentSchema, content: SiteContent): SkillGroup[] {
+  return project.skillGroups ?? [{ group: content.copy.techStackLabel, items: project.techStack }]
+}
+
 export default function ProjectDetailPage() {
   const { locale: localeParam, slug: slugParam } = useParams()
 
@@ -70,10 +76,11 @@ export default function ProjectDetailPage() {
   const content = getSiteContent(localeParam)
   const project = content.projects[slugParam]
   const nextProject = content.projects[getNextProjectSlug(slugParam)]
+  const skillGroups = getProjectSkillGroups(project, content)
 
   return (
     <div className={`pageShell ${styles.layout}`}>
-      <section className={styles.hero}>
+      <section className={`${styles.hero} ${project.poster ? '' : styles.heroSingle}`.trim()}>
         <article className={`panel ${styles.heroCard}`}>
           <span className="eyebrow">
             {project.role} · {project.period}
@@ -102,41 +109,33 @@ export default function ProjectDetailPage() {
                 </span>
                 <strong>{metric.label}</strong>
                 <span className="muted">{metric.context}</span>
-                <span className="chip">{content.evidenceSources[metric.source]}</span>
               </div>
             ))}
           </div>
         </article>
 
-        <article className={`panel ${styles.posterCard}`}>
-          <div className={styles.poster} data-slug={slugParam}>
-            <div className={styles.posterWords}>
-              {project.poster.accentWords.map((word) => (
-                <span key={word} className={styles.posterWord}>
-                  {word}
-                </span>
-              ))}
+        {project.poster && (
+          <article className={`panel ${styles.posterCard}`}>
+            <div className={styles.poster} data-slug={slugParam}>
+              <div className={styles.posterWords}>
+                {project.poster.accentWords.map((word) => (
+                  <span key={word} className={styles.posterWord}>
+                    {word}
+                  </span>
+                ))}
+              </div>
             </div>
-          </div>
-          <span className="eyebrow">{project.poster.title}</span>
-          <p className="sectionDescription">{project.poster.description}</p>
-          <div className="chipRow">
-            {project.evidenceSource.map((source) => (
-              <span key={source} className="chip">
-                {content.evidenceSources[source]}
-              </span>
-            ))}
-          </div>
-        </article>
+            <span className="eyebrow">{project.poster.title}</span>
+            <p className="sectionDescription">{project.poster.description}</p>
+          </article>
+        )}
       </section>
 
       {project.chapters.length > 0 && (
         <SceneEntry locale={localeParam} slug={slugParam} chapters={project.chapters} />
       )}
 
-      {project.liveUrl && (
-        <LiveEmbedSection project={project} content={content} />
-      )}
+      {project.liveUrl && <LiveEmbedSection project={project} content={content} />}
 
       {project.chapters.length > 0 && (
         <section className={styles.chapterGrid}>
@@ -157,16 +156,40 @@ export default function ProjectDetailPage() {
         </section>
       )}
 
-      <section className={`panel ${styles.sectionCard}`}>
-        <span className="eyebrow">{content.copy.techStackLabel}</span>
-        <div className="chipRow">
-          {project.techStack.map((item) => (
-            <span key={item} className="chip">
-              {item}
-            </span>
+      {project.detailSections && project.detailSections.length > 0 && (
+        <section className={styles.detailGrid}>
+          {project.detailSections.map((section) => (
+            <article key={section.id} className={`panel ${styles.detailCard}`} id={section.id}>
+              <div className={styles.detailLead}>
+                <span className="eyebrow">{section.eyebrow}</span>
+                <h2 className={styles.detailTitle}>{section.title}</h2>
+              </div>
+              <div className={styles.detailBody}>
+                <p className={styles.detailSummary}>{section.summary}</p>
+                <div className={styles.detailChipRow}>
+                  {section.bullets.map((bullet) => (
+                    <span key={bullet} className={styles.detailChip}>
+                      {bullet}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </article>
           ))}
-        </div>
-      </section>
+        </section>
+      )}
+
+      <SkillsShowcase
+        className={styles.stackSection}
+        groups={skillGroups}
+        copy={{
+          eyebrow: content.copy.techStackLabel,
+          toStaticLabel: content.copy.toStaticLabel,
+          toPhysicsLabel: content.copy.toPhysicsLabel,
+          toStaticAriaLabel: content.copy.toStaticAriaLabel,
+          toPhysicsAriaLabel: content.copy.toPhysicsAriaLabel,
+        }}
+      />
 
       <section className={`panel ${styles.sectionCard}`}>
         <span className="eyebrow">{content.copy.nextProjectLabel}</span>

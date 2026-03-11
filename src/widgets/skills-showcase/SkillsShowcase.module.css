@@ -1,0 +1,162 @@
+.section {
+  display: grid;
+  gap: 1rem;
+}
+
+.introDescription {
+  margin: 0;
+  max-width: 60ch;
+  color: var(--color-text-muted);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.introRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.physicsToggle {
+  padding: 0.32rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-line);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.physicsToggle:hover {
+  background: rgba(var(--color-accent), 0.1);
+  border-color: var(--color-accent);
+  color: var(--color-text);
+}
+
+.grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.featuredGrid {
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 2fr 1fr;
+}
+
+.featuredGrid .skillCard:nth-child(1),
+.featuredGrid .skillCard:nth-child(2) {
+  grid-row: 1 / -1;
+}
+
+.autoGrid {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.autoGrid .skillCard {
+  min-height: 300px;
+}
+
+.skillCard {
+  --_accent: var(--skill-accent, 107, 230, 255);
+  position: relative;
+  display: grid;
+  gap: 1.25rem;
+  padding: 1.4rem 1.3rem;
+  overflow: hidden;
+  border-top: 2px solid rgba(var(--_accent), 0.35);
+  background:
+    radial-gradient(ellipse 80% 60% at 0% 0%, rgba(var(--_accent), 0.1), transparent 70%),
+    var(--color-surface);
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-slow);
+}
+
+.skillCard:hover {
+  border-top-color: rgba(var(--_accent), 0.55);
+  box-shadow:
+    var(--shadow-card),
+    0 0 32px rgba(var(--_accent), 0.06);
+}
+
+.skillHeading {
+  position: relative;
+  z-index: 3;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: rgba(var(--_accent), 0.9);
+}
+
+:global(html[data-theme='light']) .skillHeading {
+  color: var(--color-text);
+}
+
+.skillList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-content: flex-start;
+}
+
+.skillChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.38rem;
+  padding: 0.42rem 0.72rem;
+  border-radius: 8px;
+  border: 1px solid var(--color-line);
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 0.82rem;
+  line-height: 1.35;
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.skillChip:hover {
+  background: rgba(var(--_accent), 0.1);
+  border-color: rgba(var(--_accent), 0.3);
+}
+
+.skillIcon {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  object-fit: contain;
+}
+
+@media (max-width: 640px) {
+  .introDescription {
+    font-size: 0.92rem;
+  }
+
+  .featuredGrid,
+  .autoGrid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  .featuredGrid .skillCard:nth-child(1),
+  .featuredGrid .skillCard:nth-child(2) {
+    grid-row: auto;
+  }
+
+  .skillCard {
+    padding: 1rem;
+  }
+
+  .autoGrid .skillCard {
+    min-height: 240px;
+  }
+}

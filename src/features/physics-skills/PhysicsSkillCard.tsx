@@ -22,6 +22,20 @@ interface BodyMeta {
   size: ChipSize
 }
 
+interface MouseConstraintDragEvent {
+  body?: Matter.Body
+}
+
+type PhysicsContainerHandle = HTMLDivElement & {
+  __physicsResume?: () => void
+  __physicsStartLoop?: () => void
+  __bombClick?: () => void
+}
+
+type MatterMouseWithWheel = Matter.Mouse & {
+  mousewheel?: EventListener
+}
+
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const WALL_THICKNESS = 60
@@ -41,7 +55,7 @@ const FUSE_DURATION_MS = 2000
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export function PhysicsSkillCard({ items, accentRgb, hasBomb }: PhysicsSkillCardProps) {
-  const containerRef = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<PhysicsContainerHandle>(null)
   const engineRef = useRef<Matter.Engine | null>(null)
   const runnerRef = useRef<Matter.Runner | null>(null)
   const bodiesRef = useRef<Matter.Body[]>([])
@@ -58,7 +72,7 @@ export function PhysicsSkillCard({ items, accentRgb, hasBomb }: PhysicsSkillCard
   const explodedRef = useRef(false)
   const litRef = useRef(false)
 
-  const [ready, setReady] = useState(false)
+  const [renderVersion, setRenderVersion] = useState(0)
 
   const hasIcon = useCallback(
     (label: string) => items.some((it) => it.label === label && !!it.logoSrc),
@@ -71,6 +85,13 @@ export function PhysicsSkillCard({ items, accentRgb, hasBomb }: PhysicsSkillCard
     if (!el) return
 
     let disposed = false
+    pausedRef.current = false
+    idleCountRef.current = 0
+    dropsStartedRef.current = false
+    explodedRef.current = false
+    litRef.current = false
+    chipElsRef.current = []
+    cancelAnimationFrame(rafRef.current)
 
     ;(async () => {
       const Matter = await import('matter-js')
@@ -93,7 +114,7 @@ export function PhysicsSkillCard({ items, accentRgb, hasBomb }: PhysicsSkillCard
       engineRef.current = engine
 
       // Walls
-      const wallOpts: Matter.IBodyDefinition = {
+      const wallOpts: Matter.IChamferableBodyDefinition = {
         isStatic: true,
         restitution: 0.3,
         friction: 0.6,
@@ -151,13 +172,16 @@ export function PhysicsSkillCard({ items, accentRgb, hasBomb }: PhysicsSkillCard
         mouse,
         constraint: { stiffness: 0.6, damping: 0.1, render: { visible: false } },
       })
-      mouse.element.removeEventListener('mousewheel', (mouse as any).mousewheel)
-      mouse.element.removeEventListener('DOMMouseScroll', (mouse as any).mousewheel)
+      const mouseWithWheel = mouse as MatterMouseWithWheel
+      if (mouseWithWheel.mousewheel) {
+        mouse.element.removeEventListener('mousewheel', mouseWithWheel.mousewheel)
+        mouse.element.removeEventListener('DOMMouseScroll', mouseWithWheel.mousewheel)
+      }
       Composite.add(engine.world, mouseConstraint)
 
       // Calm drag — reset angular velocity & resume RAF if paused
-      Events.on(mouseConstraint, 'startdrag', (e: any) => {
-        const body = e.body as Matter.Body
+      Events.on(mouseConstraint, 'startdrag', (event) => {
+        const body = (event as Matter.IEvent<Matter.MouseConstraint> & MouseConstraintDragEvent).body
         if (body) Matter.Body.setAngularVelocity(body, 0)
         if (pausedRef.current) resumeRaf()
       })
@@ -188,7 +212,7 @@ export function PhysicsSkillCard({ items, accentRgb, hasBomb }: PhysicsSkillCard
       }, bombHeadStart + bodies.length * DROP_STAGGER_MS + 500)
 
       // Signal React to render chip DOM elements
-      setReady(true)
+      setRenderVersion((version) => version + 1)
 
       // ── Render loop (started by a separate effect after React commits) ──
       // See the useEffect below that depends on [ready]
@@ -292,9 +316,9 @@ export function PhysicsSkillCard({ items, accentRgb, hasBomb }: PhysicsSkillCard
       }
 
       // Expose for external use (resize, mouse interaction, bomb click)
-      ;(el as any).__physicsResume = resumeRaf
-      ;(el as any).__physicsStartLoop = startRafLoop
-      ;(el as any).__bombClick = handleBombClick
+      el.__physicsResume = resumeRaf
+      el.__physicsStartLoop = startRafLoop
+      el.__bombClick = handleBombClick
     })()
 
     return () => {
@@ -311,6 +335,7 @@ export function PhysicsSkillCard({ items, accentRgb, hasBomb }: PhysicsSkillCard
       runnerRef.current = null
       bodiesRef.current = []
       metaRef.current = []
+      chipElsRef.current = []
       bombBodyRef.current = null
       explodedRef.current = false
       litRef.current = false
@@ -319,16 +344,16 @@ export function PhysicsSkillCard({ items, accentRgb, hasBomb }: PhysicsSkillCard
 
   // ── Start RAF loop AFTER React commits chip elements ────────────────────
   useEffect(() => {
-    if (!ready) return
+    if (renderVersion === 0) return
     const el = containerRef.current
     if (!el) return
     // Give React one more frame to ensure refs are populated
     const id = requestAnimationFrame(() => {
-      const startLoop = (el as any).__physicsStartLoop
+      const startLoop = el.__physicsStartLoop
       if (typeof startLoop === 'function') startLoop()
     })
     return () => cancelAnimationFrame(id)
-  }, [ready])
+  }, [renderVersion])
 
   // ── Handle resize ───────────────────────────────────────────────────────
   useEffect(() => {
@@ -351,14 +376,14 @@ export function PhysicsSkillCard({ items, accentRgb, hasBomb }: PhysicsSkillCard
         Matter.Body.setPosition(statics[2], { x: W + WALL_THICKNESS / 2, y: H / 2 })
         Matter.Body.setPosition(statics[3], { x: W / 2, y: -WALL_THICKNESS / 2 - 400 })
       }
-      const resume = (el as any).__physicsResume
+      const resume = el.__physicsResume
       if (typeof resume === 'function') resume()
     }
 
     const observer = new ResizeObserver(handleResize)
     observer.observe(el)
     return () => observer.disconnect()
-  }, [ready])
+  }, [renderVersion])
 
   // ── Render ──────────────────────────────────────────────────────────────
   return (
@@ -369,11 +394,11 @@ export function PhysicsSkillCard({ items, accentRgb, hasBomb }: PhysicsSkillCard
       onPointerDown={() => {
         if (!pausedRef.current) return
         const el = containerRef.current
-        const resume = el && (el as any).__physicsResume
+        const resume = el?.__physicsResume
         if (typeof resume === 'function') resume()
       }}
     >
-      {ready &&
+      {metaRef.current.length > 0 &&
         metaRef.current.map((m, i) => (
           <span
             key={m.label}
@@ -386,13 +411,13 @@ export function PhysicsSkillCard({ items, accentRgb, hasBomb }: PhysicsSkillCard
             {m.label}
           </span>
         ))}
-      {ready && hasBomb && (
+      {metaRef.current.length > 0 && hasBomb && (
         <div
           ref={bombElRef}
           className={styles.bombOverlay}
           onClick={() => {
             const el = containerRef.current
-            const handler = el && (el as any).__bombClick
+            const handler = el?.__bombClick
             if (typeof handler === 'function') handler()
           }}
           aria-label="Click to explode"

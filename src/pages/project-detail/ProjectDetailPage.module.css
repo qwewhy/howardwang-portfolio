@@ -9,6 +9,10 @@
   gap: 1rem;
 }
 
+.heroSingle {
+  grid-template-columns: 1fr;
+}
+
 .heroCard,
 .posterCard,
 .sectionCard {
@@ -109,10 +113,83 @@
   gap: 1rem;
 }
 
+.detailGrid {
+  display: grid;
+  gap: 1rem;
+}
+
+.stackSection {
+  margin-top: 0.2rem;
+}
+
 .chapter {
   display: grid;
   gap: 0.8rem;
   padding: 1.2rem;
+}
+
+.detailCard {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.85fr) minmax(0, 1.4fr);
+  gap: 1.4rem;
+  align-items: start;
+  padding: 1.25rem 1.3rem;
+  background:
+    radial-gradient(circle at top left, rgba(67, 231, 177, 0.1), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+}
+
+.detailCard:nth-child(2n) {
+  background:
+    radial-gradient(circle at top right, rgba(107, 230, 255, 0.12), transparent 36%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+}
+
+.detailLead {
+  display: grid;
+  gap: 0.85rem;
+  align-content: start;
+}
+
+.detailTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2vw, 1.9rem);
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+.detailBody {
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+  min-width: 0;
+}
+
+.detailSummary {
+  max-width: none;
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.82;
+  color: var(--color-text-muted);
+}
+
+.detailChipRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.detailChip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.52rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(107, 230, 255, 0.16);
+  background: rgba(255, 255, 255, 0.035);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--color-text);
 }
 
 .nextLink {
@@ -122,6 +199,11 @@
 @media (max-width: 980px) {
   .hero {
     grid-template-columns: 1fr;
+  }
+
+  .detailCard {
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
 }
 
@@ -138,6 +220,15 @@
 
   .chapter {
     padding: 0.95rem;
+  }
+
+  .detailCard {
+    padding: 1rem;
+  }
+
+  .detailSummary {
+    font-size: 0.92rem;
+    line-height: 1.72;
   }
 }
 
