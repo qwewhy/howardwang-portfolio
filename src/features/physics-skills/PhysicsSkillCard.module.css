@@ -1,0 +1,143 @@
+/* Container that overlays on top of the static skill list */
+.physicsContainer {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  border-radius: inherit;
+  cursor: grab;
+  touch-action: none;
+}
+
+.physicsContainer:active {
+  cursor: grabbing;
+}
+
+/* Each chip rendered as a DOM overlay on top of physics bodies */
+.physicsChip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.38rem;
+  padding: 0.42rem 0.72rem;
+  border-radius: 8px;
+  border: 1px solid var(--color-line);
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 0.82rem;
+  line-height: 1.35;
+  white-space: nowrap;
+  will-change: transform;
+  pointer-events: none;
+  user-select: none;
+  transition: opacity 0.3s ease;
+}
+
+.physicsChip:hover {
+  background: rgba(var(--_accent, 107, 230, 255), 0.1);
+  border-color: rgba(var(--_accent, 107, 230, 255), 0.3);
+}
+
+.physicsIcon {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  object-fit: contain;
+}
+
+/* ─── Bomb overlay ──────────────────────────────────────────────────────────── */
+
+.bombOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 72px;
+  height: 72px;
+  pointer-events: auto;
+  cursor: pointer;
+  z-index: 1;
+  will-change: transform;
+  user-select: none;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.45))
+    drop-shadow(0 0 14px rgba(255, 255, 255, 0.18));
+  transition: filter 0.2s ease;
+}
+
+.bombOverlay:hover {
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.65))
+    drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+}
+
+.bombOverlay svg {
+  width: 72px;
+  height: 72px;
+  overflow: visible;
+}
+
+/* Fuse line */
+.bombFuse {
+  stroke-dasharray: 18;
+  stroke-dashoffset: 0;
+}
+
+/* Spark at the tip of the fuse */
+.bombSpark {
+  opacity: 0;
+}
+
+/* ─── Lit state: fuse burns down over 2s ────────────────────────────────────── */
+
+.bombLit .bombFuse {
+  animation: fuseBurn 2s linear forwards;
+}
+
+.bombLit .bombSpark {
+  opacity: 1;
+  animation: sparkGlow 0.3s ease-in-out infinite alternate, sparkMove 2s linear forwards;
+}
+
+@keyframes fuseBurn {
+  to { stroke-dashoffset: 18; }
+}
+
+@keyframes sparkGlow {
+  from { r: 2; opacity: 0.8; }
+  to   { r: 3; opacity: 1; }
+}
+
+@keyframes sparkMove {
+  0%   { transform: translate(0, 0); }
+  10%  { transform: translate(1.65px, 0.64px); }
+  20%  { transform: translate(3px, 1.36px); }
+  30%  { transform: translate(4.05px, 2.16px); }
+  40%  { transform: translate(4.8px, 3.04px); }
+  50%  { transform: translate(5.25px, 4px); }
+  60%  { transform: translate(5.4px, 5.04px); }
+  70%  { transform: translate(5.25px, 6.16px); }
+  80%  { transform: translate(4.8px, 7.36px); }
+  90%  { transform: translate(4.05px, 8.64px); }
+  100% { transform: translate(3px, 10px); }
+}
+
+/* ─── Post-explosion chip color ─────────────────────────────────────────────── */
+
+.exploded {
+  background: rgba(220, 210, 170, 0.13) !important;
+  border-color: rgba(200, 190, 140, 0.22) !important;
+  color: rgba(210, 200, 160, 0.8);
+}
+
+.exploded .physicsIcon {
+  filter: saturate(0.2) brightness(1.2);
+}
+
+/* Wrapper keeps the static content visible as fallback */
+.wrapper {
+  position: relative;
+}
+
+/* Hide static list when physics is active */
+.staticHidden {
+  visibility: hidden;
+}

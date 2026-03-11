@@ -1,9 +1,11 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useRef, useState, useEffect, useMemo } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { getSiteContent } from '../../app/i18n/catalog'
 import { getLocalizedPath } from '../../app/router/route-utils'
 import { useAppShellStore } from '../../app/store/app-shell-store'
+import { usePhysicsSkillsStore } from '../../app/store/physics-skills-store'
 import { SignalGrid } from '../../features/contribution-visual/SignalGrid'
+import { LazyPhysicsSkillCard } from '../../features/physics-skills'
 import { TokenCounter } from '../../features/token-counter/TokenCounter'
 import { ProjectCard } from '../../widgets/project-card/ProjectCard'
 import { isLocale, siteConfig } from '../../shared/config/site'
@@ -41,6 +43,9 @@ const SKILL_LOGO: Record<string, string> = {
   Prettier: 'prettier.svg',
   'Node.js': 'nodejs.svg',
   NestJS: 'nestjs.svg',
+  'Python 3': 'python.svg',
+  Django: 'django.svg',
+  FastAPI: 'fastapi.svg',
   Java: 'java.svg',
   'Spring Boot 3': 'spring.svg',
   MongoDB: 'mongodb.svg',
@@ -63,12 +68,62 @@ const SKILL_LOGO: Record<string, string> = {
   'OpenAI Codex': 'openai.svg',
 }
 
+const SKILL_ACCENTS = ['107,230,255', '67,231,177', '255,155,90', '167,139,250']
+
 export default function HomePage() {
   const { locale: localeParam } = useParams()
   const locale = localeParam && isLocale(localeParam) ? localeParam : siteConfig.defaultLocale
   const content = getSiteContent(locale)
   const isMobile = useAppShellStore((state) => state.isMobile)
+  const reducedMotion = useAppShellStore((state) => state.reducedMotion)
+  const physicsMode = usePhysicsSkillsStore((s) => s.physicsMode)
+  const togglePhysicsMode = usePhysicsSkillsStore((s) => s.togglePhysicsMode)
   const heroEyebrowClassName = `eyebrow ${styles.heroEyebrow}`
+
+  // ── Physics skills: only activate when section scrolls into view ──────
+  const skillSectionRef = useRef<HTMLDivElement>(null)
+  const [skillsVisible, setSkillsVisible] = useState(false)
+  const canPhysics = !isMobile && !reducedMotion
+  const enablePhysics = canPhysics && physicsMode
+
+  useEffect(() => {
+    if (!enablePhysics) return
+    const el = skillSectionRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setSkillsVisible(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: '200px' },
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [enablePhysics])
+
+  // ── Bomb: pick one random card each time physics activates ──────────
+  const bombIndexRef = useRef(-1)
+  const showPhysics = enablePhysics && skillsVisible
+  if (showPhysics && bombIndexRef.current === -1) {
+    bombIndexRef.current = Math.floor(Math.random() * content.resume.skills.length)
+  }
+  if (!showPhysics) {
+    bombIndexRef.current = -1
+  }
+
+  /** Pre-compute physics items per group (stable across renders) */
+  const physicsItemsByGroup = useMemo(
+    () =>
+      content.resume.skills.map((group) =>
+        group.items.map((label) => ({
+          label,
+          logoSrc: SKILL_LOGO[label] ? `/logos/skills/${SKILL_LOGO[label]}` : undefined,
+        })),
+      ),
+    [content.resume.skills],
+  )
   const heroEyebrow = (
     <span className={heroEyebrowClassName}>
       <span className={styles.heroEyebrowLabel}>{content.home.hero.eyebrow}</span>
@@ -240,35 +295,58 @@ export default function HomePage() {
 
       <section className={styles.section}>
         <div className="pageIntro">
-          <span className="eyebrow">{content.home.capabilityIntro.eyebrow}</span>
+          <div className={styles.skillIntroRow}>
+            <span className="eyebrow">{content.home.capabilityIntro.eyebrow}</span>
+            {canPhysics && skillsVisible && (
+              <button
+                className={styles.physicsToggle}
+                onClick={togglePhysicsMode}
+                aria-label={physicsMode ? 'Switch to static view' : 'Switch to physics view'}
+              >
+                {physicsMode ? 'To Static' : 'To Physics'}
+              </button>
+            )}
+          </div>
           <h2 className="sectionTitle">{content.home.capabilityIntro.title}</h2>
           <p className={styles.sectionLead}>{content.home.capabilityIntro.description}</p>
         </div>
-        <div className={styles.skillGrid}>
-          {content.resume.skills.map((group, i) => (
-            <article
-              key={group.group}
-              className={`panel ${styles.skillCard}`}
-              style={{ '--skill-accent': ['107,230,255', '67,231,177', '255,155,90', '167,139,250'][i] ?? '107,230,255' } as React.CSSProperties}
-            >
-              <h3 className={styles.skillHeading}>{group.group}</h3>
-              <div className={styles.skillList}>
-                {group.items.map((item) => (
-                  <span key={item} className={styles.skillChip}>
-                    {SKILL_LOGO[item] && (
-                      <img
-                        src={`/logos/skills/${SKILL_LOGO[item]}`}
-                        alt=""
-                        className={styles.skillIcon}
-                        loading="lazy"
-                      />
-                    )}
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </article>
-          ))}
+        <div ref={skillSectionRef} className={styles.skillGrid}>
+          {content.resume.skills.map((group, i) => {
+            const accent = SKILL_ACCENTS[i] ?? SKILL_ACCENTS[0]
+            return (
+              <article
+                key={group.group}
+                className={`panel ${styles.skillCard}`}
+                style={{ '--skill-accent': accent } as React.CSSProperties}
+              >
+                <h3 className={styles.skillHeading}>{group.group}</h3>
+                {/* Static chip list: stays visible as fallback, hidden when physics active */}
+                <div className={styles.skillList} style={showPhysics ? { visibility: 'hidden' } : undefined}>
+                  {group.items.map((item) => (
+                    <span key={item} className={styles.skillChip}>
+                      {SKILL_LOGO[item] && (
+                        <img
+                          src={`/logos/skills/${SKILL_LOGO[item]}`}
+                          alt=""
+                          className={styles.skillIcon}
+                          loading="lazy"
+                        />
+                      )}
+                      {item}
+                    </span>
+                  ))}
+                </div>
+                {/* Physics overlay: lazy-loaded, chips drop from above */}
+                {showPhysics && (
+                  <LazyPhysicsSkillCard
+                    items={physicsItemsByGroup[i]}
+                    accentRgb={accent}
+                    hasBomb={i === bombIndexRef.current}
+                  />
+                )}
+              </article>
+            )
+          })}
         </div>
       </section>
 

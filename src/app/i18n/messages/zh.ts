@@ -176,7 +176,7 @@ export const zhContent: SiteContent = {
     ],
     skills: [
       { group: '前端与界面', items: ['React 18', 'Next.js', 'TanStack', 'JavaScript', 'ES6', 'TypeScript', 'WebGL', 'Three.js', 'R3F', 'Drei', 'Cannon', 'Rapier3D', 'GLSL', 'WASM', 'driver.js', 'CodeMirror 6', 'Vitest', 'DOMPurify', 'SEO', 'Vite', 'Webpack', 'React Router', 'Zustand', 'Tailwind CSS', 'Ant Design', 'Figma', 'i18n', 'ESLint/TSLint', 'Prettier'] },
-      { group: 'Backend & 服务', items: ['Node.js', 'NestJS', 'Java', 'Spring Boot 3', 'RESTful APIs', 'JWT', 'MongoDB', 'Redis', 'Caffeine', 'MySQL', 'Elasticsearch', 'Supabase', 'Stripe', 'Swagger/Knife4j'] },
+      { group: 'Backend & 服务', items: ['Node.js', 'NestJS', 'Python 3', 'Django', 'FastAPI', 'Java', 'Spring Boot 3', 'RESTful APIs', 'JWT', 'MongoDB', 'Redis', 'Caffeine', 'MySQL', 'Elasticsearch', 'Supabase', 'Stripe', 'Swagger/Knife4j'] },
       { group: 'AI技术', items: ['Spring AI', 'Spring AI Alibaba', 'Vercel AI SDK', 'OpenAI SDK', 'RAG', 'Qdrant', 'SSE', 'LLM workflows', 'WebMCP', 'OpenClaw', 'Pi', 'Function Call', 'QMD', '提示词工程'] },
       { group: 'AI 开发工具', items: ['Claude Code', 'Cursor', 'Open Code', 'Google Antigravity', 'OpenAI Codex', 'Agent Teams'] },
     ],
