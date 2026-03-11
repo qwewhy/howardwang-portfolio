@@ -148,7 +148,7 @@ export const enContent: SiteContent = {
           {
             heading: 'Virtual Coach',
             subheading: 'Full-time Intern · Full Stack Developer · 2025.07 - 2025.10',
-            detail: 'Bank anti-fraud detection training system with real-time AI voice detection, RAG integration, and backend collaboration.',
+            detail: 'Bank anti-fraud training system with real-time AI voice processing, RAG integration, and backend collaboration.',
             bullets: [
               'Built with Next.js and Spring Boot.',
               'Integrated Spring AI Alibaba with Qdrant.',
@@ -305,7 +305,7 @@ export const enContent: SiteContent = {
       metrics: [
         { value: '4000+', label: 'chemistry undergrads using it', context: 'The deployed tool directly supported teaching at scale.', source: 'resume' },
         { value: '10+', label: 'professor collaborators', context: 'The project evolved through continuous interdisciplinary feedback.', source: 'resume' },
-        { value: 'AI-assisted', label: 'academic-grade molecular animation editing', context: 'AI-powered editing pipeline for research-quality chemical reaction animations.', source: 'resume' },
+        { value: 'AI-assisted', label: 'academic molecular animation editing', context: 'AI-powered editing pipeline for research-quality chemical reaction animations.', source: 'resume' },
       ],
       techStack: ['Three.js', 'WebGL', 'WASM', 'Web Worker', 'Zustand', 'Tailwind CSS', 'AWS S3', 'Route 53', 'CloudFront'],
       links: [
@@ -360,10 +360,10 @@ export const enContent: SiteContent = {
       role: 'Full-time intern · Full Stack Developer',
       period: '2025.07 - 2025.10',
       location: 'Cyberoo AI',
-      summary: 'Bank anti-fraud training system with real-time AI voice detection and RAG integration.',
+      summary: 'Bank anti-fraud training system with real-time AI voice processing and RAG integration.',
       badges: ['Internship', 'Realtime', 'AI Systems'],
       metrics: [
-        { value: 'Realtime', label: 'voice detection flow', context: 'The product centered on immediate anti-fraud training feedback.', source: 'resume' },
+        { value: 'Realtime', label: 'voice processing flow', context: 'The product centered on immediate anti-fraud training feedback.', source: 'resume' },
         { value: 'RAG', label: 'knowledge integration', context: 'Spring AI Alibaba and Qdrant were used to support intelligent behavior.', source: 'resume' },
         { value: 'Full-stack', label: 'delivery scope', context: 'The work spanned frontend, backend integration, and system collaboration.', source: 'resume' },
       ],
@@ -382,7 +382,7 @@ export const enContent: SiteContent = {
           title: 'Voice Pulse Field',
           summary: 'Live voice signal interpretation for real-time fraud detection training.',
           bullets: [
-            'Real-time AI voice detection for banking fraud prevention training.',
+            'Real-time AI voice processing for banking fraud prevention training.',
             'Designed around low-latency user feedback.',
             'Interface language emphasizes monitoring and intervention.',
           ],

@@ -147,7 +147,7 @@ export const zhContent: SiteContent = {
           {
             heading: 'Virtual Coach',
             subheading: '全职实习 · 全栈开发者 · 2025.07 - 2025.10',
-            detail: '银行反欺诈检测训练系统，具备实时 AI 语音检测、RAG 集成与后端协作能力。',
+            detail: '银行反欺诈训练系统，具备实时 AI 语音处理、RAG 集成与后端协作能力。',
             bullets: [
               '使用 Next.js 与 Spring Boot 构建。',
               '集成 Spring AI Alibaba 与 Qdrant。',
@@ -328,10 +328,10 @@ export const zhContent: SiteContent = {
       role: '全职实习 · 全栈开发者',
       period: '2025.07 - 2025.10',
       location: 'Cyberoo AI',
-      summary: '银行反欺诈训练系统，实时 AI 语音检测与 RAG 集成。',
+      summary: '银行反欺诈训练系统，实时 AI 语音处理与 RAG 集成。',
       badges: ['实习项目', '实时系统', 'AI 产品'],
       metrics: [
-        { value: 'Realtime', label: '语音检测链路', context: '产品核心是即时的反欺诈训练反馈。', source: 'resume' },
+        { value: 'Realtime', label: '语音处理链路', context: '产品核心是即时的反欺诈训练反馈。', source: 'resume' },
         { value: 'RAG', label: '知识增强能力', context: '集成 Spring AI Alibaba 与 Qdrant。', source: 'resume' },
         { value: 'Full-stack', label: '交付范围', context: '覆盖前端、后端集成与系统协作。', source: 'resume' },
       ],
@@ -348,8 +348,8 @@ export const zhContent: SiteContent = {
           id: 'voice-pulse-field',
           eyebrow: '第一幕',
           title: 'Voice Pulse Field',
-          summary: '实时语音信号解读，用于反欺诈检测训练。',
-          bullets: ['面向银行反欺诈训练的实时 AI 语音检测。', '围绕低延迟用户反馈设计。', '界面语言强调监测与干预。'],
+          summary: '实时语音信号解读，用于反欺诈处理训练。',
+          bullets: ['面向银行反欺诈训练的实时 AI 语音处理。', '围绕低延迟用户反馈设计。', '界面语言强调监测与干预。'],
         },
         {
           id: 'risk-node-graph',

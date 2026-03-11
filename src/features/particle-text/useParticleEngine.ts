@@ -46,6 +46,19 @@ function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value))
 }
 
+function applyTextTransform(text: string, textTransform: string) {
+  switch (textTransform) {
+    case 'uppercase':
+      return text.toLocaleUpperCase()
+    case 'lowercase':
+      return text.toLocaleLowerCase()
+    case 'capitalize':
+      return text.replace(/\b(\p{L})/gu, (match) => match.toLocaleUpperCase())
+    default:
+      return text
+  }
+}
+
 function parseCssColor(input: string): RgbaColor {
   const color = input.trim()
 
@@ -246,12 +259,13 @@ function sampleParticles(
     const parent = node.parentElement
     if (!parent) continue
     const style = getComputedStyle(parent)
-    ctx.font = `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`
+    const renderedText = applyTextTransform(node.textContent, style.textTransform)
+    ctx.font = style.font || `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`
     ctx.fillStyle = style.color
     ctx.textBaseline = 'top'
 
     for (let i = 0; i < node.length; i++) {
-      const ch = node.textContent[i]
+      const ch = renderedText[i]
       if (!ch.trim()) continue
       const range = document.createRange()
       range.setStart(node, i)
@@ -271,15 +285,38 @@ function sampleParticles(
 
   for (let py = 0; py < ch; py += scaledGap) {
     for (let px = 0; px < cw; px += scaledGap) {
-      const idx = (py * cw + px) * 4
-      const alpha = data[idx + 3] / 255
-      if (alpha >= PARTICLE_ALPHA_THRESHOLD) {
+      let bestAlpha = 0
+      let bestPx = px
+      let bestPy = py
+      let bestIdx = (py * cw + px) * 4
+      const maxPy = Math.min(py + scaledGap, ch)
+      const maxPx = Math.min(px + scaledGap, cw)
+
+      for (let sy = py; sy < maxPy; sy++) {
+        for (let sx = px; sx < maxPx; sx++) {
+          const idx = (sy * cw + sx) * 4
+          const alpha = data[idx + 3] / 255
+          if (alpha > bestAlpha) {
+            bestAlpha = alpha
+            bestPx = sx
+            bestPy = sy
+            bestIdx = idx
+          }
+        }
+      }
+
+      if (bestAlpha >= PARTICLE_ALPHA_THRESHOLD) {
         pushParticle(
           particles,
-          px / dpr,
-          py / dpr,
+          bestPx / dpr,
+          bestPy / dpr,
           particleSize,
-          { r: data[idx], g: data[idx + 1], b: data[idx + 2], a: alpha },
+          {
+            r: data[bestIdx],
+            g: data[bestIdx + 1],
+            b: data[bestIdx + 2],
+            a: bestAlpha,
+          },
           saturationBoost,
           contrastBoost,
           minParticleAlpha,
