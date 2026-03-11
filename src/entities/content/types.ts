@@ -47,6 +47,7 @@ export interface ProjectChapter {
   title: string
   summary: string
   bullets: string[]
+  previewUrl?: string
 }
 
 export interface SkillGroup {
@@ -58,6 +59,14 @@ export interface PosterSpec {
   title: string
   description: string
   accentWords: string[]
+}
+
+export interface HeroLogoSpec {
+  src: string
+  alt: string
+  eyebrow?: string
+  caption?: string
+  tags?: string[]
 }
 
 export interface LivePage {
@@ -81,8 +90,10 @@ export interface ProjectContentSchema {
   livePages?: LivePage[]
   evidenceSource: EvidenceSourceId[]
   poster?: PosterSpec
+  heroLogo?: HeroLogoSpec
   chapters: ProjectChapter[]
   detailSections?: ProjectChapter[]
+  renderChapterCards?: boolean
 }
 
 export interface PageIntro {
@@ -160,6 +171,7 @@ export interface AppCopy {
   metricsLabel: string
   sourceLabel: string
   summaryLabel: string
+  previousProjectLabel: string
   nextProjectLabel: string
   liveLabel: string
   researchLabel: string

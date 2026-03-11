@@ -15,6 +15,7 @@
 
 .heroCard,
 .posterCard,
+.heroLogoCard,
 .sectionCard {
   display: grid;
   gap: 1rem;
@@ -65,6 +66,32 @@
   color: var(--color-text);
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.heroLogoCard {
+  align-content: center;
+}
+
+.heroLogoStage {
+  display: grid;
+  place-items: center;
+  min-height: 320px;
+  padding: clamp(1.2rem, 2.8vw, 2rem);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-line);
+  background:
+    radial-gradient(circle at 28% 24%, rgba(67, 231, 177, 0.18), transparent 24%),
+    radial-gradient(circle at 76% 72%, rgba(107, 230, 255, 0.16), transparent 28%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(6, 17, 31, 0.84));
+}
+
+.heroLogoImage {
+  display: block;
+  width: min(100%, 310px);
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  filter: drop-shadow(0 18px 34px rgba(0, 0, 0, 0.35));
 }
 
 .liveEmbed {
@@ -128,42 +155,91 @@
   padding: 1.2rem;
 }
 
-.detailCard {
+.detailDisclosure {
   display: grid;
-  grid-template-columns: minmax(220px, 0.85fr) minmax(0, 1.4fr);
-  gap: 1.4rem;
-  align-items: start;
-  padding: 1.25rem 1.3rem;
+  gap: 0;
+  padding: 1.15rem 1.25rem;
   background:
     radial-gradient(circle at top left, rgba(67, 231, 177, 0.1), transparent 34%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
 }
 
-.detailCard:nth-child(2n) {
+.detailDisclosure:nth-child(2n) {
   background:
     radial-gradient(circle at top right, rgba(107, 230, 255, 0.12), transparent 36%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+}
+
+.detailTrigger {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: start;
+  cursor: pointer;
+  list-style: none;
+}
+
+.detailTrigger::-webkit-details-marker {
+  display: none;
 }
 
 .detailLead {
   display: grid;
   gap: 0.85rem;
   align-content: start;
+  min-width: 0;
 }
 
 .detailTitle {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(1.25rem, 2vw, 1.9rem);
-  line-height: 1.08;
+  font-size: clamp(1.08rem, 1.55vw, 1.58rem);
+  line-height: 1.12;
   text-wrap: balance;
 }
 
-.detailBody {
+.detailChevron {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  border: 1px solid rgba(107, 230, 255, 0.16);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--color-text-muted);
+  transition: transform 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+
+.detailChevron svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.detailDisclosure[open] .detailChevron {
+  transform: rotate(180deg);
+  color: var(--color-bg);
+  background: var(--color-accent);
+}
+
+.detailPanel {
+  display: grid;
+  grid-template-rows: 0fr;
+  margin-top: 0;
+  opacity: 0;
+  transition: grid-template-rows 0.22s ease, margin-top 0.18s ease, opacity 0.18s ease;
+}
+
+.detailDisclosure[open] .detailPanel {
+  grid-template-rows: 1fr;
+  margin-top: 0.95rem;
+  opacity: 1;
+}
+
+.detailPanelInner {
+  min-height: 0;
+  overflow: hidden;
   display: grid;
   gap: 1rem;
-  align-content: start;
-  min-width: 0;
 }
 
 .detailSummary {
@@ -192,8 +268,49 @@
   color: var(--color-text);
 }
 
-.nextLink {
-  width: fit-content;
+.projectNavGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.projectNavCard {
+  display: grid;
+  gap: 0.9rem;
+  padding: 1.2rem 1.25rem;
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
+}
+
+.projectNavCard:hover {
+  transform: translateY(-2px);
+  border-color: rgba(107, 230, 255, 0.22);
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.projectNavPrev {
+  justify-items: start;
+  text-align: left;
+}
+
+.projectNavNext {
+  justify-items: end;
+  text-align: right;
+}
+
+.projectNavFoot {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+.projectNavFoot svg {
+  width: 1rem;
+  height: 1rem;
 }
 
 @media (max-width: 980px) {
@@ -201,15 +318,24 @@
     grid-template-columns: 1fr;
   }
 
-  .detailCard {
+  .detailDisclosure {
+    padding: 1rem;
+  }
+
+  .projectNavGrid {
     grid-template-columns: 1fr;
-    gap: 1rem;
+  }
+
+  .projectNavNext {
+    justify-items: start;
+    text-align: left;
   }
 }
 
 @media (max-width: 640px) {
   .heroCard,
   .posterCard,
+  .heroLogoCard,
   .sectionCard {
     padding: 0.95rem;
   }
@@ -218,12 +344,21 @@
     min-height: 220px;
   }
 
+  .heroLogoStage {
+    min-height: 220px;
+    padding: 1rem;
+  }
+
   .chapter {
     padding: 0.95rem;
   }
 
-  .detailCard {
+  .detailDisclosure {
     padding: 1rem;
+  }
+
+  .detailTitle {
+    font-size: 1.18rem;
   }
 
   .detailSummary {

@@ -4,6 +4,7 @@ import { useAppShellStore } from '../../app/store/app-shell-store'
 import { createProjectSceneStore } from '../../app/store/scene-store'
 import type { ProjectChapter } from '../../entities/content/types'
 import type { ProjectSlug, Locale } from '../../shared/config/site'
+import { BrowserChrome } from '../../shared/ui/BrowserChrome'
 import type { SceneAdapter } from '../../scenes/core/types'
 import { loadSceneModule } from './scene-loader'
 import styles from './SceneEntry.module.css'
@@ -18,6 +19,8 @@ export function SceneEntry({ locale, slug, chapters }: SceneEntryProps) {
   const content = getSiteContent(locale)
   const useSceneStore = createProjectSceneStore(slug)
   const fallbackChapterId = chapters[0]?.id ?? 'overview'
+  const previewChapters = chapters.filter((chapter) => chapter.previewUrl)
+  const hasInteractivePreview = previewChapters.length > 0 && previewChapters.length === chapters.length
   const chapterId = useSceneStore((state) => state.chapterId)
   const setChapter = useSceneStore((state) => state.setChapter)
   const sceneReady = useSceneStore((state) => state.sceneReady)
@@ -32,6 +35,8 @@ export function SceneEntry({ locale, slug, chapters }: SceneEntryProps) {
   const [requested, setRequested] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [hasError, setHasError] = useState(false)
+  const activeChapter = chapters.find((chapter) => chapter.id === chapterId) ?? chapters[0]
+  const activePreviewUrl = activeChapter?.previewUrl ?? previewChapters[0]?.previewUrl ?? ''
 
   useEffect(() => {
     const hasMatchingChapter = chapters.some((chapter) => chapter.id === chapterId)
@@ -43,24 +48,36 @@ export function SceneEntry({ locale, slug, chapters }: SceneEntryProps) {
   }, [chapterId, chapters, fallbackChapterId, setChapter])
 
   useEffect(() => {
+    if (hasInteractivePreview) {
+      return
+    }
+
     const nextMode = lowPerformanceMode || reducedMotion ? 'reduced' : 'default'
     setPerformanceMode(nextMode)
-  }, [lowPerformanceMode, reducedMotion, setPerformanceMode])
+  }, [hasInteractivePreview, lowPerformanceMode, reducedMotion, setPerformanceMode])
 
   useEffect(() => {
+    if (hasInteractivePreview) {
+      return
+    }
+
     if (!sceneReady && chapterId) {
       requestedChapterRef.current = chapterId
     }
 
     adapterRef.current?.setChapter(chapterId)
-  }, [chapterId, sceneReady])
+  }, [chapterId, hasInteractivePreview, sceneReady])
 
   useEffect(() => {
+    if (hasInteractivePreview) {
+      return
+    }
+
     adapterRef.current?.setPerformanceMode(performanceMode)
-  }, [performanceMode])
+  }, [hasInteractivePreview, performanceMode])
 
   useEffect(() => {
-    if (!requested || !containerRef.current) {
+    if (hasInteractivePreview || !requested || !containerRef.current) {
       return
     }
 
@@ -109,7 +126,40 @@ export function SceneEntry({ locale, slug, chapters }: SceneEntryProps) {
       adapterRef.current = null
       setSceneReady(false)
     }
-  }, [fallbackChapterId, performanceMode, requested, setSceneReady, slug])
+  }, [fallbackChapterId, hasInteractivePreview, performanceMode, requested, setSceneReady, slug])
+
+  if (hasInteractivePreview && activePreviewUrl) {
+    return (
+      <section className={`panel ${styles.entry}`}>
+        <div className={styles.toolbar}>
+          <div>
+            <div className="eyebrow">{content.copy.scenePosterLabel}</div>
+            <h3 className="cardTitle" style={{ marginTop: '0.6rem' }}>
+              {content.copy.enterSceneLabel}
+            </h3>
+          </div>
+          <a className="buttonPrimary" href={activePreviewUrl} target="_blank" rel="noreferrer">
+            {content.copy.enterSceneLabel}
+          </a>
+        </div>
+
+        <div className={styles.chapterRow} aria-label={content.copy.chapterLabel}>
+          {chapters.map((chapter) => (
+            <button
+              key={chapter.id}
+              type="button"
+              className={`${styles.chapterButton} ${chapterId === chapter.id ? styles.chapterActive : ''}`}
+              onClick={() => setChapter(chapter.id)}
+            >
+              {chapter.eyebrow}
+            </button>
+          ))}
+        </div>
+
+        <BrowserChrome url={activePreviewUrl} title={`${activeChapter?.title ?? slug} interactive preview`} />
+      </section>
+    )
+  }
 
   return (
     <section className={`panel ${styles.entry}`}>

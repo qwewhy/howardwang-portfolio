@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { getSiteContent } from '../../app/i18n/catalog'
 import { getLocalizedPath } from '../../app/router/route-utils'
@@ -10,9 +10,10 @@ import { SkillsShowcase } from '../../widgets/skills-showcase/SkillsShowcase'
 import NotFoundPage from '../not-found/NotFoundPage'
 import styles from './ProjectDetailPage.module.css'
 
-function getNextProjectSlug(slug: ProjectSlug): ProjectSlug {
+function getAdjacentProjectSlug(slug: ProjectSlug, offset: number): ProjectSlug {
   const currentIndex = siteConfig.projectSlugs.indexOf(slug)
-  return siteConfig.projectSlugs[(currentIndex + 1) % siteConfig.projectSlugs.length]
+  const total = siteConfig.projectSlugs.length
+  return siteConfig.projectSlugs[(currentIndex + offset + total) % total]
 }
 
 function ExternalArrowIcon() {
@@ -30,8 +31,42 @@ function ExternalArrowIcon() {
   )
 }
 
+function NavigationArrowIcon({ direction }: { direction: 'left' | 'right' }) {
+  return (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      {direction === 'left' ? (
+        <path
+          d="M11.5 8H4.5M7.5 5 4.5 8l3 3"
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+        />
+      ) : (
+        <path
+          d="M4.5 8h7M8.5 5l3 3-3 3"
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+        />
+      )}
+    </svg>
+  )
+}
+
+function getPrimaryLiveUrl(project: ProjectContentSchema) {
+  return project.livePages?.[0]?.url ?? project.liveUrl!
+}
+
+function getProjectAssetSrc(src: string) {
+  return src.startsWith('http') ? src : `${import.meta.env.BASE_URL}${src}`
+}
+
 function LiveEmbedSection({ project, content }: { project: ProjectContentSchema; content: SiteContent }) {
-  const [activeUrl, setActiveUrl] = useState(project.liveUrl!)
+  const [activeUrl, setActiveUrl] = useState(() => getPrimaryLiveUrl(project))
   const livePages = project.livePages
 
   return (
@@ -69,18 +104,33 @@ function getProjectSkillGroups(project: ProjectContentSchema, content: SiteConte
 export default function ProjectDetailPage() {
   const { locale: localeParam, slug: slugParam } = useParams()
 
+  useLayoutEffect(() => {
+    if (!localeParam || !slugParam) {
+      return
+    }
+
+    window.scrollTo(0, 0)
+  }, [localeParam, slugParam])
+
   if (!localeParam || !isLocale(localeParam) || !slugParam || !isProjectSlug(slugParam)) {
     return <NotFoundPage />
   }
 
   const content = getSiteContent(localeParam)
   const project = content.projects[slugParam]
-  const nextProject = content.projects[getNextProjectSlug(slugParam)]
+  const previousProject = content.projects[getAdjacentProjectSlug(slugParam, -1)]
+  const nextProject = content.projects[getAdjacentProjectSlug(slugParam, 1)]
   const skillGroups = getProjectSkillGroups(project, content)
+  const showChapterCards = project.renderChapterCards ?? true
+  const hasHeroAside = Boolean(project.poster || project.heroLogo)
+  const detailSections = [
+    ...(showChapterCards ? [] : project.chapters.map((chapter) => ({ ...chapter, eyebrow: '' }))),
+    ...(project.detailSections ?? []),
+  ]
 
   return (
     <div className={`pageShell ${styles.layout}`}>
-      <section className={`${styles.hero} ${project.poster ? '' : styles.heroSingle}`.trim()}>
+      <section className={`${styles.hero} ${hasHeroAside ? '' : styles.heroSingle}`.trim()}>
         <article className={`panel ${styles.heroCard}`}>
           <span className="eyebrow">
             {project.role} · {project.period}
@@ -129,15 +179,38 @@ export default function ProjectDetailPage() {
             <p className="sectionDescription">{project.poster.description}</p>
           </article>
         )}
+
+        {!project.poster && project.heroLogo && (
+          <article className={`panel ${styles.heroLogoCard}`}>
+            {project.heroLogo.eyebrow ? <span className="eyebrow">{project.heroLogo.eyebrow}</span> : null}
+            <div className={styles.heroLogoStage}>
+              <img
+                className={styles.heroLogoImage}
+                src={getProjectAssetSrc(project.heroLogo.src)}
+                alt={project.heroLogo.alt}
+              />
+            </div>
+            {project.heroLogo.caption ? <p className="sectionDescription">{project.heroLogo.caption}</p> : null}
+            {project.heroLogo.tags && project.heroLogo.tags.length > 0 ? (
+              <div className="chipRow">
+                {project.heroLogo.tags.map((tag) => (
+                  <span key={tag} className="chip">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            ) : null}
+          </article>
+        )}
       </section>
 
       {project.chapters.length > 0 && (
         <SceneEntry locale={localeParam} slug={slugParam} chapters={project.chapters} />
       )}
 
-      {project.liveUrl && <LiveEmbedSection project={project} content={content} />}
+      {project.liveUrl && <LiveEmbedSection key={`${localeParam}:${project.slug}`} project={project} content={content} />}
 
-      {project.chapters.length > 0 && (
+      {showChapterCards && project.chapters.length > 0 && (
         <section className={styles.chapterGrid}>
           {project.chapters.map((chapter) => (
             <article key={chapter.id} className={`panel ${styles.chapter}`} id={chapter.id}>
@@ -156,25 +229,40 @@ export default function ProjectDetailPage() {
         </section>
       )}
 
-      {project.detailSections && project.detailSections.length > 0 && (
+      {detailSections.length > 0 && (
         <section className={styles.detailGrid}>
-          {project.detailSections.map((section) => (
-            <article key={section.id} className={`panel ${styles.detailCard}`} id={section.id}>
-              <div className={styles.detailLead}>
-                <span className="eyebrow">{section.eyebrow}</span>
-                <h2 className={styles.detailTitle}>{section.title}</h2>
-              </div>
-              <div className={styles.detailBody}>
-                <p className={styles.detailSummary}>{section.summary}</p>
-                <div className={styles.detailChipRow}>
-                  {section.bullets.map((bullet) => (
-                    <span key={bullet} className={styles.detailChip}>
-                      {bullet}
-                    </span>
-                  ))}
+          {detailSections.map((section) => (
+            <details key={section.id} className={`panel ${styles.detailDisclosure}`} id={section.id}>
+              <summary className={styles.detailTrigger}>
+                <div className={styles.detailLead}>
+                  {section.eyebrow ? <span className="eyebrow">{section.eyebrow}</span> : null}
+                  <h2 className={styles.detailTitle}>{section.title}</h2>
+                </div>
+                <span className={styles.detailChevron} aria-hidden="true">
+                  <svg viewBox="0 0 16 16" fill="none">
+                    <path
+                      d="m4 6 4 4 4-4"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="1.5"
+                    />
+                  </svg>
+                </span>
+              </summary>
+              <div className={styles.detailPanel}>
+                <div className={styles.detailPanelInner}>
+                  <p className={styles.detailSummary}>{section.summary}</p>
+                  <div className={styles.detailChipRow}>
+                    {section.bullets.map((bullet) => (
+                      <span key={bullet} className={styles.detailChip}>
+                        {bullet}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </article>
+            </details>
           ))}
         </section>
       )}
@@ -191,12 +279,31 @@ export default function ProjectDetailPage() {
         }}
       />
 
-      <section className={`panel ${styles.sectionCard}`}>
-        <span className="eyebrow">{content.copy.nextProjectLabel}</span>
-        <h2 className="cardTitle">{nextProject.title}</h2>
-        <p className="sectionDescription">{nextProject.summary}</p>
-        <Link className={`buttonPrimary ${styles.nextLink}`} to={getLocalizedPath(localeParam, 'project', nextProject.slug)}>
-          {content.copy.openProjectLabel}
+      <section className={styles.projectNavGrid}>
+        <Link
+          className={`panel ${styles.projectNavCard} ${styles.projectNavPrev}`}
+          to={getLocalizedPath(localeParam, 'project', previousProject.slug)}
+        >
+          <span className="eyebrow">{content.copy.previousProjectLabel}</span>
+          <h2 className="cardTitle">{previousProject.title}</h2>
+          <p className="sectionDescription">{previousProject.summary}</p>
+          <span className={styles.projectNavFoot}>
+            <NavigationArrowIcon direction="left" />
+            <span>{content.copy.previousProjectLabel}</span>
+          </span>
+        </Link>
+
+        <Link
+          className={`panel ${styles.projectNavCard} ${styles.projectNavNext}`}
+          to={getLocalizedPath(localeParam, 'project', nextProject.slug)}
+        >
+          <span className="eyebrow">{content.copy.nextProjectLabel}</span>
+          <h2 className="cardTitle">{nextProject.title}</h2>
+          <p className="sectionDescription">{nextProject.summary}</p>
+          <span className={styles.projectNavFoot}>
+            <span>{content.copy.nextProjectLabel}</span>
+            <NavigationArrowIcon direction="right" />
+          </span>
         </Link>
       </section>
     </div>
