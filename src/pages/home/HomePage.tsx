@@ -1,4 +1,4 @@
-import { lazy, Suspense, useMemo } from 'react'
+import { lazy, Suspense } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { getSiteContent } from '../../app/i18n/catalog'
 import { getLocalizedPath } from '../../app/router/route-utils'
@@ -10,6 +10,7 @@ import { isLocale, siteConfig } from '../../shared/config/site'
 import styles from './HomePage.module.css'
 
 const HeroScene = lazy(() => import('../../features/hero-scene/HeroScene'))
+const ParticleText = lazy(() => import('../../features/particle-text/ParticleText'))
 
 /** Map skill display-name → logo file under /logos/skills/ */
 const SKILL_LOGO: Record<string, string> = {
@@ -57,6 +58,8 @@ const SKILL_LOGO: Record<string, string> = {
   'OpenAI SDK': 'openai.svg',
   'Claude Code': 'claude.svg',
   Cursor: 'cursor.svg',
+  'Open Code': 'opencode.svg',
+  'Google Antigravity': 'google-antigravity.svg',
   'OpenAI Codex': 'openai.svg',
 }
 
@@ -77,19 +80,59 @@ export default function HomePage() {
           </div>
         )}
 
-        <div className={styles.heroText}>
-          <span className="eyebrow">{content.home.hero.eyebrow}</span>
-          <h1 className="heroTitle">{content.home.hero.title}</h1>
-          <p className={styles.heroSubtitle}>{content.home.hero.subtitle}</p>
-        </div>
+        <div className={styles.heroContent}>
+          <div className={styles.heroText}>
+            <span className="eyebrow">{content.home.hero.eyebrow}</span>
+            {!isMobile ? (
+              <Suspense
+                fallback={
+                  <>
+                    <h1 className="heroTitle">{content.home.hero.title}</h1>
+                    <p className={styles.heroSubtitle}>{content.home.hero.subtitle}</p>
+                  </>
+                }
+              >
+                <ParticleText
+                  className={styles.heroTitleParticle}
+                  key={`${locale}-title`}
+                  particleGap={2}
+                  particleSize={1.35}
+                  repelRadius={116}
+                  repelStrength={4}
+                  springFactor={0.048}
+                >
+                  <h1 className="heroTitle">{content.home.hero.title}</h1>
+                </ParticleText>
+                <ParticleText
+                  key={`${locale}-subtitle`}
+                  particleGap={1}
+                  particleSize={1.05}
+                  repelRadius={74}
+                  repelStrength={2.8}
+                  springFactor={0.04}
+                  friction={0.88}
+                  transitionDelay={720}
+                  transitionDuration={700}
+                >
+                  <p className={styles.heroSubtitle}>{content.home.hero.subtitle}</p>
+                </ParticleText>
+              </Suspense>
+            ) : (
+              <>
+                <h1 className="heroTitle">{content.home.hero.title}</h1>
+                <p className={styles.heroSubtitle}>{content.home.hero.subtitle}</p>
+              </>
+            )}
+          </div>
 
-        <div className={styles.heroActions}>
-          <Link className={`buttonPrimary ${styles.heroCta}`} to={getLocalizedPath(locale, 'work')}>
-            {content.nav.work}
-          </Link>
-          <Link className={`buttonSecondary ${styles.heroCta}`} to={getLocalizedPath(locale, 'about')}>
-            {content.nav.about}
-          </Link>
+          <div className={styles.heroActions}>
+            <Link className={`buttonPrimary ${styles.heroCta}`} to={getLocalizedPath(locale, 'work')}>
+              {content.nav.work}
+            </Link>
+            <Link className={`buttonSecondary ${styles.heroCta}`} to={getLocalizedPath(locale, 'about')}>
+              {content.nav.about}
+            </Link>
+          </div>
         </div>
       </section>
 

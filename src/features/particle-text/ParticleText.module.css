@@ -1,0 +1,32 @@
+.wrap {
+  position: relative;
+  justify-self: stretch;
+  width: 100%;
+  text-align: center;
+}
+
+.textLayer {
+  width: 100%;
+  transition: opacity var(--particle-fade, 800ms) ease;
+}
+
+.textLayer > * {
+  margin-inline: auto;
+}
+
+.textLayer[data-active='true'] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--particle-fade, 800ms) ease;
+}
+
+.canvas[data-active='true'] {
+  opacity: 1;
+}
