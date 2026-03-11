@@ -246,35 +246,17 @@ export const zhContent: SiteContent = {
         { label: '打开编辑器', href: 'https://www.dynagraphai.com/editor', external: true },
       ],
       liveUrl: 'https://www.dynagraphai.com',
+      livePages: [
+        { label: '首页', url: 'https://www.dynagraphai.com' },
+        { label: '编辑器', url: 'https://www.dynagraphai.com/editor' },
+      ],
       evidenceSource: ['userProvided', 'liveSite'],
       poster: {
         title: 'Prompt-to-World Foundry',
         description: '一个在浏览器中把 prompt、scene graph、viewport 与 export 串起来的 3D 创作工作台。',
         accentWords: ['Prompt', 'Hierarchy', 'Viewport', 'Export'],
       },
-      chapters: [
-        {
-          id: 'prompt-signal',
-          eyebrow: '第一幕',
-          title: 'Prompt Signal',
-          summary: '自然语言输入，产出可控、可检查的 Three.js 代码。',
-          bullets: ['把描述转换为可运行的 Three.js 代码。', '把 AI 作为加速器，而不是替代创作者。', '保持从 idea 到 scene intent 的清晰映射。'],
-        },
-        {
-          id: 'scene-graph-assembly',
-          eyebrow: '第二幕',
-          title: 'Scene Graph Assembly',
-          summary: '层级、检查器与资产面板，定义产品化创作工具身份。',
-          bullets: ['面板系统本身就是 UI 产品能力的证据。', '代码检查与场景编辑并存。', '它不是一个 demo generator，而是一个 workbench。'],
-        },
-        {
-          id: 'viewport-export',
-          eyebrow: '第三幕',
-          title: 'Viewport to Export',
-          summary: '实时预览与代码导出，让输出进入真实工作流。',
-          bullets: ['视口对修改即时响应。', '输出仍然是代码，而不是不可用的黑盒结果。', '浏览器优先的体验强调低门槛与快反馈。'],
-        },
-      ],
+      chapters: [],
     },
     chemviz3d: {
       slug: 'chemviz3d',

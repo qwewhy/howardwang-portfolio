@@ -1,8 +1,10 @@
+import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { getSiteContent } from '../../app/i18n/catalog'
 import { getLocalizedPath } from '../../app/router/route-utils'
 import { SceneEntry } from '../../features/scene-entry/SceneEntry'
 import { isLocale, isProjectSlug, siteConfig, type ProjectSlug } from '../../shared/config/site'
+import { BrowserChrome } from '../../shared/ui/BrowserChrome'
 import NotFoundPage from '../not-found/NotFoundPage'
 import styles from './ProjectDetailPage.module.css'
 
@@ -23,6 +25,38 @@ function ExternalArrowIcon() {
         strokeWidth="1.5"
       />
     </svg>
+  )
+}
+
+function LiveEmbedSection({ project, content }: { project: import('../../entities/content/types').ProjectContentSchema; content: import('../../entities/content/types').SiteContent }) {
+  const [activeUrl, setActiveUrl] = useState(project.liveUrl!)
+  const livePages = project.livePages
+
+  return (
+    <section className={`panel ${styles.liveEmbed}`}>
+      <div className={styles.liveEmbedHeader}>
+        <span className="eyebrow">{content.copy.livePreviewLabel}</span>
+        {livePages && livePages.length > 1 && (
+          <div className={styles.pageTabRow}>
+            {livePages.map((page) => (
+              <button
+                key={page.url}
+                type="button"
+                className={`${styles.pageTab} ${activeUrl === page.url ? styles.pageTabActive : ''}`}
+                onClick={() => setActiveUrl(page.url)}
+              >
+                {page.label}
+              </button>
+            ))}
+          </div>
+        )}
+        <a className="buttonPrimary" href={activeUrl} target="_blank" rel="noreferrer">
+          <span>{content.copy.tryLiveLabel}</span>
+          <ExternalArrowIcon />
+        </a>
+      </div>
+      <BrowserChrome url={activeUrl} title={project.title} />
+    </section>
   )
 }
 
@@ -96,43 +130,32 @@ export default function ProjectDetailPage() {
         </article>
       </section>
 
-      <SceneEntry locale={localeParam} slug={slugParam} chapters={project.chapters} />
-
-      {project.liveUrl && (
-        <section className={`panel ${styles.liveEmbed}`}>
-          <div className={styles.liveEmbedHeader}>
-            <span className="eyebrow">{content.copy.livePreviewLabel}</span>
-            <a className="buttonPrimary" href={project.liveUrl} target="_blank" rel="noreferrer">
-              <span>{content.copy.tryLiveLabel}</span>
-              <ExternalArrowIcon />
-            </a>
-          </div>
-          <iframe
-            className={styles.liveFrame}
-            src={project.liveUrl}
-            title={`${project.title} live preview`}
-            loading="lazy"
-            sandbox="allow-scripts allow-same-origin allow-popups"
-          />
-        </section>
+      {project.chapters.length > 0 && (
+        <SceneEntry locale={localeParam} slug={slugParam} chapters={project.chapters} />
       )}
 
-      <section className={styles.chapterGrid}>
-        {project.chapters.map((chapter) => (
-          <article key={chapter.id} className={`panel ${styles.chapter}`} id={chapter.id}>
-            <span className="eyebrow">{chapter.eyebrow}</span>
-            <h2 className="cardTitle">{chapter.title}</h2>
-            <p className="sectionDescription">{chapter.summary}</p>
-            <div className="chipRow">
-              {chapter.bullets.map((bullet) => (
-                <span key={bullet} className="chip">
-                  {bullet}
-                </span>
-              ))}
-            </div>
-          </article>
-        ))}
-      </section>
+      {project.liveUrl && (
+        <LiveEmbedSection project={project} content={content} />
+      )}
+
+      {project.chapters.length > 0 && (
+        <section className={styles.chapterGrid}>
+          {project.chapters.map((chapter) => (
+            <article key={chapter.id} className={`panel ${styles.chapter}`} id={chapter.id}>
+              <span className="eyebrow">{chapter.eyebrow}</span>
+              <h2 className="cardTitle">{chapter.title}</h2>
+              <p className="sectionDescription">{chapter.summary}</p>
+              <div className="chipRow">
+                {chapter.bullets.map((bullet) => (
+                  <span key={bullet} className="chip">
+                    {bullet}
+                  </span>
+                ))}
+              </div>
+            </article>
+          ))}
+        </section>
+      )}
 
       <section className={`panel ${styles.sectionCard}`}>
         <span className="eyebrow">{content.copy.techStackLabel}</span>

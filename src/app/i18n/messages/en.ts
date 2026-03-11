@@ -252,47 +252,17 @@ export const enContent: SiteContent = {
         { label: 'Open editor', href: 'https://www.dynagraphai.com/editor', external: true },
       ],
       liveUrl: 'https://www.dynagraphai.com',
+      livePages: [
+        { label: 'Homepage', url: 'https://www.dynagraphai.com' },
+        { label: 'Editor', url: 'https://www.dynagraphai.com/editor' },
+      ],
       evidenceSource: ['userProvided', 'liveSite'],
       poster: {
         title: 'Prompt-to-World Foundry',
         description: 'A browser workbench where prompts become scene graphs, panels stay legible, and code remains exportable.',
         accentWords: ['Prompt', 'Hierarchy', 'Viewport', 'Export'],
       },
-      chapters: [
-        {
-          id: 'prompt-signal',
-          eyebrow: 'Act I',
-          title: 'Prompt Signal',
-          summary: 'Natural language input producing controlled, inspectable Three.js output.',
-          bullets: [
-            'Turns descriptions into runnable Three.js code.',
-            'Frames AI as acceleration, not replacement of authorship.',
-            'Keeps the tool grounded in scene intent and iteration speed.',
-          ],
-        },
-        {
-          id: 'scene-graph-assembly',
-          eyebrow: 'Act II',
-          title: 'Scene Graph Assembly',
-          summary: 'Hierarchy, inspector, and asset panels that define a productized creative tool.',
-          bullets: [
-            'The panel language proves productized UI thinking.',
-            'The interface supports code inspection alongside scene editing.',
-            'The workbench pattern differentiates it from simple demo generators.',
-          ],
-        },
-        {
-          id: 'viewport-export',
-          eyebrow: 'Act III',
-          title: 'Viewport to Export',
-          summary: 'Live preview and code export that carry output into real workflows.',
-          bullets: [
-            'Interactive viewport reflects edits immediately.',
-            'The generated output remains code, not an opaque artifact.',
-            'The browser experience prioritizes fast entry and low friction.',
-          ],
-        },
-      ],
+      chapters: [],
     },
     chemviz3d: {
       slug: 'chemviz3d',

@@ -73,15 +73,35 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
 }
 
-.liveFrame {
-  width: 100%;
-  height: 70vh;
-  min-height: 480px;
+.pageTabRow {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.pageTab {
+  min-height: 34px;
+  padding: 0 0.85rem;
+  border-radius: 999px;
   border: 1px solid var(--color-line);
-  border-radius: var(--radius-sm);
-  background: var(--color-bg-muted);
+  color: var(--color-text-muted);
+  background: rgba(255, 255, 255, 0.03);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.pageTab:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.pageTabActive {
+  color: var(--color-bg);
+  background: var(--color-accent);
 }
 
 .chapterGrid {

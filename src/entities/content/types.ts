@@ -55,6 +55,11 @@ export interface PosterSpec {
   accentWords: string[]
 }
 
+export interface LivePage {
+  label: string
+  url: string
+}
+
 export interface ProjectContentSchema {
   slug: ProjectSlug
   title: string
@@ -67,6 +72,7 @@ export interface ProjectContentSchema {
   techStack: string[]
   links: LinkItem[]
   liveUrl?: string
+  livePages?: LivePage[]
   evidenceSource: EvidenceSourceId[]
   poster: PosterSpec
   chapters: ProjectChapter[]
