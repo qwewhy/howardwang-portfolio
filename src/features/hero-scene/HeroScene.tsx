@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { useAppShellStore } from '../../app/store/app-shell-store'
+import { useThemeStore } from '../../app/store/theme-store'
 import type { HeroSceneAdapter } from '../../scenes/hero/adapter'
 import styles from './HeroScene.module.css'
 
@@ -9,6 +10,7 @@ export default function HeroScene() {
   const reducedMotion = useAppShellStore((state) => state.reducedMotion)
   const lowPerformanceMode = useAppShellStore((state) => state.lowPerformanceMode)
   const isMobile = useAppShellStore((state) => state.isMobile)
+  const themeId = useThemeStore((state) => state.themeId)
 
   useEffect(() => {
     const container = containerRef.current
@@ -21,7 +23,7 @@ export default function HeroScene() {
       const module = await import('../../scenes/hero/adapter')
       if (disposed || !containerRef.current) return
 
-      const adapter = module.createSceneAdapter()
+      const adapter = module.createSceneAdapter(themeId)
       const performanceMode = lowPerformanceMode ? 'reduced' : 'default'
       adapter.mount(containerRef.current, { performanceMode })
       adapterRef.current = adapter
@@ -41,7 +43,7 @@ export default function HeroScene() {
       adapterRef.current?.unmount()
       adapterRef.current = null
     }
-  }, [lowPerformanceMode, reducedMotion, isMobile])
+  }, [lowPerformanceMode, reducedMotion, isMobile, themeId])
 
   useEffect(() => {
     const onMouseMove = (event: MouseEvent) => {

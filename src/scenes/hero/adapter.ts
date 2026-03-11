@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { createSceneBundle } from '../core/createSceneBundle'
 import type { SceneAdapter, SceneMountOptions, ScenePerformanceMode } from '../core/types'
+import type { ThemeId } from '../../shared/config/site'
 
 export interface HeroSceneAdapter extends SceneAdapter {
   setMousePosition: (normalizedX: number, normalizedY: number) => void
@@ -85,8 +86,76 @@ function getResponsiveParams(viewportW: number) {
   }
 }
 
+interface HeroThemePreset {
+  ambientIntensity: number
+  keyColor: number
+  keyIntensity: number
+  fillColor: number
+  fillIntensity: number
+  rimColor: number
+  rimIntensity: number
+  envBackground: number
+  envSphereA: number
+  envSphereB: number
+  materialColor: number
+  materialOpacity: number
+  materialRoughness: number
+  materialMetalness: number
+  sheenColor: number
+  emissiveColor: number
+  emissiveIntensity: number
+  envMapIntensity: number
+  exposure: number
+}
+
+const HERO_THEME_PRESETS: Record<ThemeId, HeroThemePreset> = {
+  dark: {
+    ambientIntensity: 0.08,
+    keyColor: 0x34d399,
+    keyIntensity: 5.5,
+    fillColor: 0x6be6ff,
+    fillIntensity: 2.5,
+    rimColor: 0x43e7b1,
+    rimIntensity: 4,
+    envBackground: 0x020606,
+    envSphereA: 0x0a3d2e,
+    envSphereB: 0x0a2535,
+    materialColor: 0x0e2830,
+    materialOpacity: 0.94,
+    materialRoughness: 0.45,
+    materialMetalness: 0.15,
+    sheenColor: 0x34d399,
+    emissiveColor: 0x010808,
+    emissiveIntensity: 0.15,
+    envMapIntensity: 2,
+    exposure: 1.6,
+  },
+  light: {
+    ambientIntensity: 0.42,
+    keyColor: 0x24c59d,
+    keyIntensity: 2.2,
+    fillColor: 0xf8feff,
+    fillIntensity: 1.9,
+    rimColor: 0x7ad7ff,
+    rimIntensity: 1.5,
+    envBackground: 0xf3f8f8,
+    envSphereA: 0xdaf8ef,
+    envSphereB: 0xdcebf6,
+    materialColor: 0xe7f7f3,
+    materialOpacity: 0.82,
+    materialRoughness: 0.36,
+    materialMetalness: 0.04,
+    sheenColor: 0x34d399,
+    emissiveColor: 0xdff7f1,
+    emissiveIntensity: 0.05,
+    envMapIntensity: 0.72,
+    exposure: 1.18,
+  },
+}
+
 /* ---------- adapter ---------- */
-export function createSceneAdapter(): HeroSceneAdapter {
+export function createSceneAdapter(themeId: ThemeId = 'dark'): HeroSceneAdapter {
+  const theme = HERO_THEME_PRESETS[themeId]
   const bundle = createSceneBundle({
     background: 0x000000,
     cameraPosition: [0, -2.2, 7.5],
@@ -101,21 +170,21 @@ export function createSceneAdapter(): HeroSceneAdapter {
     .forEach((light) => bundle.scene.remove(light))
 
   /* minimal ambient — just enough to not clip to pure black */
-  const ambient = new THREE.AmbientLight(0xffffff, 0.08)
+  const ambient = new THREE.AmbientLight(0xffffff, theme.ambientIntensity)
   bundle.scene.add(ambient)
 
   /* key — accent green from right, nearly edge-on to rake across folds */
-  const keyLight = new THREE.DirectionalLight(0x34d399, 5.5)
+  const keyLight = new THREE.DirectionalLight(theme.keyColor, theme.keyIntensity)
   keyLight.position.set(6, 1, 0.8)
   bundle.scene.add(keyLight)
 
   /* fill — soft cyan from upper-left for secondary fold definition */
-  const fillLight = new THREE.DirectionalLight(0x6be6ff, 2.5)
+  const fillLight = new THREE.DirectionalLight(theme.fillColor, theme.fillIntensity)
   fillLight.position.set(-4, 3, 1.5)
   bundle.scene.add(fillLight)
 
   /* rim — bright green from behind-below to silhouette fold edges */
-  const rimLight = new THREE.DirectionalLight(0x43e7b1, 4.0)
+  const rimLight = new THREE.DirectionalLight(theme.rimColor, theme.rimIntensity)
   rimLight.position.set(-1, -4, -4)
   bundle.scene.add(rimLight)
 
@@ -188,13 +257,13 @@ export function createSceneAdapter(): HeroSceneAdapter {
   /* --- procedural environment map for PBR reflections --- */
   const envScene = new THREE.Scene()
   /* dark base with colored gradient spheres to give reflections direction */
-  envScene.background = new THREE.Color(0x020606)
+  envScene.background = new THREE.Color(theme.envBackground)
   const envGeo = new THREE.SphereGeometry(20, 16, 16)
-  const envMat1 = new THREE.MeshBasicMaterial({ color: 0x0a3d2e, side: THREE.BackSide })
+  const envMat1 = new THREE.MeshBasicMaterial({ color: theme.envSphereA, side: THREE.BackSide })
   const envSphere1 = new THREE.Mesh(envGeo, envMat1)
   envSphere1.position.set(10, 5, 0)
   envScene.add(envSphere1)
-  const envMat2 = new THREE.MeshBasicMaterial({ color: 0x0a2535, side: THREE.BackSide })
+  const envMat2 = new THREE.MeshBasicMaterial({ color: theme.envSphereB, side: THREE.BackSide })
   const envSphere2 = new THREE.Mesh(envGeo, envMat2)
   envSphere2.position.set(-10, -3, -5)
   envScene.add(envSphere2)
@@ -203,17 +272,17 @@ export function createSceneAdapter(): HeroSceneAdapter {
   const mat = new THREE.MeshPhysicalMaterial({
     side: THREE.DoubleSide,
     transparent: true,
-    opacity: 0.94,
-    color: new THREE.Color(0x0e2830),
-    roughness: 0.45,
-    metalness: 0.15,
+    opacity: theme.materialOpacity,
+    color: new THREE.Color(theme.materialColor),
+    roughness: theme.materialRoughness,
+    metalness: theme.materialMetalness,
     /* sheen creates fabric-like edge brightening (Fresnel) */
     sheen: 1.0,
     sheenRoughness: 0.3,
-    sheenColor: new THREE.Color(0x34d399),
-    emissive: new THREE.Color(0x010808),
-    emissiveIntensity: 0.15,
-    envMapIntensity: 2.0,
+    sheenColor: new THREE.Color(theme.sheenColor),
+    emissive: new THREE.Color(theme.emissiveColor),
+    emissiveIntensity: theme.emissiveIntensity,
+    envMapIntensity: theme.envMapIntensity,
   })
 
   const clothMesh = new THREE.Mesh(geo, mat)
@@ -347,7 +416,7 @@ export function createSceneAdapter(): HeroSceneAdapter {
       const renderer = bundle.getRenderer()
       if (renderer) {
         renderer.toneMapping = THREE.ACESFilmicToneMapping
-        renderer.toneMappingExposure = 1.6
+        renderer.toneMappingExposure = theme.exposure
         const pmrem = new THREE.PMREMGenerator(renderer)
         const envMap = pmrem.fromScene(envScene, 0.04).texture
         mat.envMap = envMap

@@ -19,15 +19,199 @@ interface Particle {
 }
 
 const PARTICLE_ALPHA_THRESHOLD = 0.08
-const MIN_PARTICLE_ALPHA = 0.62
+
+type ParticleShapeKind = 'none' | 'pill-outline'
 
 export interface ParticleConfig {
   particleGap: number
   particleSize: number
+  minParticleAlpha: number
+  contrastBoost: number
+  saturationBoost: number
+  shapeKind: ParticleShapeKind
   repelRadius: number
   springFactor: number
   friction: number
   repelStrength: number
+}
+
+interface RgbaColor {
+  r: number
+  g: number
+  b: number
+  a: number
+}
+
+function clamp(value: number, min: number, max: number) {
+  return Math.min(max, Math.max(min, value))
+}
+
+function parseCssColor(input: string): RgbaColor {
+  const color = input.trim()
+
+  if (!color) {
+    return { r: 255, g: 255, b: 255, a: 1 }
+  }
+
+  if (color.startsWith('#')) {
+    const hex = color.slice(1)
+    const normalized = hex.length === 3
+      ? hex.split('').map((char) => char + char).join('')
+      : hex
+
+    if (normalized.length === 6 || normalized.length === 8) {
+      return {
+        r: parseInt(normalized.slice(0, 2), 16),
+        g: parseInt(normalized.slice(2, 4), 16),
+        b: parseInt(normalized.slice(4, 6), 16),
+        a: normalized.length === 8 ? parseInt(normalized.slice(6, 8), 16) / 255 : 1,
+      }
+    }
+  }
+
+  const match = color.match(/rgba?\(([^)]+)\)/i)
+  if (match) {
+    const [r = '255', g = '255', b = '255', a = '1'] = match[1].split(',').map((value) => value.trim())
+    return {
+      r: Number.parseFloat(r),
+      g: Number.parseFloat(g),
+      b: Number.parseFloat(b),
+      a: Number.parseFloat(a),
+    }
+  }
+
+  return { r: 255, g: 255, b: 255, a: 1 }
+}
+
+function enhanceRgb(
+  r: number,
+  g: number,
+  b: number,
+  saturationBoost: number,
+  contrastBoost: number,
+): Pick<RgbaColor, 'r' | 'g' | 'b'> {
+  const avg = (r + g + b) / 3
+  let nr = avg + (r - avg) * saturationBoost
+  let ng = avg + (g - avg) * saturationBoost
+  let nb = avg + (b - avg) * saturationBoost
+
+  const luminance = (0.2126 * nr + 0.7152 * ng + 0.0722 * nb) / 255
+  if (luminance >= 0.72) {
+    nr += (255 - nr) * contrastBoost
+    ng += (255 - ng) * contrastBoost
+    nb += (255 - nb) * contrastBoost
+  } else if (luminance <= 0.24) {
+    nr *= 1 - contrastBoost
+    ng *= 1 - contrastBoost
+    nb *= 1 - contrastBoost
+  }
+
+  return {
+    r: clamp(Math.round(nr), 0, 255),
+    g: clamp(Math.round(ng), 0, 255),
+    b: clamp(Math.round(nb), 0, 255),
+  }
+}
+
+function pushParticle(
+  particles: Particle[],
+  x: number,
+  y: number,
+  size: number,
+  color: RgbaColor,
+  saturationBoost: number,
+  contrastBoost: number,
+  minParticleAlpha: number,
+) {
+  const enhanced = enhanceRgb(color.r, color.g, color.b, saturationBoost, contrastBoost)
+  particles.push({
+    x,
+    y,
+    originX: x,
+    originY: y,
+    vx: 0,
+    vy: 0,
+    size,
+    r: enhanced.r,
+    g: enhanced.g,
+    b: enhanced.b,
+    a: Math.min(1, Math.max(color.a, minParticleAlpha)),
+  })
+}
+
+function appendRoundedRectOutlineParticles(
+  particles: Particle[],
+  textEl: HTMLElement,
+  containerRect: DOMRect,
+  gap: number,
+  size: number,
+  contrastBoost: number,
+  saturationBoost: number,
+  minParticleAlpha: number,
+) {
+  const shapeEl = textEl.firstElementChild as HTMLElement | null
+  if (!shapeEl) return
+
+  const shapeRect = shapeEl.getBoundingClientRect()
+  if (shapeRect.width === 0 || shapeRect.height === 0) return
+
+  const rootStyle = getComputedStyle(document.documentElement)
+  const accent = parseCssColor(rootStyle.getPropertyValue('--color-accent'))
+
+  const baseRadius = Math.min(
+    Number.parseFloat(getComputedStyle(shapeEl).borderTopLeftRadius) || shapeRect.height / 2,
+    shapeRect.width / 2,
+    shapeRect.height / 2,
+  )
+
+  const left = shapeRect.left - containerRect.left
+  const top = shapeRect.top - containerRect.top
+  const step = Math.max(gap * 0.95, 1)
+
+  const addRing = (offset: number, alpha: number, particleSize: number) => {
+    const ringLeft = left - offset
+    const ringTop = top - offset
+    const ringWidth = shapeRect.width + offset * 2
+    const ringHeight = shapeRect.height + offset * 2
+    const radius = Math.min(baseRadius + offset, ringWidth / 2, ringHeight / 2)
+    const ringColor = { ...accent, a: alpha }
+
+    for (let x = ringLeft + radius; x <= ringLeft + ringWidth - radius; x += step) {
+      pushParticle(particles, x, ringTop, particleSize, ringColor, saturationBoost, contrastBoost, minParticleAlpha)
+      pushParticle(particles, x, ringTop + ringHeight, particleSize, ringColor, saturationBoost, contrastBoost, minParticleAlpha)
+    }
+
+    for (let y = ringTop + radius; y <= ringTop + ringHeight - radius; y += step) {
+      pushParticle(particles, ringLeft, y, particleSize, ringColor, saturationBoost, contrastBoost, minParticleAlpha)
+      pushParticle(particles, ringLeft + ringWidth, y, particleSize, ringColor, saturationBoost, contrastBoost, minParticleAlpha)
+    }
+
+    const cornerCenters = [
+      { cx: ringLeft + radius, cy: ringTop + radius, start: Math.PI, end: Math.PI * 1.5 },
+      { cx: ringLeft + ringWidth - radius, cy: ringTop + radius, start: Math.PI * 1.5, end: Math.PI * 2 },
+      { cx: ringLeft + ringWidth - radius, cy: ringTop + ringHeight - radius, start: 0, end: Math.PI * 0.5 },
+      { cx: ringLeft + radius, cy: ringTop + ringHeight - radius, start: Math.PI * 0.5, end: Math.PI },
+    ]
+
+    const arcStep = Math.max(step / Math.max(radius, 1), 0.12)
+    for (const corner of cornerCenters) {
+      for (let angle = corner.start; angle <= corner.end; angle += arcStep) {
+        pushParticle(
+          particles,
+          corner.cx + Math.cos(angle) * radius,
+          corner.cy + Math.sin(angle) * radius,
+          particleSize,
+          ringColor,
+          saturationBoost,
+          contrastBoost,
+          minParticleAlpha,
+        )
+      }
+    }
+  }
+
+  addRing(0, 0.92, size)
+  addRing(Math.max(size * 1.35, 1.75), 0.54, Math.max(size * 0.85, 0.8))
 }
 
 /* ------------------------------------------------------------------ */
@@ -37,13 +221,14 @@ export interface ParticleConfig {
 function sampleParticles(
   textEl: HTMLElement,
   containerRect: DOMRect,
-  gap: number,
-  size: number,
+  config: ParticleConfig,
   dpr: number,
 ): Particle[] {
   const w = containerRect.width
   const h = containerRect.height
   if (w === 0 || h === 0) return []
+
+  const { contrastBoost, minParticleAlpha, particleGap, particleSize, saturationBoost, shapeKind } = config
 
   const offscreen = document.createElement('canvas')
   const cw = Math.ceil(w * dpr)
@@ -81,7 +266,7 @@ function sampleParticles(
   // Sample pixels
   const imageData = ctx.getImageData(0, 0, cw, ch)
   const data = imageData.data
-  const scaledGap = Math.max(1, Math.round(gap * dpr))
+  const scaledGap = Math.max(1, Math.round(particleGap * dpr))
   const particles: Particle[] = []
 
   for (let py = 0; py < ch; py += scaledGap) {
@@ -89,21 +274,31 @@ function sampleParticles(
       const idx = (py * cw + px) * 4
       const alpha = data[idx + 3] / 255
       if (alpha >= PARTICLE_ALPHA_THRESHOLD) {
-        particles.push({
-          x: px / dpr,
-          y: py / dpr,
-          originX: px / dpr,
-          originY: py / dpr,
-          vx: 0,
-          vy: 0,
-          size,
-          r: data[idx],
-          g: data[idx + 1],
-          b: data[idx + 2],
-          a: Math.min(1, Math.max(alpha, MIN_PARTICLE_ALPHA)),
-        })
+        pushParticle(
+          particles,
+          px / dpr,
+          py / dpr,
+          particleSize,
+          { r: data[idx], g: data[idx + 1], b: data[idx + 2], a: alpha },
+          saturationBoost,
+          contrastBoost,
+          minParticleAlpha,
+        )
       }
     }
+  }
+
+  if (shapeKind === 'pill-outline') {
+    appendRoundedRectOutlineParticles(
+      particles,
+      textEl,
+      containerRect,
+      particleGap,
+      particleSize,
+      contrastBoost,
+      Math.max(saturationBoost, 1.18),
+      minParticleAlpha,
+    )
   }
 
   return particles
@@ -124,10 +319,34 @@ export function useParticleEngine(
   const particlesRef = useRef<Particle[]>([])
   const mouseRef = useRef({ x: -9999, y: -9999, inside: false })
   const rafRef = useRef(0)
-  const { friction, particleGap, particleSize, repelRadius, repelStrength, springFactor } = config
+  const {
+    contrastBoost,
+    friction,
+    minParticleAlpha,
+    particleGap,
+    particleSize,
+    repelRadius,
+    repelStrength,
+    saturationBoost,
+    shapeKind,
+    springFactor,
+  } = config
 
   useEffect(() => {
     if (!enabled) return
+
+    const samplingConfig: ParticleConfig = {
+      contrastBoost,
+      friction,
+      minParticleAlpha,
+      particleGap,
+      particleSize,
+      repelRadius,
+      repelStrength,
+      saturationBoost,
+      shapeKind,
+      springFactor,
+    }
 
     const wrap = wrapRef.current
     const canvas = canvasRef.current
@@ -160,7 +379,7 @@ export function useParticleEngine(
       const rect = resize()
       if (!rect || !textEl) return
 
-      particlesRef.current = sampleParticles(textEl, rect, particleGap, particleSize, dpr)
+      particlesRef.current = sampleParticles(textEl, rect, samplingConfig, dpr)
       if (particlesRef.current.length > 0) setActive(true)
     }
 
@@ -238,7 +457,7 @@ export function useParticleEngine(
         const rect = resize()
         if (!rect) return
         await document.fonts.ready
-        particlesRef.current = sampleParticles(textEl, rect, particleGap, particleSize, dpr)
+        particlesRef.current = sampleParticles(textEl, rect, samplingConfig, dpr)
       }, 200)
     })
     ro.observe(wrap)
@@ -249,7 +468,7 @@ export function useParticleEngine(
       // Theme changed — re-sample to pick up new colors
       await document.fonts.ready
       const rect = wrap.getBoundingClientRect()
-      particlesRef.current = sampleParticles(textEl, rect, particleGap, particleSize, dpr)
+      particlesRef.current = sampleParticles(textEl, rect, samplingConfig, dpr)
     })
     mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
 
@@ -267,7 +486,22 @@ export function useParticleEngine(
       wrap.removeEventListener('mousemove', onMouseMove)
       wrap.removeEventListener('mouseleave', onMouseLeave)
     }
-  }, [canvasRef, enabled, friction, particleGap, particleSize, repelRadius, repelStrength, springFactor, textRef, wrapRef])
+  }, [
+    canvasRef,
+    contrastBoost,
+    enabled,
+    friction,
+    minParticleAlpha,
+    particleGap,
+    particleSize,
+    repelRadius,
+    repelStrength,
+    saturationBoost,
+    shapeKind,
+    springFactor,
+    textRef,
+    wrapRef,
+  ])
 
   return { active }
 }

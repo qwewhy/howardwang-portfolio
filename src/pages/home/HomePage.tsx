@@ -68,6 +68,7 @@ export default function HomePage() {
   const locale = localeParam && isLocale(localeParam) ? localeParam : siteConfig.defaultLocale
   const content = getSiteContent(locale)
   const isMobile = useAppShellStore((state) => state.isMobile)
+  const heroEyebrowClassName = `eyebrow ${styles.heroEyebrow}`
 
   return (
     <div className="pageShell">
@@ -82,21 +83,41 @@ export default function HomePage() {
 
         <div className={styles.heroContent}>
           <div className={styles.heroText}>
-            <span className="eyebrow">{content.home.hero.eyebrow}</span>
             {!isMobile ? (
               <Suspense
                 fallback={
                   <>
+                    <span className={heroEyebrowClassName}>{content.home.hero.eyebrow}</span>
                     <h1 className="heroTitle">{content.home.hero.title}</h1>
                     <p className={styles.heroSubtitle}>{content.home.hero.subtitle}</p>
                   </>
                 }
               >
                 <ParticleText
+                  key={`${locale}-eyebrow`}
+                  particleGap={1}
+                  particleSize={0.95}
+                  minParticleAlpha={1}
+                  contrastBoost={0.28}
+                  saturationBoost={1.6}
+                  shapeKind="pill-outline"
+                  repelRadius={52}
+                  repelStrength={2.2}
+                  springFactor={0.042}
+                  friction={0.89}
+                  transitionDelay={640}
+                  transitionDuration={620}
+                >
+                  <span className={heroEyebrowClassName}>{content.home.hero.eyebrow}</span>
+                </ParticleText>
+                <ParticleText
                   className={styles.heroTitleParticle}
                   key={`${locale}-title`}
                   particleGap={2}
-                  particleSize={1.35}
+                  particleSize={1.4}
+                  minParticleAlpha={1}
+                  contrastBoost={0.48}
+                  saturationBoost={1.16}
                   repelRadius={116}
                   repelStrength={4}
                   springFactor={0.048}
@@ -106,7 +127,10 @@ export default function HomePage() {
                 <ParticleText
                   key={`${locale}-subtitle`}
                   particleGap={1}
-                  particleSize={1.05}
+                  particleSize={1.08}
+                  minParticleAlpha={0.94}
+                  contrastBoost={0.26}
+                  saturationBoost={1.08}
                   repelRadius={74}
                   repelStrength={2.8}
                   springFactor={0.04}
@@ -119,6 +143,7 @@ export default function HomePage() {
               </Suspense>
             ) : (
               <>
+                <span className={heroEyebrowClassName}>{content.home.hero.eyebrow}</span>
                 <h1 className="heroTitle">{content.home.hero.title}</h1>
                 <p className={styles.heroSubtitle}>{content.home.hero.subtitle}</p>
               </>

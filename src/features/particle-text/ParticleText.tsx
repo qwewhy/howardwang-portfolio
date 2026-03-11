@@ -8,6 +8,10 @@ interface ParticleTextProps {
   className?: string
   particleGap?: number
   particleSize?: number
+  minParticleAlpha?: number
+  contrastBoost?: number
+  saturationBoost?: number
+  shapeKind?: 'none' | 'pill-outline'
   repelRadius?: number
   springFactor?: number
   friction?: number
@@ -21,6 +25,10 @@ export default function ParticleText({
   className,
   particleGap = 3,
   particleSize = 1.2,
+  minParticleAlpha = 0.72,
+  contrastBoost = 0.16,
+  saturationBoost = 1.08,
+  shapeKind = 'none',
   repelRadius = 100,
   springFactor = 0.05,
   friction = 0.85,
@@ -33,7 +41,18 @@ export default function ParticleText({
   const textRef = useRef<HTMLDivElement>(null)
   const reducedMotion = useAppShellStore((s) => s.reducedMotion)
 
-  const config: ParticleConfig = { particleGap, particleSize, repelRadius, springFactor, friction, repelStrength }
+  const config: ParticleConfig = {
+    particleGap,
+    particleSize,
+    minParticleAlpha,
+    contrastBoost,
+    saturationBoost,
+    shapeKind,
+    repelRadius,
+    springFactor,
+    friction,
+    repelStrength,
+  }
   const { active } = useParticleEngine(wrapRef, canvasRef, textRef, config, !reducedMotion)
 
   const [showParticles, setShowParticles] = useState(false)
