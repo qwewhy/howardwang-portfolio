@@ -45,12 +45,18 @@ const FRICTION_AIR = 0.025
 const DROP_STAGGER_MS = 35
 const DROP_MIN_Y = -500
 const DROP_MAX_Y = -80
+const TOP_WALL_MARGIN = 140
 /** Consecutive all-sleeping frames before pausing the RAF loop */
 const IDLE_THRESHOLD = 60
 const BOMB_RADIUS = 36
 const EXPLOSION_STRENGTH = 0.18
 const EXPLOSION_MIN_DIST = 20
 const FUSE_DURATION_MS = 2000
+
+function getTopWallY() {
+  // Keep the ceiling safely above the spawn band so chips cannot spawn outside the world.
+  return DROP_MIN_Y - TOP_WALL_MARGIN - WALL_THICKNESS / 2
+}
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
@@ -123,7 +129,7 @@ export function PhysicsSkillCard({ items, accentRgb, hasBomb }: PhysicsSkillCard
       const bottom = Bodies.rectangle(W / 2, H + WALL_THICKNESS / 2, W + WALL_THICKNESS * 2, WALL_THICKNESS, wallOpts)
       const left = Bodies.rectangle(-WALL_THICKNESS / 2, H / 2, WALL_THICKNESS, H * 3, wallOpts)
       const right = Bodies.rectangle(W + WALL_THICKNESS / 2, H / 2, WALL_THICKNESS, H * 3, wallOpts)
-      const top = Bodies.rectangle(W / 2, -WALL_THICKNESS / 2 - 400, W + WALL_THICKNESS * 2, WALL_THICKNESS, wallOpts)
+      const top = Bodies.rectangle(W / 2, getTopWallY(), W + WALL_THICKNESS * 2, WALL_THICKNESS, wallOpts)
       Composite.add(engine.world, [bottom, left, right, top])
 
       // Chip bodies — all start sleeping, woken by stagger
@@ -374,7 +380,7 @@ export function PhysicsSkillCard({ items, accentRgb, hasBomb }: PhysicsSkillCard
         Matter.Body.setPosition(statics[0], { x: W / 2, y: H + WALL_THICKNESS / 2 })
         Matter.Body.setPosition(statics[1], { x: -WALL_THICKNESS / 2, y: H / 2 })
         Matter.Body.setPosition(statics[2], { x: W + WALL_THICKNESS / 2, y: H / 2 })
-        Matter.Body.setPosition(statics[3], { x: W / 2, y: -WALL_THICKNESS / 2 - 400 })
+        Matter.Body.setPosition(statics[3], { x: W / 2, y: getTopWallY() })
       }
       const resume = el.__physicsResume
       if (typeof resume === 'function') resume()

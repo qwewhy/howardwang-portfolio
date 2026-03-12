@@ -132,12 +132,6 @@ export function SceneEntry({ locale, slug, chapters }: SceneEntryProps) {
     return (
       <section className={`panel ${styles.entry}`}>
         <div className={styles.toolbar}>
-          <div>
-            <div className="eyebrow">{content.copy.scenePosterLabel}</div>
-            <h3 className="cardTitle" style={{ marginTop: '0.6rem' }}>
-              {content.copy.enterSceneLabel}
-            </h3>
-          </div>
           <a className="buttonPrimary" href={activePreviewUrl} target="_blank" rel="noreferrer">
             {content.copy.enterSceneLabel}
           </a>
@@ -151,7 +145,7 @@ export function SceneEntry({ locale, slug, chapters }: SceneEntryProps) {
               className={`${styles.chapterButton} ${chapterId === chapter.id ? styles.chapterActive : ''}`}
               onClick={() => setChapter(chapter.id)}
             >
-              {chapter.eyebrow}
+              {chapter.eyebrow || chapter.title}
             </button>
           ))}
         </div>
@@ -163,29 +157,25 @@ export function SceneEntry({ locale, slug, chapters }: SceneEntryProps) {
 
   return (
     <section className={`panel ${styles.entry}`}>
-      <div className={styles.toolbar}>
-        <div>
-          <div className="eyebrow">{content.copy.scenePosterLabel}</div>
-          <h3 className="cardTitle" style={{ marginTop: '0.6rem' }}>
+      {!sceneReady ? (
+        <div className={styles.toolbar}>
+          <button
+            type="button"
+            className="buttonPrimary"
+            onClick={() => {
+              requestedChapterRef.current = chapterId || fallbackChapterId
+              startTransition(() => {
+                setRequested(true)
+              })
+            }}
+            onMouseEnter={() => {
+              void loadSceneModule(slug)
+            }}
+          >
             {content.copy.enterSceneLabel}
-          </h3>
+          </button>
         </div>
-        <button
-          type="button"
-          className="buttonPrimary"
-          onClick={() => {
-            requestedChapterRef.current = chapterId || fallbackChapterId
-            startTransition(() => {
-              setRequested(true)
-            })
-          }}
-          onMouseEnter={() => {
-            void loadSceneModule(slug)
-          }}
-        >
-          {sceneReady ? content.copy.sceneReadyLabel : content.copy.enterSceneLabel}
-        </button>
-      </div>
+      ) : null}
 
       <div className={styles.chapterRow} aria-label={content.copy.chapterLabel}>
         {chapters.map((chapter) => (
@@ -195,7 +185,7 @@ export function SceneEntry({ locale, slug, chapters }: SceneEntryProps) {
             className={`${styles.chapterButton} ${chapterId === chapter.id ? styles.chapterActive : ''}`}
             onClick={() => setChapter(chapter.id)}
           >
-            {chapter.eyebrow}
+            {chapter.eyebrow || chapter.title}
           </button>
         ))}
       </div>

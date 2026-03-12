@@ -214,7 +214,7 @@ export default function ProjectDetailPage() {
         <section className={styles.chapterGrid}>
           {project.chapters.map((chapter) => (
             <article key={chapter.id} className={`panel ${styles.chapter}`} id={chapter.id}>
-              <span className="eyebrow">{chapter.eyebrow}</span>
+              {chapter.eyebrow ? <span className="eyebrow">{chapter.eyebrow}</span> : null}
               <h2 className="cardTitle">{chapter.title}</h2>
               <p className="sectionDescription">{chapter.summary}</p>
               <div className="chipRow">
