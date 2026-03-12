@@ -1,3 +1,4 @@
+import { useCallback, useState } from 'react'
 import styles from './BrowserChrome.module.css'
 
 interface BrowserChromeProps {
@@ -7,7 +8,37 @@ interface BrowserChromeProps {
   sandbox?: string
 }
 
+interface BrowserFrameProps {
+  url: string
+  title: string
+  sandbox: string
+}
+
+function BrowserFrame({ url, title, sandbox }: BrowserFrameProps) {
+  const [loading, setLoading] = useState(true)
+  const handleLoad = useCallback(() => setLoading(false), [])
+
+  return (
+    <div className={styles.frameWrapper}>
+      {loading && (
+        <div className={styles.loader}>
+          <div className={styles.spinner} />
+        </div>
+      )}
+      <iframe
+        className={styles.frame}
+        src={url}
+        title={`${title} live preview`}
+        loading="lazy"
+        sandbox={sandbox}
+        onLoad={handleLoad}
+      />
+    </div>
+  )
+}
+
 export function BrowserChrome({ url, title, className, sandbox = 'allow-scripts allow-same-origin allow-popups' }: BrowserChromeProps) {
+
   return (
     <div className={`${styles.chrome} ${className ?? ''}`}>
       <div className={styles.toolbar}>
@@ -44,13 +75,7 @@ export function BrowserChrome({ url, title, className, sandbox = 'allow-scripts 
         </a>
       </div>
 
-      <iframe
-        className={styles.frame}
-        src={url}
-        title={`${title} live preview`}
-        loading="lazy"
-        sandbox={sandbox}
-      />
+      <BrowserFrame key={url} url={url} title={title} sandbox={sandbox} />
     </div>
   )
 }

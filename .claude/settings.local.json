@@ -3,7 +3,9 @@
     "allow": [
       "WebFetch(domain:www.dynagraphai.com)",
       "mcp__plugin_playwright_playwright__browser_navigate",
-      "mcp__plugin_playwright_playwright__browser_take_screenshot"
+      "mcp__plugin_playwright_playwright__browser_take_screenshot",
+      "Bash(npx tsc --noEmit)",
+      "mcp__Claude_Preview__preview_start"
     ]
   }
 }
