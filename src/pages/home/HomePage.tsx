@@ -1,9 +1,8 @@
+import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { getSiteContent } from '../../app/i18n/catalog'
 import { getLocalizedPath } from '../../app/router/route-utils'
 import { useAppShellStore } from '../../app/store/app-shell-store'
-import HeroScene from '../../features/hero-scene/HeroScene'
-import ParticleText from '../../features/particle-text/ParticleText'
 import { SignalGrid } from '../../features/contribution-visual/SignalGrid'
 import { TokenCounter } from '../../features/token-counter/TokenCounter'
 import { isLocale, siteConfig } from '../../shared/config/site'
@@ -16,7 +15,31 @@ export default function HomePage() {
   const locale = localeParam && isLocale(localeParam) ? localeParam : siteConfig.defaultLocale
   const content = getSiteContent(locale)
   const isMobile = useAppShellStore((state) => state.isMobile)
+  const [HeroSceneView, setHeroSceneView] = useState<null | typeof import('../../features/hero-scene/HeroScene').default>(null)
+  const [ParticleTextView, setParticleTextView] = useState<null | typeof import('../../features/particle-text/ParticleText').default>(null)
   const heroEyebrowClassName = `eyebrow ${styles.heroEyebrow}`
+
+  useEffect(() => {
+    if (isMobile) return
+
+    let active = true
+
+    void import('../../features/hero-scene/HeroScene').then((module) => {
+      if (active) {
+        setHeroSceneView(() => module.default)
+      }
+    })
+
+    void import('../../features/particle-text/ParticleText').then((module) => {
+      if (active) {
+        setParticleTextView(() => module.default)
+      }
+    })
+
+    return () => {
+      active = false
+    }
+  }, [isMobile])
 
   const heroEyebrow = (
     <span className={heroEyebrowClassName}>
@@ -29,15 +52,15 @@ export default function HomePage() {
       <section className={`${styles.hero} ${isMobile ? styles.heroMobile : ''}`}>
         {!isMobile && (
           <div className={styles.heroScene}>
-            <HeroScene />
+            {HeroSceneView ? <HeroSceneView /> : null}
           </div>
         )}
 
         <div className={styles.heroContent}>
           <div className={styles.heroText}>
-            {!isMobile ? (
+            {!isMobile && ParticleTextView ? (
               <>
-                <ParticleText
+                <ParticleTextView
                   key={`${locale}-eyebrow`}
                   particleGap={1}
                   particleSize={0.95}
@@ -53,8 +76,8 @@ export default function HomePage() {
                   transitionDuration={620}
                 >
                   {heroEyebrow}
-                </ParticleText>
-                <ParticleText
+                </ParticleTextView>
+                <ParticleTextView
                   className={styles.heroTitleParticle}
                   key={`${locale}-title`}
                   particleGap={2}
@@ -67,8 +90,8 @@ export default function HomePage() {
                   springFactor={0.048}
                 >
                   <h1 className="heroTitle">{content.home.hero.title}</h1>
-                </ParticleText>
-                <ParticleText
+                </ParticleTextView>
+                <ParticleTextView
                   key={`${locale}-subtitle`}
                   particleGap={1}
                   particleSize={1.08}
@@ -83,7 +106,7 @@ export default function HomePage() {
                   transitionDuration={700}
                 >
                   <p className={styles.heroSubtitle}>{content.home.hero.subtitle}</p>
-                </ParticleText>
+                </ParticleTextView>
               </>
             ) : (
               <>
