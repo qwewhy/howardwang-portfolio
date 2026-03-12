@@ -8,6 +8,7 @@ export async function loadSceneModule(slug: ProjectSlug) {
       return import('../../scenes/chemviz3d/adapter')
     case 'virtual-coach':
       return import('../../scenes/virtual-coach/adapter')
+    default:
+      throw new Error(`No scene adapter registered for project slug: ${slug}`)
   }
 }
-

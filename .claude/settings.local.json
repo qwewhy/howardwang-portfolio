@@ -5,7 +5,20 @@
       "mcp__plugin_playwright_playwright__browser_navigate",
       "mcp__plugin_playwright_playwright__browser_take_screenshot",
       "Bash(npx tsc --noEmit)",
-      "mcp__Claude_Preview__preview_start"
+      "mcp__Claude_Preview__preview_start",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:ant.design)",
+      "WebFetch(domain:brandfetch.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:icon.icepanel.io)",
+      "WebFetch(domain:cdn.simpleicons.org)",
+      "WebFetch(domain:icon-sets.iconify.design)",
+      "WebFetch(domain:www.svgrepo.com)",
+      "WebFetch(domain:simpleicons.org)",
+      "WebFetch(domain:www.awsicon.com)",
+      "WebFetch(domain:awsicons.dev)",
+      "WebFetch(domain:cdn.jsdelivr.net)",
+      "WebFetch(domain:seeklogo.com)"
     ]
   }
 }

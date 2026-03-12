@@ -6,7 +6,7 @@ export const siteConfig = {
   defaultTheme: 'dark',
   locales: ['en', 'zh'] as const,
   themeIds: ['dark', 'light'] as const,
-  projectSlugs: ['dynagraphai', 'chemviz3d', 'virtual-coach'] as const,
+  projectSlugs: ['dynagraphai', 'chemviz3d', 'virtual-coach', 'musk-deer-platform'] as const,
   siteUrl: 'https://qwewhy.github.io/howardwang-portfolio',
 } as const
 
@@ -28,4 +28,3 @@ export function buildSiteUrl(pathname: string): string {
   const normalized = pathname.startsWith('/') ? pathname : `/${pathname}`
   return new URL(normalized, `${siteConfig.siteUrl}/`).toString()
 }
-
