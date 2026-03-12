@@ -1,17 +1,15 @@
-import { lazy, Suspense } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { getSiteContent } from '../../app/i18n/catalog'
 import { getLocalizedPath } from '../../app/router/route-utils'
 import { useAppShellStore } from '../../app/store/app-shell-store'
+import HeroScene from '../../features/hero-scene/HeroScene'
+import ParticleText from '../../features/particle-text/ParticleText'
 import { SignalGrid } from '../../features/contribution-visual/SignalGrid'
 import { TokenCounter } from '../../features/token-counter/TokenCounter'
 import { isLocale, siteConfig } from '../../shared/config/site'
 import { ProjectCard } from '../../widgets/project-card/ProjectCard'
 import { SkillsShowcase } from '../../widgets/skills-showcase/SkillsShowcase'
 import styles from './HomePage.module.css'
-
-const HeroScene = lazy(() => import('../../features/hero-scene/HeroScene'))
-const ParticleText = lazy(() => import('../../features/particle-text/ParticleText'))
 
 export default function HomePage() {
   const { locale: localeParam } = useParams()
@@ -31,24 +29,14 @@ export default function HomePage() {
       <section className={`${styles.hero} ${isMobile ? styles.heroMobile : ''}`}>
         {!isMobile && (
           <div className={styles.heroScene}>
-            <Suspense fallback={null}>
-              <HeroScene />
-            </Suspense>
+            <HeroScene />
           </div>
         )}
 
         <div className={styles.heroContent}>
           <div className={styles.heroText}>
             {!isMobile ? (
-              <Suspense
-                fallback={
-                  <>
-                    {heroEyebrow}
-                    <h1 className="heroTitle">{content.home.hero.title}</h1>
-                    <p className={styles.heroSubtitle}>{content.home.hero.subtitle}</p>
-                  </>
-                }
-              >
+              <>
                 <ParticleText
                   key={`${locale}-eyebrow`}
                   particleGap={1}
@@ -96,7 +84,7 @@ export default function HomePage() {
                 >
                   <p className={styles.heroSubtitle}>{content.home.hero.subtitle}</p>
                 </ParticleText>
-              </Suspense>
+              </>
             ) : (
               <>
                 {heroEyebrow}
