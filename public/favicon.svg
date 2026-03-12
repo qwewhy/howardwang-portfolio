@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <linearGradient id="fl" x1="0" y1="0" x2="1" y2="0.5">
+      <stop offset="0%" stop-color="#1f9e78"/>
+      <stop offset="100%" stop-color="#1a8a6e"/>
+    </linearGradient>
+    <linearGradient id="fr" x1="0" y1="0" x2="1" y2="0.5">
+      <stop offset="0%" stop-color="#35c99a"/>
+      <stop offset="100%" stop-color="#2ab893"/>
+    </linearGradient>
+    <linearGradient id="ft" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#43e7b1"/>
+      <stop offset="100%" stop-color="#6be6ff"/>
+    </linearGradient>
+  </defs>
+
+  <!--
+    Precise isometric "H" using 2:1 isometric pixel art convention.
+    Iso unit vectors (dx, dy):
+      East  = (+2, +1) per unit
+      North = (-2, +1) per unit  (screen-y inverted: up = minus)
+      Up    = ( 0, -2) per unit
+
+    Pillar cross-section: 3u x 3u,  height: 10u
+    Gap between pillars along East axis: 2u
+    Bar height: 1.5u,  bar sits at z = 4u from bottom
+
+    Scale: 1u = 28px
+    Origin (front-bottom corner of left pillar): (152, 424)
+  -->
+
+  <!-- LEFT PILLAR -->
+  <!-- Left face (south face) -->
+  <path d="M124,410 L124,130 L208,88 L208,368 Z" fill="url(#fl)"/>
+  <!-- Right face (east face) -->
+  <path d="M208,88 L264,118 L264,398 L208,368 Z" fill="url(#fr)"/>
+  <!-- Top face -->
+  <path d="M124,130 L208,88 L264,118 L180,160 Z" fill="url(#ft)"/>
+
+  <!-- RIGHT PILLAR -->
+  <!-- Left face -->
+  <path d="M248,434 L248,154 L332,112 L332,392 Z" fill="url(#fl)"/>
+  <!-- Right face -->
+  <path d="M332,112 L388,142 L388,422 L332,392 Z" fill="url(#fr)"/>
+  <!-- Top face -->
+  <path d="M248,154 L332,112 L388,142 L304,184 Z" fill="url(#ft)"/>
+
+  <!-- CROSS BAR -->
+  <!-- Left face -->
+  <path d="M208,310 L208,268 L248,290 L248,332 Z" fill="url(#fl)"/>
+  <!-- Right face -->
+  <path d="M248,290 L248,332 L332,288 L332,246 Z" fill="url(#fr)"/>
+  <!-- Top face -->
+  <path d="M208,268 L248,290 L332,246 L292,224 Z" fill="url(#ft)"/>
+</svg>
