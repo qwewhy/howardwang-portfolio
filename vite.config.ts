@@ -1,10 +1,12 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { repoBasePath } from './src/shared/config/site'
+
+const siteBasePath = process.env.SITE_BASE_PATH ?? '/'
+const normalizedBasePath = siteBasePath.endsWith('/') ? siteBasePath : `${siteBasePath}/`
 
 // https://vite.dev/config/
-export default defineConfig(({ command }) => ({
-  base: command === 'build' ? repoBasePath : '/',
+export default defineConfig(() => ({
+  base: normalizedBasePath,
   plugins: [react()],
   build: {
     target: 'es2022',

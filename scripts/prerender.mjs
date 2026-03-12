@@ -7,9 +7,9 @@ const distDir = path.join(rootDir, 'dist')
 const { render, getStaticRenderPaths } = await import(path.join(rootDir, 'dist-ssr/entry-server.js'))
 
 const template = await readFile(path.join(distDir, 'index.html'), 'utf8')
-const pkg = JSON.parse(await readFile(path.join(rootDir, 'package.json'), 'utf8'))
-const repoBase = `/${pkg.name}/`
-const defaultLocalePath = `${repoBase}en/`
+const siteBasePath = process.env.SITE_BASE_PATH ?? '/'
+const normalizedBasePath = siteBasePath.endsWith('/') ? siteBasePath : `${siteBasePath}/`
+const defaultLocalePath = `${normalizedBasePath}en/`
 
 function routeToOutputPath(routePath) {
   const normalized = routePath.replace(/^\//, '')

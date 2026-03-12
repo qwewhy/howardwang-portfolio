@@ -1,3 +1,5 @@
+const configuredSiteUrl = import.meta.env.VITE_SITE_URL?.replace(/\/$/, '') || 'https://howardwang.link'
+
 export const siteConfig = {
   owner: 'qwewhy',
   repoName: 'howardwang-portfolio',
@@ -7,14 +9,14 @@ export const siteConfig = {
   locales: ['en', 'zh'] as const,
   themeIds: ['dark', 'light'] as const,
   projectSlugs: ['dynagraphai', 'chemviz3d', 'virtual-coach', 'musk-deer-platform'] as const,
-  siteUrl: 'https://qwewhy.github.io/howardwang-portfolio',
+  siteUrl: configuredSiteUrl,
 } as const
 
 export type Locale = (typeof siteConfig.locales)[number]
 export type ThemeId = (typeof siteConfig.themeIds)[number]
 export type ProjectSlug = (typeof siteConfig.projectSlugs)[number]
 
-export const repoBasePath = `/${siteConfig.repoName}/`
+export const repoBasePath = import.meta.env.BASE_URL
 
 export function isLocale(value: string): value is Locale {
   return siteConfig.locales.includes(value as Locale)
