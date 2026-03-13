@@ -131,6 +131,7 @@ export type AboutSnippetId =
   | 'quality-gates'
   | 'modular-hooks'
   | 'docs-contract'
+  | 'docs-contract-zh'
   | 'pubsub-zustand'
   | 'pubsub-qt'
   | 'pubsub-react'

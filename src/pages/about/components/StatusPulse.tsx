@@ -38,7 +38,36 @@ export function StatusPulse({ status }: StatusPulseProps) {
 
       <div className={styles.grid}>
         <article className={`panel ${styles.corePanel}`}>
-          <div className={styles.coreHalo} aria-hidden="true" />
+          <svg
+            className={styles.coreLogo}
+            viewBox="0 0 512 512"
+            fill="none"
+            aria-hidden="true"
+          >
+            <defs>
+              <linearGradient id="sp-fl" x1="0" y1="0" x2="1" y2="0.5">
+                <stop offset="0%" stopColor="#1f9e78" />
+                <stop offset="100%" stopColor="#1a8a6e" />
+              </linearGradient>
+              <linearGradient id="sp-fr" x1="0" y1="0" x2="1" y2="0.5">
+                <stop offset="0%" stopColor="#35c99a" />
+                <stop offset="100%" stopColor="#2ab893" />
+              </linearGradient>
+              <linearGradient id="sp-ft" x1="0" y1="1" x2="1" y2="0">
+                <stop offset="0%" stopColor="#43e7b1" />
+                <stop offset="100%" stopColor="#6be6ff" />
+              </linearGradient>
+            </defs>
+            <path d="M124,410 L124,130 L208,88 L208,368 Z" fill="url(#sp-fl)" />
+            <path d="M208,88 L264,118 L264,398 L208,368 Z" fill="url(#sp-fr)" />
+            <path d="M124,130 L208,88 L264,118 L180,160 Z" fill="url(#sp-ft)" />
+            <path d="M248,434 L248,154 L332,112 L332,392 Z" fill="url(#sp-fl)" />
+            <path d="M332,112 L388,142 L388,422 L332,392 Z" fill="url(#sp-fr)" />
+            <path d="M248,154 L332,112 L388,142 L304,184 Z" fill="url(#sp-ft)" />
+            <path d="M208,310 L208,268 L248,290 L248,332 Z" fill="url(#sp-fl)" />
+            <path d="M248,290 L248,332 L332,288 L332,246 Z" fill="url(#sp-fr)" />
+            <path d="M208,268 L248,290 L332,246 L292,224 Z" fill="url(#sp-ft)" />
+          </svg>
           <span className={styles.signalLabel}>{activeSignal.label}</span>
           <h3 className={styles.signalValue}>{activeSignal.value}</h3>
           <p className={styles.signalDescription}>{activeSignal.description}</p>

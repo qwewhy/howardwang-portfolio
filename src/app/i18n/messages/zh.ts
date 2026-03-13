@@ -124,7 +124,7 @@ export const zhContent: SiteContent = {
   about: {
     intro: {
       eyebrow: '关于',
-      title: '做有空间感的界面，写能上线的系统。',
+      title: '做有空间感的界面，\n写能上线的系统；\n真实商业实战，\n无低质玩具项目。',
       description: '前端架构、3D 图形与全栈交付——从交互原型到生产级产品。',
     },
     heroHighlight: {
@@ -236,7 +236,7 @@ export const zhContent: SiteContent = {
             label: '契约注释',
             language: 'ts',
             fileLabel: 'timeline-snapshot.ts',
-            snippetId: 'docs-contract',
+            snippetId: 'docs-contract-zh',
             summary: '在协作者最容易误判的地方写文档——行为、顺序、导出安全性。',
             annotation: '注释是用来编码不变量的，不是复述语法。',
           },
@@ -292,8 +292,8 @@ export const zhContent: SiteContent = {
           {
             id: 'service-injection',
             label: '服务注入',
-            language: 'ts',
-            fileLabel: 'project-search.service.ts',
+            language: 'java',
+            fileLabel: 'ProjectSearchService.java',
             snippetId: 'di-services',
             summary: '业务逻辑依赖契约，而不是具体的搜索厂商或传输层。',
             annotation: '测试和替换成本因此大幅降低。',
@@ -314,7 +314,7 @@ export const zhContent: SiteContent = {
           id: 'roles',
           label: '角色焦点',
           value: '全栈开发 + 创意工程',
-          description: '我最想做的，仍然是产品思维、前端架构和交互系统同时成立的岗位。',
+          description: '我最想做的，仍然是产品思维、全栈架构和交互系统同时成立的岗位。',
           tags: ['React', 'Interaction', 'System Design'],
         },
         {

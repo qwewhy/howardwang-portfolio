@@ -20,7 +20,14 @@ export default function AboutPage() {
         <div className={styles.heroGrid}>
           <div className={styles.heroCopy}>
             <span className="eyebrow">{about.intro.eyebrow}</span>
-            <h1 className="heroTitle">{about.intro.title}</h1>
+            <h1 className={`heroTitle ${styles.heroTitle}`}>
+              {about.intro.title.split('\n').map((line, i, arr) => (
+                <span key={i}>
+                  {line}
+                  {i < arr.length - 1 && <br />}
+                </span>
+              ))}
+            </h1>
             <p className={styles.heroLead}>{about.intro.description}</p>
             <div className={styles.heroTags}>
               {content.capabilities.slice(0, 4).map((capability) => (

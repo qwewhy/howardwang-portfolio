@@ -66,6 +66,20 @@ export function createTimelineSnapshot(tracks: Track[]) {
     easing: serializeEasing(track.easing),
   }))
 }`,
+  'docs-contract-zh': `/**
+ * 创建一个可安全回放和导出的时间线快照。
+ * 不变量：
+ * 1. 帧已按时间排序
+ * 2. ID 保持稳定
+ * 3. 缓动函数已序列化
+ */
+export function createTimelineSnapshot(tracks: Track[]) {
+  return tracks.map((track) => ({
+    id: track.id,
+    frames: track.frames.toSorted((a, b) => a.at - b.at),
+    easing: serializeEasing(track.easing),
+  }))
+}`,
   'pubsub-zustand': `type FocusIntent = {
   nodeId: string
   source: 'hierarchy' | 'timeline'
@@ -109,19 +123,20 @@ connect(
     </>
   )
 }`,
-  'di-services': `interface SearchGateway {
-  search(query: string): Promise<SearchResult[]>
+  'di-services': `public interface SearchGateway {
+    List<SearchResult> search(String query);
 }
 
-export class ProjectSearchService {
-  constructor(private readonly gateway: SearchGateway) {}
+@Service
+public class ProjectSearchService {
+    private final SearchGateway gateway;
 
-  run(query: string) {
-    return this.gateway.search(query.trim())
-  }
-}
+    public ProjectSearchService(SearchGateway gateway) {
+        this.gateway = gateway;
+    }
 
-const searchService = new ProjectSearchService(
-  new AlgoliaSearchGateway(client),
-)`,
+    public List<SearchResult> run(String query) {
+        return gateway.search(query.trim());
+    }
+}`,
 }

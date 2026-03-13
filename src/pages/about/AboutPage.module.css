@@ -21,6 +21,10 @@
   gap: 1rem;
 }
 
+.heroTitle {
+  text-wrap: nowrap;
+}
+
 .heroLead,
 .sectionLead {
   max-width: 66ch;

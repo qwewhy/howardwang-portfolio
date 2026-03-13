@@ -34,15 +34,10 @@
   pointer-events: none;
 }
 
-.coreHalo {
-  width: 6.6rem;
-  height: 6.6rem;
-  border-radius: 50%;
-  border: 1px solid rgba(67, 231, 177, 0.28);
-  background:
-    radial-gradient(circle, rgba(67, 231, 177, 0.22), transparent 58%),
-    radial-gradient(circle, rgba(107, 230, 255, 0.16), transparent 74%);
-  box-shadow: inset 0 0 0 14px rgba(67, 231, 177, 0.04);
+.coreLogo {
+  width: 5.6rem;
+  height: 5.6rem;
+  filter: drop-shadow(0 0 18px rgba(67, 231, 177, 0.35));
   animation: statusPulse 3.8s ease-in-out infinite;
 }
 
@@ -124,23 +119,36 @@
   min-height: 11rem;
   padding: 1rem;
   border: 1px solid var(--color-line);
+  border-left: 3px solid transparent;
   border-radius: var(--radius-md);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.015)),
     rgba(255, 255, 255, 0.01);
   color: inherit;
   text-align: left;
+  cursor: pointer;
   transition:
     transform var(--transition-fast),
     border-color var(--transition-fast),
+    border-left-color var(--transition-fast),
     background-color var(--transition-fast);
 }
 
-.signalCard:hover,
-.signalCardActive {
+.signalCard:hover {
   transform: translateY(-2px);
-  border-color: rgba(67, 231, 177, 0.3);
-  background: rgba(67, 231, 177, 0.08);
+  border-color: rgba(107, 230, 255, 0.28);
+  border-left-color: rgba(107, 230, 255, 0.5);
+  background: rgba(107, 230, 255, 0.05);
+}
+
+.signalCardActive,
+.signalCardActive:hover {
+  transform: translateY(-2px);
+  border-color: rgba(67, 231, 177, 0.34);
+  border-left-color: var(--color-accent);
+  background:
+    linear-gradient(135deg, rgba(67, 231, 177, 0.1), transparent 70%),
+    rgba(67, 231, 177, 0.05);
 }
 
 @keyframes statusPulse {
@@ -182,9 +190,9 @@
     gap: 0.75rem;
   }
 
-  .coreHalo {
-    width: 4.8rem;
-    height: 4.8rem;
+  .coreLogo {
+    width: 4rem;
+    height: 4rem;
   }
 
   .signalDescription,
@@ -220,7 +228,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .coreHalo {
+  .coreLogo {
     animation: none;
   }
 }

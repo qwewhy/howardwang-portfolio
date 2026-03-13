@@ -124,7 +124,7 @@ export const enContent: SiteContent = {
   about: {
     intro: {
       eyebrow: 'About',
-      title: 'I build interfaces that feel spatial and systems that ship.',
+      title: 'Spatial interfaces.\nProduction systems.\nReal-world delivery,\nzero toy projects.',
       description: 'Frontend architecture, 3D graphics, and full-stack delivery — from interactive prototypes to production-grade products.',
     },
     heroHighlight: {
@@ -292,8 +292,8 @@ export const enContent: SiteContent = {
           {
             id: 'service-injection',
             label: 'Service injection',
-            language: 'ts',
-            fileLabel: 'project-search.service.ts',
+            language: 'java',
+            fileLabel: 'ProjectSearchService.java',
             snippetId: 'di-services',
             summary: 'Business logic depends on a contract, not on the concrete search vendor or transport layer.',
             annotation: 'Makes testing and vendor replacement cheap down the line.',
@@ -314,7 +314,7 @@ export const enContent: SiteContent = {
           id: 'roles',
           label: 'Role Focus',
           value: 'Full-stack + creative engineering',
-          description: 'I am most interested in roles where product thinking, frontend architecture, and interactive systems all matter at once.',
+          description: 'I am most interested in roles where product thinking, full-stack architecture, and interactive systems all matter at once.',
           tags: ['React', 'Interaction', 'System Design'],
         },
         {

@@ -15,20 +15,31 @@
   min-height: 5.2rem;
   padding: 0.95rem 1rem;
   border: 1px solid var(--color-line);
+  border-left: 3px solid transparent;
   border-radius: calc(var(--radius-md) - 8px);
   background: rgba(255, 255, 255, 0.02);
   color: inherit;
   text-align: left;
+  cursor: pointer;
   transition:
     transform var(--transition-fast),
     border-color var(--transition-fast),
+    border-left-color var(--transition-fast),
     background-color var(--transition-fast);
 }
 
-.habitButton:hover,
-.habitButtonActive {
+.habitButton:hover {
+  transform: translateY(-2px);
+  border-color: rgba(107, 230, 255, 0.28);
+  border-left-color: rgba(107, 230, 255, 0.5);
+  background: rgba(107, 230, 255, 0.05);
+}
+
+.habitButtonActive,
+.habitButtonActive:hover {
   transform: translateY(-2px);
   border-color: rgba(67, 231, 177, 0.34);
+  border-left-color: var(--color-accent);
   background:
     linear-gradient(135deg, rgba(67, 231, 177, 0.1), transparent 70%),
     rgba(67, 231, 177, 0.05);
