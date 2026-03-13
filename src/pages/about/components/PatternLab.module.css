@@ -1,0 +1,236 @@
+.section {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.catalog {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.75rem;
+}
+
+.habitButton {
+  display: grid;
+  gap: 0.3rem;
+  min-height: 5.2rem;
+  padding: 0.95rem 1rem;
+  border: 1px solid var(--color-line);
+  border-radius: calc(var(--radius-md) - 8px);
+  background: rgba(255, 255, 255, 0.02);
+  color: inherit;
+  text-align: left;
+  transition:
+    transform var(--transition-fast),
+    border-color var(--transition-fast),
+    background-color var(--transition-fast);
+}
+
+.habitButton:hover,
+.habitButtonActive {
+  transform: translateY(-2px);
+  border-color: rgba(67, 231, 177, 0.34);
+  background:
+    linear-gradient(135deg, rgba(67, 231, 177, 0.1), transparent 70%),
+    rgba(67, 231, 177, 0.05);
+}
+
+.habitDensity {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--color-accent-alt);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.habitLabel {
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+  line-height: 1.15;
+}
+
+.detailPanel {
+  display: grid;
+  gap: 1.1rem;
+  padding: 1.3rem;
+}
+
+.detailHeader {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: start;
+}
+
+.detailCopy {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.detailBadge {
+  display: inline-flex;
+  width: fit-content;
+  padding: 0.34rem 0.7rem;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--color-accent);
+  background: rgba(67, 231, 177, 0.1);
+}
+
+.detailTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.18rem, 1.8vw, 1.7rem);
+}
+
+.detailDescription {
+  margin: 0;
+  color: var(--color-text-muted);
+  line-height: 1.65;
+}
+
+.toolRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.55rem;
+}
+
+.overviewGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+  gap: 0.85rem;
+}
+
+.highlightCard,
+.principleCard,
+.previewNote {
+  display: grid;
+  align-content: start;
+  gap: 0.7rem;
+  padding: 1rem;
+  border: 1px solid rgba(107, 230, 255, 0.14);
+  border-radius: calc(var(--radius-md) - 8px);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.highlightCard {
+  background:
+    radial-gradient(circle at top right, rgba(67, 231, 177, 0.16), transparent 60%),
+    rgba(255, 255, 255, 0.02);
+}
+
+.highlightText {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.06rem, 1.6vw, 1.35rem);
+  line-height: 1.4;
+}
+
+.principleList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.principleItem {
+  position: relative;
+  padding-left: 1rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+.principleItem::before {
+  content: '';
+  position: absolute;
+  top: 0.62rem;
+  left: 0;
+  width: 0.38rem;
+  height: 0.38rem;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+.toolToken {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  border: 1px solid rgba(67, 231, 177, 0.14);
+  background: rgba(67, 231, 177, 0.08);
+  color: var(--color-accent);
+}
+
+.variantTabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.variantButton {
+  min-height: 2.5rem;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid rgba(107, 230, 255, 0.14);
+  border-radius: 999px;
+  color: var(--color-text-muted);
+  background: transparent;
+  transition:
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    background-color var(--transition-fast);
+}
+
+.variantButton:hover,
+.variantButtonActive {
+  color: var(--color-text);
+  border-color: rgba(67, 231, 177, 0.3);
+  background: rgba(67, 231, 177, 0.09);
+}
+
+.previewStack {
+  display: grid;
+  gap: 1rem;
+}
+
+.previewTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+}
+
+.previewSummary,
+.previewAnnotation {
+  margin: 0;
+  color: var(--color-text-muted);
+  line-height: 1.65;
+}
+
+.previewAnnotation {
+  color: var(--color-text);
+}
+
+@media (max-width: 780px) {
+  .detailHeader,
+  .overviewGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .toolRow {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .detailPanel {
+    padding: 1rem;
+  }
+
+  .habitButton {
+    padding: 1rem;
+  }
+}

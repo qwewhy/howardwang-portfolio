@@ -126,23 +126,106 @@ export interface AboutBioEntry {
   text: string
 }
 
+export type AboutSnippetId =
+  | 'ai-loop'
+  | 'quality-gates'
+  | 'modular-hooks'
+  | 'docs-contract'
+  | 'pubsub-zustand'
+  | 'pubsub-qt'
+  | 'pubsub-react'
+  | 'di-services'
+
+export interface AboutHeroStat {
+  value: string
+  label: string
+  detail: string
+}
+
+export interface AboutHabitVariant {
+  id: string
+  label: string
+  language: string
+  fileLabel: string
+  snippetId: AboutSnippetId
+  summary: string
+  annotation: string
+}
+
 export interface AboutHabitEntry {
+  id: string
   label: string
   description: string
+  densityLabel: string
+  highlight: string
+  principles: string[]
+  tools: string[]
+  variants: AboutHabitVariant[]
 }
 
 export interface AboutInterestEntry {
+  id: string
   label: string
+  cue: string
   description: string
+}
+
+export interface AboutTravelCity {
+  id: string
+  name: string
+  country: string
+  x: number
+  y: number
+  moment: string
+  summary: string
+  foods: string[]
+}
+
+export interface AboutTravelAtlas {
+  eyebrow: string
+  title: string
+  description: string
+  cue: string
+  visitedLabel: string
+  cityLabel: string
+  foodsLabel: string
+  cities: AboutTravelCity[]
+}
+
+export interface AboutStatusMeta {
+  label: string
+  value: string
+}
+
+export interface AboutStatusSignal {
+  id: string
+  label: string
+  value: string
+  description: string
+  tags: string[]
+}
+
+export interface AboutStatusPanel {
+  eyebrow: string
+  title: string
+  description: string
+  meta: AboutStatusMeta[]
+  signals: AboutStatusSignal[]
 }
 
 export interface AboutContent {
   intro: PageIntro
+  heroStats?: AboutHeroStat[]
+  capabilityIntro?: PageIntro
   bio?: AboutBioEntry[]
   codingHabitsTitle?: string
+  codingHabitsIntro?: string
   codingHabits?: AboutHabitEntry[]
   interestsTitle?: string
+  interestsIntro?: string
   interests?: AboutInterestEntry[]
+  travelAtlas?: AboutTravelAtlas
+  status?: AboutStatusPanel
   statusTitle?: string
   statusItems?: string[]
 }

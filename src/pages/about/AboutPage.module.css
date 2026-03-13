@@ -1,182 +1,233 @@
 .layout {
   display: grid;
-  gap: 3.5rem;
+  gap: clamp(3rem, 5vw, 4.75rem);
 }
 
-/* ── Narrative sections — editorial spacing ── */
-.narrative {
+.heroStage,
+.capabilityStage {
   display: grid;
-  gap: 1.8rem;
+  gap: 1.5rem;
 }
 
-.narrativeBlock {
-  max-width: 64ch;
+.heroGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+  gap: 1rem;
+  align-items: start;
 }
 
-.narrativeHeading {
-  margin: 0 0 0.5rem;
-  font-family: var(--font-display);
-  font-size: clamp(1.1rem, 1.6vw, 1.4rem);
-  line-height: 1.15;
-  color: var(--color-accent);
+.heroCopy {
+  display: grid;
+  gap: 1rem;
 }
 
-.narrativeText {
+.heroLead,
+.sectionLead {
+  max-width: 66ch;
   margin: 0;
-  font-size: 1.02rem;
-  line-height: 1.72;
   color: var(--color-text-muted);
+  line-height: 1.7;
 }
 
-/* ── Chapter title — section divider ── */
-.chapterTitle {
+.heroTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.heroTag,
+.projectChip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.1rem;
+  padding: 0.4rem 0.78rem;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+}
+
+.heroTag {
+  border: 1px solid rgba(107, 230, 255, 0.14);
+  background: rgba(107, 230, 255, 0.08);
+}
+
+.heroPanel {
+  display: grid;
+  gap: 1rem;
+  padding: 1.25rem;
+  background:
+    radial-gradient(circle at top right, rgba(67, 231, 177, 0.12), transparent 42%),
+    var(--color-surface);
+}
+
+.heroPanelHeader {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.heroPanelTitle {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+}
+
+.heroPanelText {
+  margin: 0;
+  color: var(--color-text-muted);
+  line-height: 1.65;
+}
+
+.statGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.statCard {
+  display: grid;
+  gap: 0.36rem;
+  padding: 0.95rem;
+  border: 1px solid rgba(107, 230, 255, 0.14);
+  border-radius: calc(var(--radius-md) - 8px);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.statValue {
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: 0.94rem;
+}
+
+.statDetail {
+  color: var(--color-text-muted);
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+.storyGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-top: clamp(0.8rem, 3vw, 1.4rem);
+}
+
+.storyCard {
+  position: relative;
+  display: grid;
+  gap: 0.85rem;
+  overflow: hidden;
+  padding: 1.25rem;
+  content-visibility: auto;
+}
+
+.storyCard::before,
+.capCard::before {
+  content: '';
+  position: absolute;
+  inset: auto auto 0 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(67, 231, 177, 0.08), transparent 42%);
+  pointer-events: none;
+}
+
+.storyIndex,
+.capIndex {
+  position: relative;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-accent-alt);
+  letter-spacing: 0.06em;
+}
+
+.storyHeading,
+.capTitle {
+  position: relative;
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(1.15rem, 1.8vw, 1.6rem);
-  line-height: 1.1;
-  padding-bottom: 0.6rem;
-  border-bottom: 1px solid var(--color-line);
 }
 
-/* ── Capabilities — compact grid ── */
-.capSection {
+.storyHeading {
+  font-size: clamp(1.14rem, 1.8vw, 1.5rem);
+}
+
+.storyText,
+.capDescription {
+  position: relative;
+  margin: 0;
+  color: var(--color-text-muted);
+  line-height: 1.68;
+}
+
+.capabilityGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1rem;
 }
 
 .capCard {
+  position: relative;
   display: grid;
-  gap: 0.6rem;
-  padding: 1.1rem;
-  align-content: start;
+  gap: 0.85rem;
+  overflow: hidden;
+  padding: 1.15rem;
+  transition:
+    transform var(--transition-fast),
+    border-color var(--transition-fast);
+  content-visibility: auto;
+}
+
+.capCard:hover {
+  transform: translateY(-4px);
+  border-color: rgba(67, 231, 177, 0.3);
+}
+
+.capCardHeader {
+  display: grid;
+  gap: 0.45rem;
 }
 
 .projectChip {
-  display: inline-block;
-  padding: 0.3rem 0.65rem;
-  border-radius: 999px;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
   color: var(--color-accent);
-  background: rgba(107, 230, 255, 0.08);
-  border: 1px solid rgba(107, 230, 255, 0.15);
-  text-decoration: none;
-  transition: background 0.15s;
+  border: 1px solid rgba(67, 231, 177, 0.15);
+  background: rgba(67, 231, 177, 0.08);
+  transition:
+    transform var(--transition-fast),
+    background-color var(--transition-fast);
 }
 
 .projectChip:hover {
-  background: rgba(107, 230, 255, 0.16);
+  transform: translateY(-1px);
+  background: rgba(67, 231, 177, 0.14);
 }
 
-/* ── Coding habits — definition list ── */
-.habitList {
-  margin: 0;
-  display: grid;
-  gap: 0;
+@media (max-width: 1040px) {
+  .heroGrid {
+    grid-template-columns: 1fr;
+  }
 }
 
-.habitRow {
-  display: grid;
-  grid-template-columns: 13rem 1fr;
-  gap: 1rem;
-  padding: 0.9rem 0;
-  border-bottom: 1px solid var(--color-line);
-  align-items: baseline;
-}
-
-.habitRow:last-child {
-  border-bottom: none;
-}
-
-.habitRow dt {
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--color-text);
-  white-space: nowrap;
-}
-
-.habitRow dd {
-  margin: 0;
-  font-size: 0.92rem;
-  line-height: 1.6;
-}
-
-/* ── Interests — horizontal row ── */
-.interestRow {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.5rem;
-}
-
-.interestItem {
-  display: grid;
-  gap: 0.35rem;
-  align-content: start;
-}
-
-.interestLabel {
-  font-family: var(--font-display);
-  font-size: 1.05rem;
-}
-
-.interestItem .muted {
-  font-size: 0.9rem;
-  line-height: 1.6;
-}
-
-/* ── Status — closing section ── */
-.statusSection {
-  display: grid;
-  gap: 1rem;
-  padding: 2rem 0 0;
-  border-top: 1px solid var(--color-line);
-}
-
-.statusLines {
-  display: grid;
-  gap: 0.4rem;
-}
-
-.statusLine {
-  margin: 0;
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: var(--color-text-muted);
-}
-
-/* ── Responsive ── */
 @media (max-width: 780px) {
   .layout {
-    gap: 2.5rem;
-  }
-
-  .habitRow {
-    grid-template-columns: 1fr;
-    gap: 0.25rem;
+    gap: 2.8rem;
   }
 }
 
 @media (max-width: 640px) {
   .layout {
-    gap: 2rem;
+    gap: 2.35rem;
   }
 
-  .capSection {
-    grid-template-columns: 1fr;
-  }
-
+  .heroPanel,
+  .storyCard,
   .capCard {
-    padding: 0.95rem;
+    padding: 1rem;
   }
 
-  .interestRow {
+  .statGrid {
     grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-
-  .statusSection {
-    padding-top: 1.5rem;
   }
 }

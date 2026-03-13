@@ -1,10 +1,11 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { fileURLToPath, pathToFileURL } from 'node:url'
 
 const rootDir = path.dirname(fileURLToPath(new URL('../package.json', import.meta.url)))
 const distDir = path.join(rootDir, 'dist')
-const { render, getStaticRenderPaths } = await import(path.join(rootDir, 'dist-ssr/entry-server.js'))
+const ssrEntryUrl = pathToFileURL(path.join(rootDir, 'dist-ssr/entry-server.js')).href
+const { render, getStaticRenderPaths } = await import(ssrEntryUrl)
 
 const template = await readFile(path.join(distDir, 'index.html'), 'utf8')
 const siteBasePath = process.env.SITE_BASE_PATH ?? '/'
