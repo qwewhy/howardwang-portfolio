@@ -226,11 +226,78 @@
 }
 
 @media (max-width: 640px) {
-  .detailPanel {
-    padding: 1rem;
+  .section {
+    gap: 1rem;
+  }
+
+  .catalog {
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 0.55rem;
   }
 
   .habitButton {
-    padding: 1rem;
+    min-height: 4rem;
+    padding: 0.7rem 0.8rem;
+    gap: 0.2rem;
+  }
+
+  .habitDensity {
+    font-size: 0.64rem;
+  }
+
+  .habitLabel {
+    font-size: 0.84rem;
+  }
+
+  .detailPanel {
+    padding: 0.85rem;
+    gap: 0.85rem;
+  }
+
+  .detailBadge {
+    padding: 0.24rem 0.55rem;
+    font-size: 0.64rem;
+  }
+
+  .detailDescription {
+    font-size: 0.84rem;
+  }
+
+  .overviewGrid {
+    gap: 0.65rem;
+  }
+
+  .highlightCard,
+  .principleCard,
+  .previewNote {
+    padding: 0.8rem;
+    gap: 0.55rem;
+  }
+
+  .principleItem {
+    font-size: 0.84rem;
+    line-height: 1.5;
+  }
+
+  .toolToken {
+    min-height: 1.7rem;
+    padding: 0.25rem 0.6rem;
+    font-size: 0.64rem;
+  }
+
+  .variantButton {
+    min-height: 2.1rem;
+    padding: 0.38rem 0.7rem;
+    font-size: 0.84rem;
+  }
+
+  .previewTitle {
+    font-size: 0.92rem;
+  }
+
+  .previewSummary,
+  .previewAnnotation {
+    font-size: 0.84rem;
+    line-height: 1.55;
   }
 }

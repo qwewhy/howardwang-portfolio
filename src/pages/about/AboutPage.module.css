@@ -51,6 +51,79 @@
   background: rgba(107, 230, 255, 0.08);
 }
 
+@keyframes highlightEnter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.heroHighlight {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.25rem;
+  padding: 0.85rem 1.15rem;
+  border: 1px solid rgba(67, 231, 177, 0.25);
+  border-radius: var(--radius-md);
+  background:
+    linear-gradient(135deg, rgba(67, 231, 177, 0.12), rgba(107, 230, 255, 0.06) 60%, transparent),
+    var(--color-surface);
+  animation: highlightEnter 0.6s ease-out both;
+  animation-delay: 0.3s;
+}
+
+.highlightValue {
+  flex-shrink: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 700;
+  line-height: 1;
+  background: linear-gradient(
+    90deg,
+    rgb(67, 231, 177),
+    rgb(107, 230, 255) 40%,
+    rgb(67, 231, 177) 80%,
+    rgb(107, 230, 255)
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+
+.highlightMeta {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.highlightLabel {
+  font-family: var(--font-display);
+  font-size: 1rem;
+}
+
+.highlightDetail {
+  color: var(--color-text-muted);
+  font-size: 0.84rem;
+  line-height: 1.4;
+}
+
 .heroPanel {
   display: grid;
   gap: 1rem;
@@ -218,16 +291,109 @@
 
 @media (max-width: 640px) {
   .layout {
-    gap: 2.35rem;
+    gap: 1.8rem;
+  }
+
+  .heroStage,
+  .capabilityStage {
+    gap: 1rem;
+  }
+
+  .heroLead,
+  .sectionLead {
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+
+  .heroTags {
+    gap: 0.45rem;
+  }
+
+  .heroTag,
+  .projectChip {
+    min-height: 1.8rem;
+    padding: 0.28rem 0.6rem;
+    font-size: 0.66rem;
+  }
+
+  .heroHighlight {
+    gap: 0.7rem;
+    padding: 0.65rem 0.85rem;
+  }
+
+  .highlightValue {
+    font-size: 1.5rem;
+  }
+
+  .highlightLabel {
+    font-size: 0.88rem;
+  }
+
+  .highlightDetail {
+    font-size: 0.76rem;
   }
 
   .heroPanel,
   .storyCard,
   .capCard {
-    padding: 1rem;
+    padding: 0.85rem;
+  }
+
+  .heroPanelTitle {
+    font-size: 0.95rem;
+  }
+
+  .heroPanelText {
+    font-size: 0.84rem;
   }
 
   .statGrid {
     grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+
+  .statCard {
+    padding: 0.7rem;
+    gap: 0.25rem;
+  }
+
+  .statValue {
+    font-size: 0.95rem;
+  }
+
+  .statLabel {
+    font-size: 0.84rem;
+  }
+
+  .statDetail {
+    font-size: 0.76rem;
+  }
+
+  .storyGrid {
+    gap: 0.75rem;
+    margin-top: 0.6rem;
+  }
+
+  .storyIndex,
+  .capIndex {
+    font-size: 0.68rem;
+  }
+
+  .storyHeading {
+    font-size: 1.05rem;
+  }
+
+  .storyText,
+  .capDescription {
+    font-size: 0.84rem;
+    line-height: 1.6;
+  }
+
+  .capabilityGrid {
+    gap: 0.75rem;
+  }
+
+  .capTitle {
+    font-size: 1rem;
   }
 }

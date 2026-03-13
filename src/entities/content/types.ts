@@ -213,8 +213,15 @@ export interface AboutStatusPanel {
   signals: AboutStatusSignal[]
 }
 
+export interface AboutHeroHighlight {
+  value: string
+  label: string
+  detail: string
+}
+
 export interface AboutContent {
   intro: PageIntro
+  heroHighlight?: AboutHeroHighlight
   heroStats?: AboutHeroStat[]
   capabilityIntro?: PageIntro
   bio?: AboutBioEntry[]

@@ -110,23 +110,73 @@
   word-break: break-word;
 }
 
+.tokKeyword {
+  color: #ff7b72;
+}
+
+.tokType {
+  color: #79c0ff;
+}
+
+.tokString {
+  color: #a5d6ff;
+}
+
+.tokComment {
+  color: #8b949e;
+  font-style: italic;
+}
+
+.tokNumber {
+  color: #ffa657;
+}
+
+.tokPunctuation {
+  color: #8b949e;
+}
+
 @media (max-width: 640px) {
   .header {
     align-items: flex-start;
     flex-direction: column;
+    padding: 0.65rem 0.8rem;
+    gap: 0.6rem;
+  }
+
+  .dot {
+    width: 0.58rem;
+    height: 0.58rem;
   }
 
   .meta {
     justify-content: flex-start;
+    gap: 0.4rem;
+  }
+
+  .fileLabel,
+  .language {
+    min-height: 1.55rem;
+    padding: 0.18rem 0.48rem;
+    font-size: 0.62rem;
+  }
+
+  .lines {
+    padding: 0.6rem 0;
+    max-height: 22rem;
   }
 
   .line {
-    grid-template-columns: 2.3rem minmax(0, 1fr);
-    gap: 0.7rem;
-    padding-inline: 0.85rem;
+    grid-template-columns: 1.8rem minmax(0, 1fr);
+    gap: 0.5rem;
+    padding: 0.12rem 0.65rem;
+  }
+
+  .lineNumber {
+    font-size: 0.64rem;
   }
 
   .code {
-    font-size: 0.74rem;
+    font-size: 0.66rem;
+    line-height: 1.55;
   }
 }

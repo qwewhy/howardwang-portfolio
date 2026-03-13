@@ -29,6 +29,16 @@ export default function AboutPage() {
                 </span>
               ))}
             </div>
+
+            {about.heroHighlight && (
+              <div className={styles.heroHighlight}>
+                <span className={styles.highlightValue}>{about.heroHighlight.value}</span>
+                <div className={styles.highlightMeta}>
+                  <strong className={styles.highlightLabel}>{about.heroHighlight.label}</strong>
+                  <span className={styles.highlightDetail}>{about.heroHighlight.detail}</span>
+                </div>
+              </div>
+            )}
           </div>
 
           {heroStats.length > 0 && (
