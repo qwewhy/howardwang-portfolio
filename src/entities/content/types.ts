@@ -121,8 +121,30 @@ export interface WorkContent {
   intro: PageIntro
 }
 
+export interface AboutBioEntry {
+  heading: string
+  text: string
+}
+
+export interface AboutHabitEntry {
+  label: string
+  description: string
+}
+
+export interface AboutInterestEntry {
+  label: string
+  description: string
+}
+
 export interface AboutContent {
   intro: PageIntro
+  bio?: AboutBioEntry[]
+  codingHabitsTitle?: string
+  codingHabits?: AboutHabitEntry[]
+  interestsTitle?: string
+  interests?: AboutInterestEntry[]
+  statusTitle?: string
+  statusItems?: string[]
 }
 
 export interface ResumeContent {

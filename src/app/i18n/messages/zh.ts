@@ -127,6 +127,37 @@ export const zhContent: SiteContent = {
       title: '设计、代码与空间交互的交汇处。',
       description: '前端架构、3D 图形与全栈 AI 交付——打造技术深度与视觉清晰度兼具的产品。',
     },
+    bio: [
+      {
+        heading: '关于我',
+        text: '本科毕业于中国 985 高校计算机科学专业，硕士就读于悉尼 UTS 信息技术（交互媒体方向），GPA 排名前 5%。我的知识体系横跨系统工程、空间图形与 AI 增强产品开发。',
+      },
+      {
+        heading: '驱动力',
+        text: '我喜欢把复杂的技术问题变成人们能看到、能交互的东西。无论是服务 4,000 名学生的 3D 分子动画，还是浏览器原生的创作引擎，目标始终一样：让困难的事情变得自然。',
+      },
+    ],
+    codingHabitsTitle: '编程习惯',
+    codingHabits: [
+      { label: 'AI 驱动开发', description: 'Claude Code、Cursor、Codex 是我日常工作流的一部分——我把 AI 当作效率放大器，而不是拐杖。' },
+      { label: '代码质量优先', description: '严格的 ESLint + Prettier + TypeScript 配置，PR 先自审再提交。' },
+      { label: '组件化 & 模块化设计', description: '清晰边界、单一职责 Hooks、可复用抽象——单个项目中编写了 20+ 自定义 React Hooks。' },
+      { label: '文档 & 注释习惯', description: '公共 API 写 JSDoc，关键意图写内联注释，README 优先保障协作者上手。' },
+      { label: '发布/订阅 & 事件驱动', description: '使用事件总线和可观察模式实现编辑器面板、3D 视窗与状态层之间的解耦通信。' },
+      { label: '依赖注入', description: 'NestJS 和 Spring Boot 中的服务导向架构——从第一天起就可测试、可替换、可审计。' },
+    ],
+    interestsTitle: '键盘之外',
+    interests: [
+      { label: 'War Thunder', description: '螺旋桨空战、坦克 RB——物理模型令人叹服。我最喜欢的放松方式。' },
+      { label: '旅行', description: '新城市、新美食、新视角。我已经在三个国家生活过，下一次旅行永远在计划中。' },
+      { label: '美食', description: '做饭和吃饭同样热爱。哪里有没尝过的地方特色，那就是我必须解决的问题。' },
+    ],
+    statusTitle: '当前状态',
+    statusItems: [
+      '现居悉尼，澳大利亚永久居民。',
+      '期望方向：全栈开发、创意工程、3D Web、AI 产品、游戏开发等。',
+      '接受全职、项目制合作或研究合作。',
+    ],
   },
   resume: {
     intro: {

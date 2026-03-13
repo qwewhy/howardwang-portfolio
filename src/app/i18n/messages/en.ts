@@ -127,6 +127,37 @@ export const enContent: SiteContent = {
       title: 'Where design, code, and spatial interaction intersect.',
       description: 'Frontend architecture, 3D graphics, and full-stack AI delivery — building products that are technically deep and visually clear.',
     },
+    bio: [
+      {
+        heading: 'Who I am',
+        text: 'Computer Science undergraduate from a top Chinese university, then a Master of IT (Interactive Media) at UTS Sydney — top 5% GPA. My background sits at the crossroads of systems engineering, spatial graphics, and AI-augmented product development.',
+      },
+      {
+        heading: 'What drives me',
+        text: 'I like turning complex technical problems into things people can actually see and interact with. Whether it is 3D molecular animations for 4,000 students or a browser-native creation engine, the goal is always the same: make the hard stuff feel natural.',
+      },
+    ],
+    codingHabitsTitle: 'How I code',
+    codingHabits: [
+      { label: 'AI-Driven Development', description: 'Claude Code, Cursor, and Codex are part of my daily loop — I treat AI as a force multiplier, not a crutch.' },
+      { label: 'Code Quality First', description: 'Strict ESLint + Prettier + TypeScript configs. I review my own PRs before anyone else does.' },
+      { label: 'Component & Modular Design', description: 'Clean boundaries, single-responsibility hooks, and reusable abstractions — I wrote 20+ custom React hooks in one project.' },
+      { label: 'Documentation & Comments', description: 'JSDoc on public APIs, inline comments where intent matters, and README-first onboarding for collaborators.' },
+      { label: 'Pub/Sub & Event-Driven', description: 'Event buses and observable patterns for decoupled communication between editor panels, 3D viewports, and state layers.' },
+      { label: 'Dependency Injection', description: 'Service-oriented architecture in NestJS and Spring Boot — testable, swappable, and auditable from day one.' },
+    ],
+    interestsTitle: 'Off the keyboard',
+    interests: [
+      { label: 'War Thunder', description: 'Prop-era dogfights, tank RB — the physics model is genuinely impressive. My go-to way to unwind.' },
+      { label: 'Travel', description: 'New cities, new food, new perspectives. I have lived in three countries and I am always planning the next trip.' },
+      { label: 'Food', description: 'Cooking and eating with equal passion. If there is a local specialty I have not tried, that is a problem I intend to fix.' },
+    ],
+    statusTitle: 'Currently',
+    statusItems: [
+      'Based in Sydney, Australia — Australian permanent resident.',
+      'Open to full-stack, creative engineering, 3D web, AI product, and game development roles.',
+      'Available for full-time positions, project-based contracts, or research collaborations.',
+    ],
   },
   resume: {
     intro: {
